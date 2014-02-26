@@ -1,0 +1,6 @@
+build
+dist
+.idea
+*.pyc
+pytest_spec.egg-info
+.cache
