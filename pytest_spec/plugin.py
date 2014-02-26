@@ -11,23 +11,3 @@ def pytest_addoption(parser):
         action='store_true',
         help='Print test result in specification format'
     )
-
-
-def pytest_runtest_logreport(report):
-    pass
-
-
-def pytest_report_header(config, startdir):
-    pass
-
-
-def pytest_runtest_setup(item):
-    pass
-
-
-def pytest_runtest_logstart(nodeid, location):
-    pass
-
-
-def pytest_report_teststatus(report):
-    pass
