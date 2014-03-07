@@ -1,2 +1,5 @@
+v.0.2
+- Enable/Disable plugin via --spec option
+
 v.0.1
 - Initial implementation

@@ -20,6 +20,7 @@ class TestPlugin(unittest.TestCase):
         pytest_addoption(self.parser)
         self.parser.assert_has_calls(call.getgroup().addoption('--spec',
                                                                action='store_true',
+                                                               dest='spec',
                                                                help='Print test result in specification format'))
 
     def test_should_be_failed(self):
