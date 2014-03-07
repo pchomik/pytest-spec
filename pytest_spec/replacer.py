@@ -10,7 +10,6 @@ def pytest_runtest_logstart(self, nodeid, location):
 
 def pytest_runtest_logreport(self, report):
     """ Responsible for report format """
-    test_status = None
     res = self.config.hook.pytest_report_teststatus(report=report)
     cat, letter, word = res
     self.stats.setdefault(cat, []).append(report)
@@ -20,20 +19,14 @@ def pytest_runtest_logreport(self, report):
         return
     if not is_nodeid_has_test(report.nodeid):
         return
-    fspath = get_test_path(report.nodeid)
-    if fspath != self.currentfspath:
-        self.currentfspath = fspath
-        self._tw.line()
-        if hasattr(self, "_first_fspath"):
-            self._tw.line()
-        self._first_fspath = True
-        self._tw.write(fspath)
-    if isinstance(word, tuple):
-        word, markup = word
-    else:
+    test_path = get_test_path(report.nodeid)
+    if test_path != self.currentfspath:
+        self.currentfspath = test_path
+        print_class_information(self)
+    if not isinstance(word, tuple):
+        test_name = get_test_name(report.nodeid)
         markup, test_status = format_results(report)
-    self._tw.line()
-    self._tw.write("    {}{}".format(test_status, get_test_name(report.nodeid)), **markup)
+        print_test_result(self, test_name, test_status, markup)
 
 
 def is_nodeid_has_test(nodeid):
@@ -44,6 +37,12 @@ def is_nodeid_has_test(nodeid):
 
 def get_test_path(nodeid):
     return nodeid.rsplit("::", 1)[0]
+
+
+def print_class_information(self):
+    self._tw.line()
+    self._tw.line()
+    self._tw.write(self.currentfspath)
 
 
 def get_test_name(nodeid):
@@ -57,3 +56,8 @@ def format_results(report):
         return {'red': True}, '[FAIL]  '
     elif report.skipped:
         return {'yellow': True}, '[SKIP]  '
+
+
+def print_test_result(self, test_name, test_status, markup):
+    self._tw.line()
+    self._tw.write("    {}{}".format(test_status, test_name), **markup)
