@@ -2,7 +2,7 @@
 """
 :author: Pawel Chomicki
 """
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 requires = [
@@ -12,7 +12,8 @@ requires = [
 
 setup(
     name="pytest_spec",
-    version="0.1",
+    packages=find_packages(),
+    version="0.1.1",
     entry_points={'pytest11': ['pytest_spec = pytest_spec.plugin']},
     description="Pytest plugin to print more spec report than only execution result",
     author="Pawel Chomicki",
