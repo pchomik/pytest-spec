@@ -34,6 +34,16 @@ Download
 ========
 Latest version of plugin is available in [drono.io project artifacts](https://drone.io/bitbucket.org/pchomik/pytest-spec/files).
 
+Install
+=======
+
+    cd /dir/with/downloaded/package
+    pip install pytest_spec-<depend_of_version_and_format>
+
+    # Example
+    cd /home/user/Downloads
+    pip install pytest_spec-0.2.4-py27-none-all.whl
+
 Contribution
 ============
 Please feel free to present your idea by code example (pull request) or reported issues.
