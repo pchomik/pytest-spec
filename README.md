@@ -30,6 +30,10 @@ Continues Integration
 =====================
 [![Build Status](https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png)](https://drone.io/bitbucket.org/pchomik/pytest-spec/latest)
 
+Download
+========
+Latest version of plugin is available in [drono.io project artifacts](https://drone.io/bitbucket.org/pchomik/pytest-spec/files).
+
 Contribution
 ============
 Please feel free to present your idea by code example (pull request) or reported issues.
