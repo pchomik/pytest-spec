@@ -23,20 +23,6 @@ class TestPlugin(unittest.TestCase):
                                                                dest='spec',
                                                                help='Print test result in specification format'))
 
-    def test_should_be_failed(self):
-        self.assertEqual(1, 2)
 
-
-@unittest.skip("to skip")
-class TestPlugin2(unittest.TestCase):
-    def test_should_be_skipped(self):
-        self.assertEqual(1, 1)
-
-
-class TestHelper(unittest.TestCase):
-    pass
-
-
-class TestPlugin3(TestHelper):
-    def test_should_be_passed_when_is_subclassed(self):
-        self.assertEqual(1, 1)
+if __name__ == '__main__':
+    unittest.main()
