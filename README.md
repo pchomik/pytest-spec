@@ -26,6 +26,10 @@ Output example
     test/test_plugin.py::TestPlugin3
         [PASS]  Should be passed when is subclassed
 
+Continues Integration
+=====================
+[![Build Status](https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png)](https://drone.io/bitbucket.org/pchomik/pytest-spec/latest)
+
 Contribution
 ============
 Please feel free to present your idea by code example (pull request) or reported issues.
