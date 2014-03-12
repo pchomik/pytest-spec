@@ -19,4 +19,5 @@ setup(
     author="Pawel Chomicki",
     author_email="pawel.chomicki@gmail.com",
     install_requires=requires,
+    url="https://bitbucket.org/pchomik/pytest-spec",
 )
