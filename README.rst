@@ -13,20 +13,19 @@ Available features
 Output example
 ==============
 
+.. code::
+
     py.test --spec
 
     test/test_plugin.py::TestPlugin
-
-    |    [PASS]  Pytest adoption adds spec option
-    |    [PASS]  Pytest adoption gets general group
-    |    [FAIL]  Should be failed
+        [PASS]  Pytest adoption adds spec option
+        [PASS]  Pytest adoption gets general group
+        [FAIL]  Should be failed
 
     test/test_plugin.py::TestPlugin2
-
          [SKIP]  Should be skipped
 
     test/test_plugin.py::TestPlugin3
-    
          [PASS]  Should be passed when is subclassed
 
 Continues Integration
@@ -40,6 +39,8 @@ Latest version of plugin is available in `drone.io project artifacts <https://dr
 
 Install
 =======
+
+.. code::
 
     pip install pytest_spec
 
