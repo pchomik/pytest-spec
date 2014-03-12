@@ -1,4 +1,4 @@
-pytest-spec
+pytest_spec
 ===========
 pytest plugin to display test execution output like a SPECIFICATION.
 
