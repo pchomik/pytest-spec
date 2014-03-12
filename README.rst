@@ -13,7 +13,7 @@ Available features
 Output example
 ==============
 
-.. code-block:: none
+::
 
     py.test --spec
 
@@ -40,7 +40,7 @@ Latest version of plugin is available in `drone.io project artifacts <https://dr
 Install
 =======
 
-.. code-block:: none
+::
 
     pip install pytest_spec
 
