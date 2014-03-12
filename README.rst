@@ -8,7 +8,7 @@ Available features
 * Format output to look like specification.
 * Group tests by classes.
 * Failed, passed and skipped are marked and colored.
-* Remove test_ and underscores for every test.
+* Remove test\_ and underscores for every test.
 
 Output example
 ==============
@@ -28,11 +28,12 @@ Output example
 
 Continues Integration
 =====================
-[![Build Status](https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png)](https://drone.io/bitbucket.org/pchomik/pytest-spec/latest)
+.. image:: https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png
+     :target: https://drone.io/bitbucket.org/pchomik/pytest-spec/latest
 
 Download
 ========
-Latest version of plugin is available in [drone.io project artifacts](https://drone.io/bitbucket.org/pchomik/pytest-spec/files).
+Latest version of plugin is available in `drone.io project artifacts <https://drone.io/bitbucket.org/pchomik/pytest-spec/files>`_.
 
 Install
 =======
