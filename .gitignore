@@ -4,3 +4,4 @@ dist
 *.pyc
 pytest_spec.egg-info
 .cache
+.coverage
