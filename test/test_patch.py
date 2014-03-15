@@ -4,7 +4,7 @@
 """
 import unittest
 
-from mock import Mock
+from mock import Mock, call
 from pytest_spec.patch import pytest_runtest_logstart, pytest_runtest_logreport
 
 
@@ -48,10 +48,37 @@ class TestPatch(unittest.TestCase):
     def test__pytest_runtest_logstart__returns_none(self):
         self.assertEqual(pytest_runtest_logstart('self', 'nodeid', 'location'), None)
 
-    def test__pytest_runtest_logreport_first_try(self):
+    def test__pytest_runtest_logreport__returns_none_when_letter_is_missing(self):
+        result = pytest_runtest_logreport(FakeSelf(letter=''), FakeReport('Test::Second::Test_example_demo'))
+        self.assertIsNone(result)
+
+    def test__pytest_runtest_logreport__returns_none_when_word_is_missing(self):
+        result = pytest_runtest_logreport(FakeSelf(word=''), FakeReport('Test::Second::Test_example_demo'))
+        self.assertIsNone(result)
+
+    def test__pytest_runtest_logreport__returns_none_when_nodeid_is_wrong_formatted(self):
+        result = pytest_runtest_logreport(FakeSelf(), FakeReport(''))
+        self.assertIsNone(result)
+
+    def test__pytest_runtest_logreport__prints_class_name_before_first_test_result(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::Test_example_demo'))
-        print fake_self._tw.mock_calls
+        fake_self._tw.assert_has_calls(call('Test::Second'))
+
+    def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo'))
+        fake_self._tw.assert_has_calls(call('    [PASS]  Example demo', green=True))
+
+    def test__pytest_runtest_logreport__prints_test_name_and_failed_status(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo', passed=False, failed=True))
+        fake_self._tw.assert_has_calls(call('    [FAIL]  Example demo', red=True))
+
+    def test__pytest_runtest_logreport__prints_test_name_and_skipped_status(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo', passed=False, skipped=True))
+        fake_self._tw.assert_has_calls(call('    [SKIP]  Example demo', yellow=True))
 
 
 if __name__ == '__main__':
