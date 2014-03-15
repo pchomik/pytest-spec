@@ -48,8 +48,9 @@ may be displayed as:
     [SKIP]  The <execute_command> returns something
 
 This type of format provides clear information:
-    * which method is under test
-    * what kind of result should be expected
+
+* which method is under test
+* what kind of result should be expected
 
 Continues Integration
 =====================
