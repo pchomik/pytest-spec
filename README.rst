@@ -9,6 +9,7 @@ Available features
 * Group tests by classes.
 * Failed, passed and skipped are marked and colored.
 * Remove test\_ and underscores for every test.
+* Method under test may be highlighted (<method>) like in example.
 
 Output example
 ==============
@@ -31,6 +32,25 @@ Output example
         [PASS]  The <execute_command> returns positive return code
         [SKIP]  The <execute_command> returns something
 
+Highlight method under test
+===========================
+Simple test definition is required (double '__' characters before and after method)
+to put method under test between '<>' characters e.g.
+::
+
+    def test__execute_method__returns_something(self):
+
+may be displayed as:
+::
+
+    [PASS]  The <execute_command> returns something
+    [FAIL]  The <execute_command> returns something
+    [SKIP]  The <execute_command> returns something
+
+This type of format provides clear information:
+    * which method is under test
+    * what kind of result should be expected
+
 Continues Integration
 =====================
 .. image:: https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png
@@ -42,7 +62,6 @@ Latest version of plugin is available in `drone.io project artifacts <https://dr
 
 Install
 =======
-
 ::
 
     pip install pytest_spec
