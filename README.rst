@@ -17,16 +17,19 @@ Output example
 
     py.test --spec
 
-    test/test_plugin.py::TestPlugin
-        [PASS]  Pytest adoption adds spec option
-        [PASS]  Pytest adoption gets general group
-        [FAIL]  Should be failed
+    test/test_example.py::TestWhenExamplePassed
+        [PASS]  Execute returns positive return code
 
-    test/test_plugin.py::TestPlugin2
-         [SKIP]  Should be skipped
+    test/test_example.py::TestWhenExampleFailed
+        [FAIL]  Execute returns negative return code
 
-    test/test_plugin.py::TestPlugin3
-         [PASS]  Should be passed when is subclassed
+    test/test_example.py::TestWhenExampleIsSkipped
+        [SKIP]  Execute returns something
+
+    test/test_example.py::TestExamplesWhenMethodUnderTestIsHighlighted
+        [FAIL]  The <execute_command> returns negative return code
+        [PASS]  The <execute_command> returns positive return code
+        [SKIP]  The <execute_command> returns something
 
 Continues Integration
 =====================
