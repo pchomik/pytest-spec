@@ -86,6 +86,10 @@ class TestPatch(unittest.TestCase):
         with self.assertRaises(AssertionError):
             fake_self._tw.assert_has_calls([call.line(), call.line()])
 
+    def test__pytest_runtest_logreport__marks_method_marked_by_double_underscores(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test__example__demo'))
+        fake_self._tw.assert_has_calls(call('    [PASS]  The <example> demo', green=True))
 
 if __name__ == '__main__':
     unittest.main()

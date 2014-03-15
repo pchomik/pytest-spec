@@ -53,7 +53,11 @@ def _print_class_information(self):
 
 
 def _get_test_name(nodeid):
-    return nodeid.split("::")[2][5:].replace("_", " ").capitalize()
+    test_name = nodeid.split("::")[2][5:].replace("_", " ").capitalize()
+    if test_name[:1] is ' ':
+        test_name_parts = test_name.split('  ')
+        return 'The <{}> {}'.format(test_name_parts[0][1:].replace(' ', '_'), test_name_parts[1])
+    return test_name
 
 
 def _format_results(report):
