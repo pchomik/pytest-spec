@@ -80,6 +80,12 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo', passed=False, skipped=True))
         fake_self._tw.assert_has_calls(call('    [SKIP]  Example demo', yellow=True))
 
+    def test__pytest_runtest_logreport__skips_empty_line_for_first_test(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo'))
+        with self.assertRaises(AssertionError):
+            fake_self._tw.assert_has_calls([call.line(), call.line()])
+
 
 if __name__ == '__main__':
     unittest.main()

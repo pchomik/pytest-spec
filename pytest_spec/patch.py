@@ -45,9 +45,11 @@ def _get_test_path(nodeid):
 
 
 def _print_class_information(self):
-    self._tw.line()
+    if hasattr(self, '_first_triggered'):
+        self._tw.line()
     self._tw.line()
     self._tw.write(self.currentfspath)
+    self._first_triggered = True
 
 
 def _get_test_name(nodeid):
