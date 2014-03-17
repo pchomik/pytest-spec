@@ -1,4 +1,6 @@
 v.0.2
+- Add method highlighting feature
+- Add tests to cover features
 - Enable/Disable plugin via --spec option
 
 v.0.1
