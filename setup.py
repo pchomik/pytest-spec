@@ -13,11 +13,11 @@ requires = [
 setup(
     name="pytest_spec",
     packages=find_packages(),
-    version="0.2.18",
+    version="0.2.19",
     entry_points={'pytest11': ['pytest_spec = pytest_spec.plugin']},
     description="pytest plugin to display test execution output like a SPECIFICATION",
     author="Pawel Chomicki",
     author_email="pawel.chomicki@gmail.com",
     install_requires=requires,
-    url="https://bitbucket.org/pchomik/pytest-spec",
+    url="https://github.com/pchomik/pytest-spec",
 )
