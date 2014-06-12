@@ -54,12 +54,12 @@ This type of format provides clear information:
 
 Continues Integration
 =====================
-.. image:: https://drone.io/bitbucket.org/pchomik/pytest-spec/status.png
-     :target: https://drone.io/bitbucket.org/pchomik/pytest-spec/latest
+.. image:: https://drone.io/github.com/pchomik/pytest-spec/status.png
+     :target: https://drone.io/github.com/pchomik/pytest-spec/latest
 
 Download
 ========
-Latest version of plugin is available in `drone.io project artifacts <https://drone.io/bitbucket.org/pchomik/pytest-spec/files>`_.
+Latest version of plugin is available in `drone.io project artifacts <https://drone.io/github.com/pchomik/pytest-spec/files>`_.
 
 Install
 =======
