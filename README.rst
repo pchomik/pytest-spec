@@ -9,7 +9,7 @@ Available features
 * Group tests by classes.
 * Failed, passed and skipped are marked and colored.
 * Remove test\_ and underscores for every test.
-* Method under test may be highlighted (<method>) like in example.
+* Method under test may be highlighted (method) like in example.
 
 Output example
 ==============
@@ -28,9 +28,9 @@ Output example
         [SKIP]  Execute returns something
 
     test/test_example.py::TestExamplesWhenMethodUnderTestIsHighlighted
-        [FAIL]  The <execute_command> returns negative return code
-        [PASS]  The <execute_command> returns positive return code
-        [SKIP]  The <execute_command> returns something
+        [FAIL]  The (execute_command) returns negative return code
+        [PASS]  The (execute_command) returns positive return code
+        [SKIP]  The (execute_command) returns something
 
 Highlight method under test
 ===========================
@@ -43,9 +43,9 @@ to put method under test between '<>' characters e.g.
 may be displayed as:
 ::
 
-    [PASS]  The <execute_command> returns something
-    [FAIL]  The <execute_command> returns something
-    [SKIP]  The <execute_command> returns something
+    [PASS]  The (execute_command) returns something
+    [FAIL]  The (execute_command) returns something
+    [SKIP]  The (execute_command) returns something
 
 This type of format provides clear information:
 

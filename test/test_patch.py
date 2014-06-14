@@ -89,7 +89,7 @@ class TestPatch(unittest.TestCase):
     def test__pytest_runtest_logreport__marks_method_marked_by_double_underscores(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test__example__demo'))
-        fake_self._tw.assert_has_calls(call('    [PASS]  The <example> demo', green=True))
+        fake_self._tw.assert_has_calls(call('    [PASS]  The (example) demo', green=True))
 
     def test__pytest_runtest_logreport__prints_test_name_and_handle_only_single_marker(self):
         fake_self = FakeSelf()

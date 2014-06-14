@@ -58,7 +58,7 @@ def _get_test_name(nodeid):
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
             return test_name.strip().capitalize()
-        return 'The <{}> {}'.format(test_name_parts[0][1:].replace(' ', '_'), test_name_parts[1])
+        return 'The ({}) {}'.format(test_name_parts[0][1:].replace(' ', '_'), test_name_parts[1])
     return test_name
 
 

@@ -2,6 +2,8 @@ v.0.2
 - Add method highlighting feature
 - Add tests to cover features
 - Enable/Disable plugin via --spec option
+- Fix issue if only one mark __ exists
+- Change <> into () around the merhod
 
 v.0.1
 - Initial implementation
