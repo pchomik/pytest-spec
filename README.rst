@@ -1,4 +1,4 @@
-pytest_spec
+pytest-spec
 ===========
 pytest plugin to display test execution output like a SPECIFICATION.
 
@@ -65,7 +65,7 @@ Install
 =======
 ::
 
-    pip install pytest_spec
+    pip install pytest-spec
 
 Contribution
 ============
