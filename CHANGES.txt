@@ -4,6 +4,7 @@ v.0.2
 - Enable/Disable plugin via --spec option
 - Fix issue if only one mark __ exists
 - Change <> into () around the merhod
+- Change the name from pytest_spec to pytest-spec
 
 v.0.1
 - Initial implementation
