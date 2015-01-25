@@ -53,7 +53,7 @@ def _print_class_information(self):
 
 
 def _get_test_name(nodeid):
-    test_name = nodeid.split("::")[2][5:].replace("_", " ").capitalize()
+    test_name = nodeid.rsplit("::", 1)[1][5:].replace("_", " ").capitalize()
     if test_name[:1] is ' ':
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
