@@ -58,7 +58,7 @@ def _get_test_name(nodeid):
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
             return test_name.strip().capitalize()
-        return 'The ({}) {}'.format(test_name_parts[0][1:].replace(' ', '_'), test_name_parts[1])
+        return 'The ({0}) {1}'.format(test_name_parts[0][1:].replace(' ', '_'), test_name_parts[1])
     return test_name
 
 
@@ -73,4 +73,4 @@ def _format_results(report):
 
 def _print_test_result(self, test_name, test_status, markup):
     self._tw.line()
-    self._tw.write("    {}{}".format(test_status, test_name), **markup)
+    self._tw.write("    {0}{1}".format(test_status, test_name), **markup)
