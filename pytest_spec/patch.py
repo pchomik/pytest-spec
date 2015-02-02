@@ -35,7 +35,7 @@ def pytest_runtest_logreport(self, report):
 
 
 def _is_nodeid_has_test(nodeid):
-    if len(nodeid.split("::")) > 2:
+    if len(nodeid.split("::")) >= 2:
         return True
     return False
 
