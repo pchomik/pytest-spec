@@ -52,8 +52,8 @@ This type of format provides clear information:
 * which method is under test
 * what kind of result should be expected
 
-Continues Integration
-=====================
+Continuous Integration
+======================
 .. image:: https://drone.io/github.com/pchomik/pytest-spec/status.png
      :target: https://drone.io/github.com/pchomik/pytest-spec/latest
 
