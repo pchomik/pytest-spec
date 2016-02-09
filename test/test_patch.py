@@ -96,6 +96,11 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test__example'))
         fake_self._tw.assert_has_calls(call('    [PASS]  Example', green=True))
 
+    def test__pytest_runtest_logreport__honors_capitalization_of_words_in_test_name(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase'))
+        fake_self._tw.assert_has_calls(call('    [PASS]  Example Demo CamelCase', green=True))
+
 
 if __name__ == '__main__':
     unittest.main()

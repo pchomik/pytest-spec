@@ -4,6 +4,8 @@
 :author: Pawel Chomicki
 """
 
+import re
+
 
 def pytest_runtest_logstart(self, nodeid, location):
     """Signal the start of running a single test item.
@@ -52,8 +54,24 @@ def _print_class_information(self):
     self._first_triggered = True
 
 
+def _remove_module_name(nodeid):
+    return nodeid.rsplit("::", 1)[1]
+
+
+def _remove_test_prefix(nodeid):
+    return re.sub("^test_+", "", nodeid)
+
+
+def _replace_underscores(nodeid):
+    return nodeid.replace("_", " ").strip()
+
+
+def _capitalize_first_letter(s):
+    return s[:1].capitalize() + s[1:]
+
+
 def _get_test_name(nodeid):
-    test_name = nodeid.rsplit("::", 1)[1][5:].replace("_", " ").capitalize()
+    test_name = _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_module_name(nodeid))))
     if test_name[:1] is ' ':
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
