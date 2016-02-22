@@ -1,3 +1,6 @@
+v.1.0
+- Honor capitalization of words in test name
+
 v.0.2
 - Add method highlighting feature
 - Add tests to cover features
