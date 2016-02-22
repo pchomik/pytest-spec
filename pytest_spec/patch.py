@@ -63,7 +63,7 @@ def _remove_test_prefix(nodeid):
 
 
 def _replace_underscores(nodeid):
-    return nodeid.replace("_", " ").strip()
+    return nodeid.replace("__", " ").strip().replace("_", " ").strip()
 
 
 def _capitalize_first_letter(s):
