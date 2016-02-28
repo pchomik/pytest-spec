@@ -6,10 +6,10 @@ pytest plugin to display test execution output like a SPECIFICATION.
 Available features
 ==================
 * Format output to look like specification.
-* Group tests by classes.
+* Group tests by classes and files
 * Failed, passed and skipped are marked and colored.
 * Remove test\_ and underscores for every test.
-* Method under test may be highlighted (method) like in example.
+
 
 Output example
 ==============
@@ -18,39 +18,16 @@ Output example
 
     py.test --spec
 
-    test/test_example.py::TestWhenExamplePassed
-        [PASS]  Execute returns positive return code
+    test/test_results/test_as_class.py::TestResults
+        [SKIP]  Some method return none
+        [FAIL]  Some method returns false
+        [PASS]  Some method returns true
 
-    test/test_example.py::TestWhenExampleFailed
-        [FAIL]  Execute returns negative return code
+    test/test_results/test_as_functions.py
+        [PASS]  Some method returns true
+        [FAIL]  Some method returns false
+        [SKIP]  Some method return none
 
-    test/test_example.py::TestWhenExampleIsSkipped
-        [SKIP]  Execute returns something
-
-    test/test_example.py::TestExamplesWhenMethodUnderTestIsHighlighted
-        [FAIL]  The (execute_command) returns negative return code
-        [PASS]  The (execute_command) returns positive return code
-        [SKIP]  The (execute_command) returns something
-
-Highlight method under test
-===========================
-Simple test definition is required (double '__' characters before and after method)
-to put method under test between '<>' characters e.g.
-::
-
-    def test__execute_method__returns_something(self):
-
-may be displayed as:
-::
-
-    [PASS]  The (execute_command) returns something
-    [FAIL]  The (execute_command) returns something
-    [SKIP]  The (execute_command) returns something
-
-This type of format provides clear information:
-
-* which method is under test
-* what kind of result should be expected
 
 Continuous Integration
 ======================
@@ -80,7 +57,7 @@ License
 =======
 pytest-spec - pytest plugin to display test execution output like a SPECIFICATION.
 
-Copyright (C) 2014 Pawel Chomicki
+Copyright (C) 2014-2016 Pawel Chomicki
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
