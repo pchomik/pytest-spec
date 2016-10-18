@@ -4,6 +4,7 @@
 :author: Pawel Chomicki
 """
 
+import os
 import re
 
 
@@ -43,7 +44,11 @@ def _is_nodeid_has_test(nodeid):
 
 
 def _get_test_path(nodeid):
-    return nodeid.rsplit("::", 1)[0]
+    levels = nodeid.split("::")
+    if len(levels) > 2:
+        return _split_words(_remove_class_prefix(levels[1]))
+    else:
+        return _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(levels[0]))))
 
 
 def _print_class_information(self):
@@ -52,6 +57,18 @@ def _print_class_information(self):
     self._tw.line()
     self._tw.write(self.currentfspath)
     self._first_triggered = True
+
+
+def _remove_class_prefix(nodeid):
+    return re.sub("^Test", "", nodeid)
+
+
+def _split_words(nodeid):
+    return re.sub(r"([A-Z])", r" \1", nodeid).strip()
+
+
+def _remove_file_extension(nodeid):
+    return os.path.splitext(nodeid)[0]
 
 
 def _remove_module_name(nodeid):
