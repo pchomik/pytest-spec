@@ -21,6 +21,11 @@ def pytest_addoption(parser):
         default='{path}:{name}',
         help='The format of the test case when using the spec plugin'
     )
+    parser.addini(
+        'spec_test_format',
+        default='[{result}]  {name}',
+        help='The format of the test result when using the spec plugin'
+    )
 
 
 def pytest_configure(config):

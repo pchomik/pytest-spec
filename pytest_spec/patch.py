@@ -105,13 +105,13 @@ def _get_test_name(nodeid):
 
 def _format_results(report):
     if report.passed:
-        return {'green': True}, '[PASS]  '
+        return {'green': True}, 'PASS'
     elif report.failed:
-        return {'red': True}, '[FAIL]  '
+        return {'red': True}, 'FAIL'
     elif report.skipped:
-        return {'yellow': True}, '[SKIP]  '
+        return {'yellow': True}, 'SKIP'
 
 
 def _print_test_result(self, test_name, test_status, markup):
     self._tw.line()
-    self._tw.write("    {0}{1}".format(test_status, test_name), **markup)
+    self._tw.write("    "+self.config.getini('spec_test_format').format(result=test_status, name=test_name), **markup)
