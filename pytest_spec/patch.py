@@ -27,7 +27,7 @@ def pytest_runtest_logreport(self, report):
         return
     if not _is_nodeid_has_test(report.nodeid):
         return
-    test_path = _get_test_path(report.nodeid)
+    test_path = _get_test_path(report.nodeid, self.config.getini('spec_header_format'))
     if test_path != self.currentfspath:
         self.currentfspath = test_path
         _print_class_information(self)
@@ -43,12 +43,18 @@ def _is_nodeid_has_test(nodeid):
     return False
 
 
-def _get_test_path(nodeid):
+def _get_test_path(nodeid, header):
     levels = nodeid.split("::")
+
     if len(levels) > 2:
-        return _split_words(_remove_class_prefix(levels[1]))
+        path = levels[0]
+        name = _split_words(_remove_class_prefix(levels[1]))
     else:
-        return _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(levels[0]))))
+        dirs, file = os.path.split(levels[0])
+        path = dirs or '.'
+        name = _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(file))))
+
+    return header.format(path=path, name=name)
 
 
 def _print_class_information(self):

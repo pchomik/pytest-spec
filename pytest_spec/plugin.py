@@ -15,6 +15,13 @@ def pytest_addoption(parser):
         help='Print test result in specification format'
     )
 
+    # register config options
+    parser.addini(
+        'spec_header_format',
+        default='{path}:{name}',
+        help='The format of the test case when using the spec plugin'
+    )
+
 
 def pytest_configure(config):
     if config.option.spec:
