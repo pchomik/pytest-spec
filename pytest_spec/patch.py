@@ -47,14 +47,14 @@ def _get_test_path(nodeid, header):
     levels = nodeid.split("::")
 
     if len(levels) > 2:
-        path = levels[0]
-        name = _split_words(_remove_class_prefix(levels[1]))
+        class_name = levels[1]
+        test_case = _split_words(_remove_class_prefix(class_name))
     else:
-        dirs, file = os.path.split(levels[0])
-        path = dirs or '.'
-        name = _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(file))))
+        module_name = os.path.split(levels[0])[1]
+        class_name = ''
+        test_case = _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(module_name))))
 
-    return header.format(path=path, name=name)
+    return header.format(path=levels[0], class_name=class_name, test_case=test_case)
 
 
 def _print_class_information(self):

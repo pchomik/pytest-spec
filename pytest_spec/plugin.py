@@ -18,13 +18,13 @@ def pytest_addoption(parser):
     # register config options
     parser.addini(
         'spec_header_format',
-        default='{path}:{name}',
-        help='The format of the test case when using the spec plugin'
+        default='{path}:{class_name}',
+        help='The format of the test headers when using the spec plugin'
     )
     parser.addini(
         'spec_test_format',
         default='[{result}]  {name}',
-        help='The format of the test result when using the spec plugin'
+        help='The format of the test results when using the spec plugin'
     )
 
 
