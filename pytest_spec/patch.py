@@ -4,6 +4,7 @@
 :author: Pawel Chomicki
 """
 
+import os
 import re
 
 
@@ -26,7 +27,7 @@ def pytest_runtest_logreport(self, report):
         return
     if not _is_nodeid_has_test(report.nodeid):
         return
-    test_path = _get_test_path(report.nodeid)
+    test_path = _get_test_path(report.nodeid, self.config.getini('spec_header_format'))
     if test_path != self.currentfspath:
         self.currentfspath = test_path
         _print_class_information(self)
@@ -42,8 +43,18 @@ def _is_nodeid_has_test(nodeid):
     return False
 
 
-def _get_test_path(nodeid):
-    return nodeid.rsplit("::", 1)[0]
+def _get_test_path(nodeid, header):
+    levels = nodeid.split("::")
+
+    if len(levels) > 2:
+        class_name = levels[1]
+        test_case = _split_words(_remove_class_prefix(class_name))
+    else:
+        module_name = os.path.split(levels[0])[1]
+        class_name = ''
+        test_case = _capitalize_first_letter(_replace_underscores(_remove_test_prefix(_remove_file_extension(module_name))))
+
+    return header.format(path=levels[0], class_name=class_name, test_case=test_case)
 
 
 def _print_class_information(self):
@@ -52,6 +63,18 @@ def _print_class_information(self):
     self._tw.line()
     self._tw.write(self.currentfspath)
     self._first_triggered = True
+
+
+def _remove_class_prefix(nodeid):
+    return re.sub("^Test", "", nodeid)
+
+
+def _split_words(nodeid):
+    return re.sub(r"([A-Z])", r" \1", nodeid).strip()
+
+
+def _remove_file_extension(nodeid):
+    return os.path.splitext(nodeid)[0]
 
 
 def _remove_module_name(nodeid):
@@ -82,13 +105,13 @@ def _get_test_name(nodeid):
 
 def _format_results(report):
     if report.passed:
-        return {'green': True}, '[PASS]  '
+        return {'green': True}, 'PASS'
     elif report.failed:
-        return {'red': True}, '[FAIL]  '
+        return {'red': True}, 'FAIL'
     elif report.skipped:
-        return {'yellow': True}, '[SKIP]  '
+        return {'yellow': True}, 'SKIP'
 
 
 def _print_test_result(self, test_name, test_status, markup):
     self._tw.line()
-    self._tw.write("    {0}{1}".format(test_status, test_name), **markup)
+    self._tw.write("    "+self.config.getini('spec_test_format').format(result=test_status, name=test_name), **markup)

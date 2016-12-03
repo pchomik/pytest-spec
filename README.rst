@@ -29,6 +29,32 @@ Output example
         [SKIP]  Some method return none
 
 
+Configuration
+=============
+
+``spec_header_format``
+----------------------
+
+You can configure the format of the test headers by specifying a `format string <https://docs.python.org/2/library/string.html#format-string-syntax>`_ in your `ini-file <http://doc.pytest.org/en/latest/customize.html#inifiles>`_:
+
+::
+
+    [pytest]
+    spec_header_format = {path}:{class_name}
+
+In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
+
+``spec_test_format``
+--------------------
+
+You can configure the format of the test results by specifying a `format string <https://docs.python.org/2/library/string.html#format-string-syntax>`_ in your `ini-file <http://doc.pytest.org/en/latest/customize.html#inifiles>`_:
+
+::
+
+    [pytest]
+    spec_test_format = [{result}]  {name}
+
+
 Continuous Integration
 ======================
 .. image:: https://drone.io/github.com/pchomik/pytest-spec/status.png
