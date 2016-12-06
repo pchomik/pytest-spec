@@ -74,6 +74,11 @@ Contribution
 ============
 Please feel free to present your idea by code example (pull request) or reported issues.
 
+Contributors
+============
+* dtk
+* Eric Carmichael
+
 Future plans
 ============
 * Tests with other pytest plugins to check possible side-effects.
