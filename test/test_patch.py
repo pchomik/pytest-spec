@@ -22,6 +22,14 @@ class FakeConfig(object):
     def __init__(self, *args, **kwargs):
         self.hook = FakeHook(*args, **kwargs)
 
+    def getini(self, option):
+        if option == 'spec_header_format':
+            return '{path}::{class_name}'
+        elif option == 'spec_test_format':
+            return '[{result}]  {name}'
+        else:
+            raise TypeError('Option {} is not supported in the test'.format(option))
+
 
 class FakeStats(object):
     def setdefault(self, first, second):
