@@ -18,7 +18,7 @@ def pytest_addoption(parser):
     # register config options
     parser.addini(
         'spec_header_format',
-        default='{path}:{class_name}',
+        default='{path}::{class_name}',
         help='The format of the test headers when using the spec plugin'
     )
     parser.addini(
