@@ -10,9 +10,11 @@ class Cache(object):
 
     def __new__(cls, *args, **kwargs):
         if cls.instance is None:
-            cls.instance = object.__new__(cls, *args, **kwargs)
+            cls.instance = _Cache(*args, **kwargs)
         return cls.instance
 
+
+class _Cache(object):
     def __init__(self, default=''):
         self._default = default
         self._cached = {}
