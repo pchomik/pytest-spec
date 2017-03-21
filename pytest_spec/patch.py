@@ -6,6 +6,13 @@
 
 import os
 import re
+import pdb
+
+from .reader import Reader
+from .cache import Cache
+
+
+P_REGEX = re.compile(r'({p\d})')     # P_REGEX - findall will work
 
 
 def pytest_runtest_logstart(self, nodeid, location):
@@ -20,6 +27,7 @@ def pytest_runtest_logreport(self, report):
 
     Hook changed to define SPECIFICATION like output format. This hook will overwrite also VERBOSE option.
     """
+    _read_test_format(report)
     res = self.config.hook.pytest_report_teststatus(report=report)
     cat, letter, word = res
     self.stats.setdefault(cat, []).append(report)
@@ -34,7 +42,15 @@ def pytest_runtest_logreport(self, report):
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
         markup, test_status = _format_results(report)
-        _print_test_result(self, test_name, test_status, markup)
+        _print_test_result(self, report, test_name, test_status, markup)
+
+
+def _read_test_format(report):
+    cache = Cache()
+    test_spec_format = cache.get(report.fspath) or \
+        Reader().read_spec_test_format(report.fspath) or \
+        cache.default
+    cache.put(report.fspath, test_spec_format)
 
 
 def _is_nodeid_has_test(nodeid):
@@ -112,6 +128,25 @@ def _format_results(report):
         return {'yellow': True}, 'SKIP'
 
 
-def _print_test_result(self, test_name, test_status, markup):
+def _print_test_result(self, report, test_name, test_status, markup):
+    test_format = Cache().get(report.fspath)
+    params_count = len(P_REGEX.findall(test_format))
+    params = []
+    if params_count > 0:
+        result = test_name.strip().split('[')
+        if len(result) > 1:
+            test_name, params = result
+            params = params[:-1]
+            params = params.split(',')
+            params = [each.strip() for each in params]
+    format_params = {
+        'result': test_status,
+        'name': test_name
+    }
+    for index in range(params_count):
+        if index < len(params):
+            format_params['p{}'.format(index)] = params[index]
+        else:
+            format_params['p{}'.format(index)] = ''
     self._tw.line()
-    self._tw.write("    "+self.config.getini('spec_test_format').format(result=test_status, name=test_name), **markup)
+    self._tw.write("    "+test_format.format(**format_params), **markup)
