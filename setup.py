@@ -7,6 +7,7 @@ from setuptools import setup, find_packages
 
 requires = [
     'mock>=1.0.1',
+    'asserts>=0.6',
 ]
 
 
