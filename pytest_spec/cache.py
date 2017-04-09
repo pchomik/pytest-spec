@@ -13,6 +13,12 @@ class Cache(object):
             cls.instance = _Cache(*args, **kwargs)
         return cls.instance
 
+    def get(self, key):
+        """To remove fake errors in test_cache."""
+
+    def put(self, key, value):
+        """To remove fake errors in test_cache."""
+
 
 class _Cache(object):
     def __init__(self, default=''):
