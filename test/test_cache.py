@@ -9,7 +9,7 @@ from pytest_spec.cache import Cache
 
 
 class TestPluginCache(object):
-    
+
     def setup_class(self):
         self.default = "[{result}]  {name}"
         self.cache = Cache()
