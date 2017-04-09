@@ -159,4 +159,3 @@ def _add_formats_for_params(params, params_count, format_params):
             format_params['p{}'.format(index)] = params[index]
         else:
             format_params['p{}'.format(index)] = ''
-
