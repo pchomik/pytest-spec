@@ -1,3 +1,9 @@
+v.1.2
+- Add support for pytest parametrize option
+
+v.1.1
+- Add output formats
+
 v.1.0
 - Honor capitalization of words in test name
 
