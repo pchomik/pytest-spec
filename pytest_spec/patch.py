@@ -136,17 +136,27 @@ def _print_test_result(self, report, test_name, test_status, markup):
         result = test_name.strip().split('[')
         if len(result) > 1:
             test_name, params = result
-            params = params[:-1]
-            params = params.split(',')
-            params = [each.strip() for each in params]
+            params = _clean_params(params)
     format_params = {
         'result': test_status,
         'name': test_name
     }
+    _add_formats_for_params(params, params_count, format_params)
+    self._tw.line()
+    self._tw.write("    "+test_format.format(**format_params), **markup)
+
+
+def _clean_params(params):
+    params = params[:-1]
+    params = params.split(',')
+    params = [each.strip() for each in params]
+    return params
+
+
+def _add_formats_for_params(params, params_count, format_params):
     for index in range(params_count):
         if index < len(params):
             format_params['p{}'.format(index)] = params[index]
         else:
             format_params['p{}'.format(index)] = ''
-    self._tw.line()
-    self._tw.write("    "+test_format.format(**format_params), **markup)
+
