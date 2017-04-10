@@ -4,6 +4,7 @@
 :author: Pawel Chomicki
 """
 from .replacer import logstart_replacer, report_replacer
+from .cache import Cache
 
 
 def pytest_addoption(parser):
@@ -30,6 +31,7 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     if config.option.spec:
+        Cache(default=config.getini('spec_test_format'))
         import imp
         import _pytest
         _pytest.terminal.TerminalReporter.pytest_runtest_logstart = logstart_replacer

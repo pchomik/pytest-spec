@@ -7,13 +7,14 @@ from setuptools import setup, find_packages
 
 requires = [
     'mock>=1.0.1',
+    'asserts>=0.6',
 ]
 
 
 setup(
     name="pytest-spec",
     packages=['pytest_spec'],
-    version="1.1.0",
+    version="1.2.0",
     entry_points={'pytest11': ['pytest_spec = pytest_spec.plugin']},
     description="pytest plugin to display test execution output like a SPECIFICATION",
     author="Pawel Chomicki",

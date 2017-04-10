@@ -54,15 +54,21 @@ You can configure the format of the test results by specifying a `format string 
     [pytest]
     spec_test_format = [{result}]  {name}
 
+or in test module (in first 100 lines):
+
+::
+
+    SPEC_TEST_FORMAT = '[{result}]  {name}'
+
 
 Continuous Integration
 ======================
-.. image:: https://drone.io/github.com/pchomik/pytest-spec/status.png
-     :target: https://drone.io/github.com/pchomik/pytest-spec/latest
+.. image:: https://travis-ci.org/pchomik/pytest-spec.svg?branch=master
+     :target: https://travis-ci.org/pchomik/pytest-spec/
 
 Download
 ========
-Latest version of plugin is available in `drone.io project artifacts <https://drone.io/github.com/pchomik/pytest-spec/files>`_.
+Latest version of plugin is available on pypi server. Please use "pip" command.
 
 Install
 =======
