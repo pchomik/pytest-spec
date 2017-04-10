@@ -54,6 +54,12 @@ You can configure the format of the test results by specifying a `format string 
     [pytest]
     spec_test_format = [{result}]  {name}
 
+or in test module (in first 100 lines):
+
+::
+
+    SPEC_TEST_FORMAT = '[{result}]  {name}'
+
 
 Continuous Integration
 ======================
