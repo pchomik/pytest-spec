@@ -71,7 +71,7 @@ class TestPatch(unittest.TestCase):
     def test__pytest_runtest_logreport__prints_class_name_before_first_test_result(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::Test_example_demo'))
-        fake_self._tw.write.assert_has_calls([call('Test::Second')])
+        fake_self._tw.write.assert_has_calls([call('Second:')])
 
     def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
         fake_self = FakeSelf()

@@ -3,8 +3,7 @@
 
 :author: Pawel Chomicki
 """
-from .replacer import logstart_replacer, report_replacer
-
+from .replacer import logstart_replacer, report_replacer, modifyitems_replacer
 
 def pytest_addoption(parser):
     group = parser.getgroup('general')
@@ -34,4 +33,5 @@ def pytest_configure(config):
         import _pytest
         _pytest.terminal.TerminalReporter.pytest_runtest_logstart = logstart_replacer
         _pytest.terminal.TerminalReporter.pytest_runtest_logreport = report_replacer
+        _pytest.terminal.TerminalReporter.pytest_collection_modifyitems = modifyitems_replacer
         imp.reload(_pytest)
