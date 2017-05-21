@@ -20,6 +20,7 @@ def pytest_runtest_logstart(self, nodeid, location):
 def pytest_collection_modifyitems(session, config, items):
     def depth(f):
         return len(f.listchain()) - 1
+
     def get_module_name(f):
         return f.listchain()[1].name
     items.sort(key=depth)
@@ -67,8 +68,7 @@ def pytest_runtest_logreport(self, report):
     if self.previous_scopes != self.current_scopes:
         msg = [i for i in self.current_scopes if i not in self.previous_scopes]
         msg = [' ' * 4 * ind + prettify_description(item)
-            for ind, item in enumerate(msg, len(self.current_scopes) - 1)
-        ]
+               for ind, item in enumerate(msg, len(self.current_scopes) - 1)]
         msg = "\n".join(msg)
         _print_description(self, msg)
         self.previous_scopes = self.current_scopes
@@ -87,10 +87,9 @@ def _is_nodeid_has_test(nodeid):
 
 def prettify(string):
     return _capitalize_first_letter(
-           _replace_underscores(
-           _remove_test_container_prefix(
-           _remove_file_extension(string)
-    )))
+        _replace_underscores(
+            _remove_test_container_prefix(
+                _remove_file_extension(string))))
 
 
 def prettify_test(string):

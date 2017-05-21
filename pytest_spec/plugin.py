@@ -5,6 +5,7 @@
 """
 from .replacer import logstart_replacer, report_replacer, modifyitems_replacer
 
+
 def pytest_addoption(parser):
     group = parser.getgroup('general')
     group.addoption(
