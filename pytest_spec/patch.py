@@ -39,7 +39,7 @@ def get_report_scopes(report):
     >>> get_report_scopes(report)
     ['describe_a_user', 'describe_email_address']
     """
-    return report.nodeid.split('::')[1:-1]
+    return [i for i in report.nodeid.split('::')[1:-1] if i != '()']
 
 
 def pytest_runtest_logreport(self, report):
