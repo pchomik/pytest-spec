@@ -24,7 +24,7 @@ class FakeConfig(object):
 
     def getini(self, option):
         mapping = {
-            'spec_header_format': '{path}::{class_name}',
+            'spec_header_format': '{module_path}:',
             'spec_test_format': '{result} {name}',
             'spec_success_indicator': '✓',
             'spec_failure_indicator': '✗',
