@@ -74,7 +74,7 @@ def pytest_runtest_logreport(self, report):
         self.previous_scopes = self.current_scopes
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
-        markup, test_status = _format_results(report)
+        markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes)
         _print_test_result(self, test_name, test_status, markup, depth)
 
@@ -166,13 +166,16 @@ def _get_test_name(nodeid):
     return test_name
 
 
-def _format_results(report):
+def _format_results(report, config):
+    success_glpyh = config.getini('spec_success_indicator')
+    failure_indicator = config.getini('spec_failure_indicator')
+    skipped_indicator = config.getini('spec_skipped_indicator')
     if report.passed:
-        return {'green': True}, 'PASS'
+        return {'green': True}, success_glpyh
     elif report.failed:
-        return {'red': True}, 'FAIL'
+        return {'red': True}, failure_indicator
     elif report.skipped:
-        return {'yellow': True}, 'SKIP'
+        return {'yellow': True}, skipped_indicator
 
 
 def _print_test_result(self, test_name, test_status, markup, depth):

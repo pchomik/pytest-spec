@@ -26,6 +26,21 @@ def pytest_addoption(parser):
         default='[{result}]  {name}',
         help='The format of the test results when using the spec plugin'
     )
+    parser.addini(
+        'spec_success_indicator',
+        default='PASS',
+        help='The indicator displayed when a test passes.'
+    )
+    parser.addini(
+        'spec_failure_indicator',
+        default='FAIL',
+        help='The indicator displayed when a test fails.'
+    )
+    parser.addini(
+        'spec_skipped_indicator',
+        default='SKIP',
+        help='The indicator displayed when a test is skipped.'
+    )
 
 
 def pytest_configure(config):

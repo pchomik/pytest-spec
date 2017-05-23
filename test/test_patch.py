@@ -23,12 +23,19 @@ class FakeConfig(object):
         self.hook = FakeHook(*args, **kwargs)
 
     def getini(self, option):
-        if option == 'spec_header_format':
-            return '{path}::{class_name}'
-        elif option == 'spec_test_format':
-            return '[{result}]  {name}'
-        else:
-            raise TypeError('Option {} is not supported in the test'.format(option))
+        mapping = {
+            'spec_header_format': '{path}::{class_name}',
+            'spec_test_format': '[{result}]  {name}',
+            'spec_success_indicator': 'PASS',
+            'spec_failure_indicator': 'FAIL',
+            'spec_skipped_indicator': 'SKIP',
+        }
+        result = mapping.get(option, None)
+        if not result:
+            raise TypeError('Option {} is not supported in the test'.format(
+                option)
+            )
+        return result
 
 
 class FakeStats(object):
