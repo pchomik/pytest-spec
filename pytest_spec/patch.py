@@ -173,11 +173,11 @@ def _get_test_name(nodeid):
 
 
 def _format_results(report, config):
-    success_glpyh = config.getini('spec_success_indicator')
+    success_indicator = config.getini('spec_success_indicator')
     failure_indicator = config.getini('spec_failure_indicator')
     skipped_indicator = config.getini('spec_skipped_indicator')
     if report.passed:
-        return {'green': True}, success_glpyh
+        return {'green': True}, success_indicator
     elif report.failed:
         return {'red': True}, failure_indicator
     elif report.skipped:
