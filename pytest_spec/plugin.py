@@ -41,6 +41,11 @@ def pytest_addoption(parser):
         default='?',
         help='The indicator displayed when a test is skipped.'
     )
+    parser.addini(
+        'spec_indent',
+        default='    ',
+        help='The string used for indentation in the spec output.'
+    )
 
 
 def pytest_configure(config):

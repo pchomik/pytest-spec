@@ -53,6 +53,7 @@ def pytest_runtest_logreport(self, report):
     """
     self.previous_scopes = getattr(self, 'previous_scopes', [])
     self.current_scopes = get_report_scopes(report)
+    indent = self.config.getini('spec_indent')
 
     res = self.config.hook.pytest_report_teststatus(report=report)
     cat, letter, word = res
@@ -68,7 +69,7 @@ def pytest_runtest_logreport(self, report):
 
     if self.previous_scopes != self.current_scopes:
         msg = [i for i in self.current_scopes if i not in self.previous_scopes]
-        msg = [' ' * 4 * ind + prettify_description(item)
+        msg = [indent * ind + prettify_description(item)
                for ind, item in enumerate(msg, len(self.current_scopes) - 1)]
         msg = "\n".join(msg)
         if msg:
@@ -185,9 +186,10 @@ def _format_results(report, config):
 
 
 def _print_test_result(self, test_name, test_status, markup, depth):
+    indent = self.config.getini('spec_indent')
     self._tw.line()
     self._tw.write(
-        "    " * depth + self.config.getini('spec_test_format').format(
+        indent * depth + self.config.getini('spec_test_format').format(
             result=test_status, name=test_name
         ), **markup
     )

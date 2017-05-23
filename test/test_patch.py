@@ -29,6 +29,7 @@ class FakeConfig(object):
             'spec_success_indicator': '✓',
             'spec_failure_indicator': '✗',
             'spec_skipped_indicator': '?',
+            'spec_indent': '    ',
         }
         result = mapping.get(option, None)
         if not result:
