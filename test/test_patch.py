@@ -25,10 +25,10 @@ class FakeConfig(object):
     def getini(self, option):
         mapping = {
             'spec_header_format': '{path}::{class_name}',
-            'spec_test_format': '[{result}]  {name}',
-            'spec_success_indicator': 'PASS',
-            'spec_failure_indicator': 'FAIL',
-            'spec_skipped_indicator': 'SKIP',
+            'spec_test_format': '{result} {name}',
+            'spec_success_indicator': '✓',
+            'spec_failure_indicator': '✗',
+            'spec_skipped_indicator': '?',
         }
         result = mapping.get(option, None)
         if not result:
@@ -83,17 +83,26 @@ class TestPatch(unittest.TestCase):
     def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo'))
-        fake_self._tw.write.assert_has_calls([call('    [PASS]  Example demo', green=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ✓ Example demo', green=True)
+        ])
 
     def test__pytest_runtest_logreport__prints_test_name_and_failed_status(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo', passed=False, failed=True))
-        fake_self._tw.write.assert_has_calls([call('    [FAIL]  Example demo', red=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ✗ Example demo', red=True)
+        ])
 
     def test__pytest_runtest_logreport__prints_test_name_and_skipped_status(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_demo', passed=False, skipped=True))
-        fake_self._tw.write.assert_has_calls([call('    [SKIP]  Example demo', yellow=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ? Example demo', yellow=True)
+        ])
 
     def test__pytest_runtest_logreport__skips_empty_line_for_first_test(self):
         fake_self = FakeSelf()
@@ -104,17 +113,26 @@ class TestPatch(unittest.TestCase):
     def test__pytest_runtest_logreport__marks_method_marked_by_double_underscores(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test__example__demo'))
-        fake_self._tw.write.assert_has_calls([call('    [PASS]  Example demo', green=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ✓ Example demo', green=True)
+        ])
 
     def test__pytest_runtest_logreport__prints_test_name_and_handle_only_single_marker(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test__example'))
-        fake_self._tw.write.assert_has_calls([call('    [PASS]  Example', green=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ✓ Example', green=True)
+        ])
 
     def test__pytest_runtest_logreport__honors_capitalization_of_words_in_test_name(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase'))
-        fake_self._tw.write.assert_has_calls([call('    [PASS]  Example Demo CamelCase', green=True)])
+        fake_self._tw.write.assert_has_calls([
+            call('Second:'),
+            call('    ✓ Example Demo CamelCase', green=True)
+        ])
 
 
 if __name__ == '__main__':
