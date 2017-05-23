@@ -64,13 +64,15 @@ def pytest_runtest_logreport(self, report):
     test_path = _get_test_path(report.nodeid, self.config.getini('spec_header_format'))
     if test_path != self.currentfspath:
         self.currentfspath = test_path
+        _print_description(self)
 
     if self.previous_scopes != self.current_scopes:
         msg = [i for i in self.current_scopes if i not in self.previous_scopes]
         msg = [' ' * 4 * ind + prettify_description(item)
                for ind, item in enumerate(msg, len(self.current_scopes) - 1)]
         msg = "\n".join(msg)
-        _print_description(self, msg)
+        if msg:
+            _print_description(self, msg)
         self.previous_scopes = self.current_scopes
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
@@ -103,23 +105,27 @@ def prettify_description(string):
 def _get_test_path(nodeid, header):
     levels = nodeid.split("::")
 
+    module_path = levels[0]
+    module_name = os.path.split(levels[0])[1]
+
     if len(levels) > 2:
         class_name = levels[1]
         test_case = prettify(class_name)
     else:
-        module_name = os.path.split(levels[0])[1]
         class_name = ''
         test_case = prettify(module_name)
 
     return header.format(
         path=levels[0],
+        module_name=module_name,
+        module_path=module_path,
         class_name=class_name,
         test_case=test_case
     )
 
 
 def _print_description(self, msg=None):
-    if not msg:
+    if msg is None:
         msg = self.currentfspath
     if hasattr(self, '_first_triggered'):
         self._tw.line()
