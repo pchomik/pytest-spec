@@ -43,7 +43,7 @@ def pytest_addoption(parser):
     )
     parser.addini(
         'spec_indent',
-        default='    ',
+        default='  ',
         help='The string used for indentation in the spec output.'
     )
 
