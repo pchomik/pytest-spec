@@ -29,22 +29,22 @@ def pytest_addoption(parser):
     parser.addini(
         'spec_success_indicator',
         default='✓',
-        help='The indicator displayed when a test passes.'
+        help='The indicator displayed when a test passes'
     )
     parser.addini(
         'spec_failure_indicator',
         default='✗',
-        help='The indicator displayed when a test fails.'
+        help='The indicator displayed when a test fails'
     )
     parser.addini(
         'spec_skipped_indicator',
         default='?',
-        help='The indicator displayed when a test is skipped.'
+        help='The indicator displayed when a test is skipped'
     )
     parser.addini(
         'spec_indent',
         default='  ',
-        help='The string used for indentation in the spec output.'
+        help='The string used for indentation in the spec output'
     )
 
 
