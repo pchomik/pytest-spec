@@ -20,7 +20,11 @@ def pytest_runtest_logreport(self, report):
 
     Hook changed to define SPECIFICATION like output format. This hook will overwrite also VERBOSE option.
     """
-    res = self.config.hook.pytest_report_teststatus(report=report, config=self.config)
+    try:
+        res = self.config.hook.pytest_report_teststatus(report=report, config=self.config)
+    except TypeError:
+        # Config argument is not supported in older versions of python
+        res = self.config.hook.pytest_report_teststatus(report=report)
     cat, letter, word = res
     self.stats.setdefault(cat, []).append(report)
     if not letter and not word:
