@@ -23,12 +23,12 @@ Output example
     test/test_results/test_as_class.py:
 
     Results:
-        ? Some method return none
+        ✗ Some method return none
         ? Some method returns false
         ✓ Some method returns true
 
     test/test_results/test_as_functions.py:
-    ? Some method returns false
+    ✗ Some method returns false
     ? Some method return none
     ✓ Some method returns true
 
