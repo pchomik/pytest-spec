@@ -3,7 +3,7 @@
 
 :author: Pawel Chomicki
 """
-from .replacer import logstart_replacer, report_replacer
+from .replacer import logstart_replacer, report_replacer, modifyitems_replacer
 
 
 def pytest_addoption(parser):
@@ -18,13 +18,33 @@ def pytest_addoption(parser):
     # register config options
     parser.addini(
         'spec_header_format',
-        default='{path}::{class_name}',
+        default='{module_path}:',
         help='The format of the test headers when using the spec plugin'
     )
     parser.addini(
         'spec_test_format',
-        default='[{result}]  {name}',
+        default='{result} {name}',
         help='The format of the test results when using the spec plugin'
+    )
+    parser.addini(
+        'spec_success_indicator',
+        default='✓',
+        help='The indicator displayed when a test passes'
+    )
+    parser.addini(
+        'spec_failure_indicator',
+        default='✗',
+        help='The indicator displayed when a test fails'
+    )
+    parser.addini(
+        'spec_skipped_indicator',
+        default='?',
+        help='The indicator displayed when a test is skipped'
+    )
+    parser.addini(
+        'spec_indent',
+        default='  ',
+        help='The string used for indentation in the spec output'
     )
 
 
@@ -34,4 +54,5 @@ def pytest_configure(config):
         import _pytest
         _pytest.terminal.TerminalReporter.pytest_runtest_logstart = logstart_replacer
         _pytest.terminal.TerminalReporter.pytest_runtest_logreport = report_replacer
+        _pytest.terminal.TerminalReporter.pytest_collection_modifyitems = modifyitems_replacer
         imp.reload(_pytest)
