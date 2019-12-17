@@ -9,6 +9,8 @@ Available features
 * Group tests by classes and files
 * Failed, passed and skipped are marked and colored.
 * Remove test\_ and underscores for every test.
+* Supports function based, class based test.
+* Supports describe like tests.
 
 
 Output example
@@ -18,15 +20,17 @@ Output example
 
     py.test --spec
 
-    test/test_results/test_as_class.py::TestResults
-        [SKIP]  Some method return none
-        [FAIL]  Some method returns false
-        [PASS]  Some method returns true
+    test/test_results/test_as_class.py:
 
-    test/test_results/test_as_functions.py
-        [PASS]  Some method returns true
-        [FAIL]  Some method returns false
-        [SKIP]  Some method return none
+    Results:
+        ? Some method return none
+        ? Some method returns false
+        ✓ Some method returns true
+
+    test/test_results/test_as_functions.py:
+    ? Some method returns false
+    ? Some method return none
+    ✓ Some method returns true
 
 
 Configuration
@@ -57,12 +61,12 @@ You can configure the format of the test results by specifying a `format string 
 
 Continuous Integration
 ======================
-.. image:: https://drone.io/github.com/pchomik/pytest-spec/status.png
-     :target: https://drone.io/github.com/pchomik/pytest-spec/latest
+.. image:: https://api.travis-ci.org/pchomik/pytest-spec.svg?branch=master
+     :target: https://travis-ci.org/pchomik/pytest-spec
 
 Download
 ========
-Latest version of plugin is available in `drone.io project artifacts <https://drone.io/github.com/pchomik/pytest-spec/files>`_.
+All versions of library are available on official `pypi server <https://pypi.org/project/pytest-spec/#history>`_.
 
 Install
 =======
@@ -76,8 +80,12 @@ Please feel free to present your idea by code example (pull request) or reported
 
 Contributors
 ============
-* dtk
-* Eric Carmichael
+* @0x64746b
+* @lucasmarshall
+* @amcgregor
+* @jhermann
+* @frenzymadness
+* @chrischambers
 
 Future plans
 ============
@@ -88,7 +96,7 @@ License
 =======
 pytest-spec - pytest plugin to display test execution output like a SPECIFICATION.
 
-Copyright (C) 2014-2016 Pawel Chomicki
+Copyright (C) 2014-2019 Pawel Chomicki
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
