@@ -55,7 +55,7 @@ def pytest_runtest_logreport(self, report):
     self.current_scopes = get_report_scopes(report)
     indent = self.config.getini('spec_indent')
 
-    res = self.config.hook.pytest_report_teststatus(report=report)
+    res = self.config.hook.pytest_report_teststatus(report=report, config=self.config)
     cat, letter, word = res
     self.stats.setdefault(cat, []).append(report)
     if not letter and not word:

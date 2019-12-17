@@ -14,7 +14,7 @@ class FakeHook(object):
         self.letter = kwargs.get('letter', ' ')
         self.word = kwargs.get('word', ' ')
 
-    def pytest_report_teststatus(self, report):
+    def pytest_report_teststatus(self, report, config):
         return self.cat, self.letter, self.word
 
 
