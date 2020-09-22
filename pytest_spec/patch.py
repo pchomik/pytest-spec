@@ -165,7 +165,7 @@ def _append_colon(string):
 
 def _get_test_name(nodeid):
     test_name = prettify_test(_remove_module_name(nodeid))
-    if test_name[:1] is ' ':
+    if test_name[:1] == ' ':
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
             return test_name.strip().capitalize()
