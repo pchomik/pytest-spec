@@ -18,12 +18,13 @@ def pytest_runtest_logstart(self, nodeid, location):
 
 
 def pytest_collection_modifyitems(session, config, items):
-    def depth(f):
-        return len(f.listchain()) - 1
-
     def get_module_name(f):
         return f.listchain()[1].name
-    items.sort(key=depth)
+
+    def get_nodeid(f):
+        return "::".join(f.nodeid.split('::')[:-1])
+
+    items.sort(key=get_nodeid)
     items.sort(key=get_module_name)
     return items
 
@@ -67,14 +68,16 @@ def pytest_runtest_logreport(self, report):
         self.currentfspath = test_path
         _print_description(self)
 
-    if self.previous_scopes != self.current_scopes:
-        msg = [i for i in self.current_scopes if i not in self.previous_scopes]
-        msg = [indent * ind + prettify_description(item)
-               for ind, item in enumerate(msg, len(self.current_scopes) - 1)]
-        msg = "\n".join(msg)
-        if msg:
-            _print_description(self, msg)
-        self.previous_scopes = self.current_scopes
+    scope_ind = 0
+    for msg in self.current_scopes:
+        if msg not in self.previous_scopes:
+            msg = [indent * scope_ind + prettify_description(msg)]
+            msg = "\n".join(msg)
+            if msg:
+                _print_description(self, msg)
+        scope_ind += 1
+    self.previous_scopes = self.current_scopes
+
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
         markup, test_status = _format_results(report, self.config)
