@@ -11,6 +11,7 @@ from pytest_spec.plugin import pytest_addoption, pytest_configure
 class FakeOption(object):
     def __init__(self, spec=False):
         self.spec = spec
+        self.verbose = 0
 
 
 class FakeConfig(object):

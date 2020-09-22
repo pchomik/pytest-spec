@@ -49,7 +49,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    if config.option.spec:
+    if config.option.spec and not hasattr(config.option, 'quiet') and not config.option.verbose:
         import imp
         import _pytest
         _pytest.terminal.TerminalReporter.pytest_runtest_logstart = logstart_replacer
