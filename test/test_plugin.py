@@ -34,12 +34,12 @@ class TestPlugin(unittest.TestCase):
                                                               dest='spec',
                                                               help='Print test result in specification format')])
 
-    @patch('importlib.reload')
+    @patch('six.moves.reload_module')
     def test__pytest_configure__should_not_reload_configuration(self, imp_mock):
         pytest_configure(FakeConfig(spec=False))
         self.assertEqual(len(imp_mock.mock_calls), 0)
 
-    @patch('importlib.reload')
+    @patch('six.moves.reload_module')
     def test__pytest_configure__reloads_pytest_after_patching(self, imp_mock):
         pytest_configure(FakeConfig(spec=True))
         self.assertEqual(len(imp_mock.mock_calls), 1)
