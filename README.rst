@@ -86,11 +86,8 @@ Contributors
 * @jhermann
 * @frenzymadness
 * @chrischambers
-
-Future plans
-============
-* Tests with other pytest plugins to check possible side-effects.
-* Work to make output even better.
+* @maxalbert
+* @jayvdb
 
 License
 =======
