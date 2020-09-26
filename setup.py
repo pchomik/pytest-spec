@@ -13,7 +13,7 @@ with open(path.join(this_directory, 'README.rst')) as f:
 
 
 requires = [
-    'mock>=1.0.1',
+    'six',
 ]
 
 
