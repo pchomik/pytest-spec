@@ -1,3 +1,22 @@
+v.3.0.1
+- Fixed plugin activation logic
+
+v.3.0.0
+- Fixed SyntaxWarning issue
+- Fixed output format for pytest-describe
+- Active plugin only if -q or -v was not provided
+
+v.2.0.0
+- New format of output was introduced
+- Added support for nested pytest-describe blocks
+- Made success/failure/skip indicators configurable
+- Generate package in wheel format
+
+v.1.0.1
+- Added support for ini file
+- Fixed default header format
+- Added contributors to the list
+
 v.1.0
 - Honor capitalization of words in test name
 
