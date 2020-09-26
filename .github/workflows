@@ -1,0 +1,30 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install pip
+      run: |
+        python -m pip install --upgrade pip
+    - name: Install test dependencies
+      run: |
+        pip install pytest pytest-flake8 pytest-describe mock>=1.0.1
+    - name: Install package
+      run: |
+        python setup.py develop
+    - name: Test with pytest
+      run: |
+        pytest .
