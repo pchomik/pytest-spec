@@ -44,7 +44,7 @@ You can configure the format of the test headers by specifying a `format string 
 ::
 
     [pytest]
-    spec_header_format = {path}:{class_name}
+    spec_header_format = {module_path}:
 
 In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
 
@@ -56,13 +56,53 @@ You can configure the format of the test results by specifying a `format string 
 ::
 
     [pytest]
-    spec_test_format = [{result}]  {name}
+    spec_test_format = {result} {name}
 
+``spec_success_indicator``
+--------------------------
+
+You can configure the indicator displayed when test passed.
+
+::
+
+    [pytest]
+    spec_success_indicator = ✓
+
+``spec_failure_indicator``
+--------------------------
+
+You can configure the indicator displated when test failed.
+
+::
+
+    [pytest]
+    spec_failure_indicator = ✗
+
+``spec_skipped_indicator``
+--------------------------
+
+You can configure the indicator displated when test is skipped.
+
+::
+
+    [pytest]
+    spec_skipped_indicator = ?
+
+``spec_indent``
+---------------
+
+::
+
+    [pytest]
+    spec_indent = "   "
 
 Continuous Integration
 ======================
 .. image:: https://api.travis-ci.org/pchomik/pytest-spec.svg?branch=master
      :target: https://travis-ci.org/pchomik/pytest-spec
+
+.. image:: https://github.com/pchomik/pytest-spec/workflows/build/badge.svg
+     :target: https://github.com/pchomik/pytest-spec/actions
 
 Download
 ========
