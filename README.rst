@@ -16,21 +16,7 @@ Available features
 Output example
 ==============
 
-::
-
-    py.test --spec
-
-    test/test_results/test_as_class.py:
-
-    Results:
-        ✗ Some method return none
-        ? Some method returns false
-        ✓ Some method returns true
-
-    test/test_results/test_as_functions.py:
-    ✗ Some method returns false
-    ? Some method return none
-    ✓ Some method returns true
+.. image:: https://github.com/pchomik/pytest-spec/raw/issue29/docs/output.png
 
 
 Configuration
@@ -98,9 +84,6 @@ You can configure the indicator displated when test is skipped.
 
 Continuous Integration
 ======================
-.. image:: https://api.travis-ci.org/pchomik/pytest-spec.svg?branch=master
-     :target: https://travis-ci.org/pchomik/pytest-spec
-
 .. image:: https://github.com/pchomik/pytest-spec/workflows/build/badge.svg
      :target: https://github.com/pchomik/pytest-spec/actions
 
