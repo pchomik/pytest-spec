@@ -16,7 +16,7 @@ Available features
 Output example
 ==============
 
-.. image:: https://github.com/pchomik/pytest-spec/raw/issue29/docs/output.png
+.. image:: https://github.com/pchomik/pytest-spec/raw/master/docs/output.png
 
 
 Configuration
@@ -84,7 +84,7 @@ You can configure the indicator displated when test is skipped.
 
 Continuous Integration
 ======================
-.. image:: https://github.com/pchomik/pytest-spec/workflows/build/badge.svg
+.. image:: https://github.com/pchomik/pytest-spec/workflows/test/badge.svg
      :target: https://github.com/pchomik/pytest-spec/actions
 
 Download

@@ -1,9 +1,9 @@
-name: build
+name: test
 
 on: [push]
 
 jobs:
-  build:
+  test:
     strategy:
       fail-fast: false
       matrix:

@@ -1,11 +1,11 @@
-name: publish
+name: release
 
 on:
   release:
     types: [created]
 
 jobs:
-  build:
+  release:
     strategy:
       fail-fast: false
       matrix:
