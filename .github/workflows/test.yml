@@ -4,27 +4,23 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
-
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8, 3.9]
+        poetry-version: [1.0.10]
+        os: [ubuntu-18.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install pip
-      run: |
-        python -m pip install --upgrade pip
-    - name: Install test dependencies
-      run: |
-        pip install pytest pytest-flake8 pytest-describe mock>=1.0.1
-    - name: Install package
-      run: |
-        python setup.py develop
-    - name: Test with pytest
-      run: |
-        pytest .
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install projects
+        run: poetry install
+      - name: Test with pytest
+        run: pytest .
