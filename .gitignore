@@ -1,8 +1,21 @@
+# Release directories
 build
 dist
-.idea
-*.pyc
+
+# Project egg dir
 pytest_spec.egg-info
+
+# Python/Test temporary files
+*.pyc
 .cache
 .coverage
+.pytest_cache
+
+# Pyenv configuration file
 .python-version
+
+# VSCode workspace settings
+.vscode
+
+# Poetry lock file
+poetry.lock

@@ -16,21 +16,7 @@ Available features
 Output example
 ==============
 
-::
-
-    py.test --spec
-
-    test/test_results/test_as_class.py:
-
-    Results:
-        ✗ Some method return none
-        ? Some method returns false
-        ✓ Some method returns true
-
-    test/test_results/test_as_functions.py:
-    ✗ Some method returns false
-    ? Some method return none
-    ✓ Some method returns true
+.. image:: https://github.com/pchomik/pytest-spec/raw/master/docs/output.png
 
 
 Configuration
@@ -44,7 +30,7 @@ You can configure the format of the test headers by specifying a `format string 
 ::
 
     [pytest]
-    spec_header_format = {path}:{class_name}
+    spec_header_format = {module_path}:
 
 In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
 
@@ -56,13 +42,50 @@ You can configure the format of the test results by specifying a `format string 
 ::
 
     [pytest]
-    spec_test_format = [{result}]  {name}
+    spec_test_format = {result} {name}
 
+``spec_success_indicator``
+--------------------------
+
+You can configure the indicator displayed when test passed.
+
+::
+
+    [pytest]
+    spec_success_indicator = ✓
+
+``spec_failure_indicator``
+--------------------------
+
+You can configure the indicator displated when test failed.
+
+::
+
+    [pytest]
+    spec_failure_indicator = ✗
+
+``spec_skipped_indicator``
+--------------------------
+
+You can configure the indicator displated when test is skipped.
+
+::
+
+    [pytest]
+    spec_skipped_indicator = ?
+
+``spec_indent``
+---------------
+
+::
+
+    [pytest]
+    spec_indent = "   "
 
 Continuous Integration
 ======================
-.. image:: https://api.travis-ci.org/pchomik/pytest-spec.svg?branch=master
-     :target: https://travis-ci.org/pchomik/pytest-spec
+.. image:: https://github.com/pchomik/pytest-spec/workflows/test/badge.svg
+     :target: https://github.com/pchomik/pytest-spec/actions
 
 Download
 ========
@@ -86,11 +109,8 @@ Contributors
 * @jhermann
 * @frenzymadness
 * @chrischambers
-
-Future plans
-============
-* Tests with other pytest plugins to check possible side-effects.
-* Work to make output even better.
+* @maxalbert
+* @jayvdb
 
 License
 =======
