@@ -1,3 +1,6 @@
+v.3.0.4
+- Release 3.0.2 as 3.0.4 to fix pypi release issue
+
 v.3.0.3
 - Release 3.0.2 as 3.0.3 to fix pypi release issue
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-spec"
-version = "3.0.3"
+version = "3.0.4"
 description = "pytest plugin to display test execution output like a SPECIFICATION"
 readme = "README.rst"
 authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
