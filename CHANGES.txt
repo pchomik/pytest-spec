@@ -1,3 +1,6 @@
+v.3.0.5
+- Added support for Python 3.9
+
 v.3.0.4
 - Release 3.0.2 as 3.0.4 to fix pypi release issue
 
