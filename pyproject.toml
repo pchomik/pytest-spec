@@ -22,6 +22,11 @@ classifiers = [
     "Topic :: Software Development :: Testing",
     "Topic :: Utilities"
 ]
+packages = [
+    { include = "pytest_spec" },
+    { include = "test", format = "sdist" },
+]
+include = ["LICENSE.txt"]
 
 [tool.poetry.dependencies]
 six = "*"
