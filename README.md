@@ -103,7 +103,7 @@ You can configure the indicator displated when test is skipped.
 
 ## Download
 
-All versions of library are available on official `pypi server <https://pypi.org/project/pytest-spec/#history>`_.
+All versions of library are available on official [pypi server](https://pypi.org/project/pytest-spec/#history).
 
 ## Install
 
