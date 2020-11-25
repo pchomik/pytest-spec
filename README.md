@@ -117,14 +117,14 @@ Please feel free to present your idea by code example (pull request) or reported
 
 ## Contributors
 
-* @0x64746b
-* @lucasmarshall
-* @amcgregor
-* @jhermann
-* @frenzymadness
-* @chrischambers
-* @maxalbert
-* @jayvdb
+* [@0x64746b](https://github.com/0x64746b)
+* [@lucasmarshall](https://github.com/lucasmarshall)
+* [@amcgregor](https://github.com/amcgregor)
+* [@jhermann](https://github.com/jhermann)
+* [@frenzymadness](https://github.com/frenzymadness)
+* [@chrischambers](https://github.com/chrischambers)
+* [@maxalbert](https://github.com/maxalbert)
+* [@jayvdb](https://github.com/jayvdb)
 
 ## License
 
