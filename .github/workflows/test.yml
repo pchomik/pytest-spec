@@ -3,14 +3,12 @@ name: test
 on: [push]
 
 jobs:
-  test:
+  test-python:
     strategy:
       fail-fast: false
       matrix:
         python-version: [2.7, 3.5, 3.6, 3.7, 3.8, 3.9]
-        poetry-version: [1.0.10]
-        os: [ubuntu-18.04, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -19,7 +17,48 @@ jobs:
       - name: Run image
         uses: abatilo/actions-poetry@v2.0.0
         with:
-          poetry-version: ${{ matrix.poetry-version }}
+          poetry-version: 1.0.10
+      - name: Install projects
+        run: poetry install
+      - name: Test with pytest
+        run: poetry run pytest .
+  test-os:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.0.10
+      - name: Install projects
+        run: poetry install
+      - name: Test with pytest
+        run: poetry run pytest .
+  test-pytest:
+    strategy:
+      fail-fast: false
+      matrix:
+        pytest-version: [3.9.3, 4.6.11, 5.4.3, 6.1.2]
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - uses: BSFishy/pip-action@v1
+        with:
+          packages: pytest==${{ matrix.pytest-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.0.10
       - name: Install projects
         run: poetry install
       - name: Test with pytest

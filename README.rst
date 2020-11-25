@@ -2,6 +2,22 @@ pytest-spec
 ===========
 pytest plugin to display test execution output like a SPECIFICATION.
 
+.. image:: https://badgen.net/badge/python/2.7/green
+.. image:: https://badgen.net/badge/python/3.5/green
+.. image:: https://badgen.net/badge/python/3.6/green
+.. image:: https://badgen.net/badge/python/3.7/green
+.. image:: https://badgen.net/badge/python/3.8/green
+.. image:: https://badgen.net/badge/python/3.9/green
+
+.. image:: https://badgen.net/badge/os/linux/green
+.. image:: https://badgen.net/badge/os/windows/green
+.. image:: https://badgen.net/badge/os/macos/green
+
+.. image:: https://badgen.net/badge/pytest/3.9.3/green
+.. image:: https://badgen.net/badge/pytest/4.6.11/green
+.. image:: https://badgen.net/badge/pytest/5.4.3/green
+.. image:: https://badgen.net/badge/pytest/6.1.2/green
+
 
 Available features
 ==================
