@@ -37,7 +37,7 @@
 
 ## Output example
 
-![Example](https://github.com/pchomik/pytest-spec/raw/master/docs/output.png)
+![Example](https://github.com/pchomik/pytest-spec/raw/new-test-pipeline/docs/output.gif)
 
 
 ## Configuration
