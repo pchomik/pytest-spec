@@ -55,7 +55,6 @@ def pytest_addoption(parser):
     )
 
 
-
 def pytest_configure(config):
     if getattr(config.option, 'spec', 0) and not getattr(config.option, 'quiet', 0) and not getattr(config.option, 'verbose', 0):
         import six
