@@ -3,6 +3,8 @@
 
 :author: Pawel Chomicki
 """
+import pytest
+
 from .replacer import logstart_replacer, report_replacer, modifyitems_replacer
 
 
@@ -56,3 +58,12 @@ def pytest_configure(config):
         _pytest.terminal.TerminalReporter.pytest_runtest_logreport = report_replacer
         _pytest.terminal.TerminalReporter.pytest_collection_modifyitems = modifyitems_replacer
         six.moves.reload_module(_pytest)
+
+
+@pytest.mark.hookwrapper
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+    node = getattr(item, 'obj', None)
+    if node and item.obj.__doc__:
+        report.docstring_summary = str(item.obj.__doc__).split("\n")[0].strip()
