@@ -51,6 +51,8 @@ def pytest_runtest_logreport(self, report):
     Hook changed to define SPECIFICATION like output format. This hook will
     overwrite also VERBOSE option.
     """
+    if _is_ignored(report.nodeid, self.config.getini('spec_ignore').split(',')):
+        return
     self.previous_scopes = getattr(self, 'previous_scopes', [])
     self.current_scopes = get_report_scopes(report)
     indent = self.config.getini('spec_indent')
@@ -84,6 +86,14 @@ def pytest_runtest_logreport(self, report):
         markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes)
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
+
+
+def _is_ignored(nodeid, ignore_strings):
+    if ignore_strings:
+        for ignore_string in ignore_strings:
+            if ignore_string in nodeid:
+                return True
+    return False
 
 
 def _is_nodeid_has_test(nodeid):
