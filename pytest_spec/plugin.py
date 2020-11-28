@@ -40,7 +40,7 @@ def pytest_addoption(parser):
     )
     parser.addini(
         'spec_skipped_indicator',
-        default='?',
+        default='»',
         help='The indicator displayed when a test is skipped'
     )
     parser.addini(
