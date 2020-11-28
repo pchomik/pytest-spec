@@ -31,6 +31,7 @@
 * Group tests by classes and files
 * Failed, passed and skipped are marked and colored.
 * Remove test\_ and underscores for every test.
+* It is possible to use docstring summary instead of test name.
 * Supports function based, class based test.
 * Supports describe like tests.
 
