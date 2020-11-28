@@ -1,3 +1,13 @@
+v.3.1.0
+- Added logic to use docstring_summary instead of test name
+- Added logic to ignore some tests from spec output
+- Changed indicator for skipped tests
+- Improve formatting for functions
+- Changed actions to test against python and pytest versions, operating systems
+
+v.3.0.6
+- Added tests to sdist
+
 v.3.0.5
 - Added support for Python 3.9
 
