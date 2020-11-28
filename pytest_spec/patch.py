@@ -81,10 +81,10 @@ def pytest_runtest_logreport(self, report):
 
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
-        docstring_summary = getattr(report, 'docstring_summary', "")
+        docstring_summary = getattr(report, 'docstring_summary', '')
         docstring_summary = docstring_summary if docstring_summary else test_name
         markup, test_status = _format_results(report, self.config)
-        depth = len(self.current_scopes)
+        depth = len(self.current_scopes) or 1
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
 
 
