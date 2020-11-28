@@ -19,6 +19,10 @@ def describe_first_level():
     def it_failed_on_first_level():
         assert True is False
 
+    def it_passed_with_custom_message_on_first_level():
+        """Shows custom message from docstring summary"""
+        assert True is True
+
     def describe_second_level():
 
         def it_passed_on_second_level():
@@ -32,6 +36,10 @@ def describe_first_level():
         def it_failed_on_second_level():
             assert True is False
 
+        def it_passed_with_custom_message_on_second_level():
+            """Shows custom message from docstring summary"""
+            assert True is True
+
         def describe_third_level():
 
             def it_passed_on_third_level():
@@ -44,6 +52,10 @@ def describe_first_level():
             @unittest.skip('Remove docorator to see fail result')
             def it_failed_on_third_level():
                 assert True is False
+
+            def it_passed_with_custom_message_on_third_level():
+                """Shows custom message from docstring summary"""
+                assert True is True
 
     def describe_second_level_again():
 

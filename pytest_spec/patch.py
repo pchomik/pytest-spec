@@ -3,7 +3,6 @@
 
 :author: Pawel Chomicki
 """
-
 import os
 import re
 
@@ -80,9 +79,11 @@ def pytest_runtest_logreport(self, report):
 
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
+        docstring_summary = getattr(report, 'docstring_summary', "")
+        docstring_summary = docstring_summary if docstring_summary else test_name
         markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes)
-        _print_test_result(self, test_name, test_status, markup, depth)
+        _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
 
 
 def _is_nodeid_has_test(nodeid):
@@ -188,11 +189,11 @@ def _format_results(report, config):
         return {'yellow': True}, skipped_indicator
 
 
-def _print_test_result(self, test_name, test_status, markup, depth):
+def _print_test_result(self, test_name, docstring_summary, test_status, markup, depth):
     indent = self.config.getini('spec_indent')
     self._tw.line()
     self._tw.write(
         indent * depth + self.config.getini('spec_test_format').format(
-            result=test_status, name=test_name
+            result=test_status, name=test_name, docstring_summary=docstring_summary
         ), **markup
     )

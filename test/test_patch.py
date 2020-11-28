@@ -5,6 +5,8 @@
 import unittest
 
 from mock import Mock, call
+
+import pytest_spec
 from pytest_spec.patch import pytest_runtest_logstart, pytest_runtest_logreport
 
 
@@ -19,11 +21,10 @@ class FakeHook(object):
 
 
 class FakeConfig(object):
+
     def __init__(self, *args, **kwargs):
         self.hook = FakeHook(*args, **kwargs)
-
-    def getini(self, option):
-        mapping = {
+        self.mapping = {
             'spec_header_format': '{module_path}:',
             'spec_test_format': '{result} {name}',
             'spec_success_indicator': '✓',
@@ -31,7 +32,9 @@ class FakeConfig(object):
             'spec_skipped_indicator': '?',
             'spec_indent': '  ',
         }
-        result = mapping.get(option, None)
+
+    def getini(self, option):
+        result = self.mapping.get(option, None)
         if not result:
             raise TypeError('Option {} is not supported in the test'.format(
                 option)
@@ -58,9 +61,14 @@ class FakeReport(object):
         self.passed = kwargs.get('passed', True)
         self.failed = kwargs.get('failed', False)
         self.skipped = kwargs.get('skipped', False)
+        self.docstring_summary = "Test documentation"
 
 
 class TestPatch(unittest.TestCase):
+
+    def tearDown(self):
+        pytest_spec.patch.docstring_summaries = dict()
+
     def test__pytest_runtest_logstart__returns_none(self):
         self.assertEqual(pytest_runtest_logstart('self', 'nodeid', 'location'), None)
 
@@ -132,6 +140,24 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase'))
         fake_self._tw.write.assert_has_calls([
             call('Second:'),
+            call('  ✓ Example Demo CamelCase', green=True)
+        ])
+
+    def test__pytest_runtest_longreport__uses_docstring_summary(self):
+        fake_self = FakeSelf()
+        fake_self.config.mapping['spec_test_format'] = "{result} {docstring_summary}"
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase'))
+        fake_self._tw.write.assert_has_calls([
+            call('  ✓ Test documentation', green=True)
+        ])
+
+    def test__pytest_runtest_longreport__uses_test_name_as_docstring_summary_if_missing(self):
+        fake_self = FakeSelf()
+        fake_self.config.mapping['spec_test_format'] = "{result} {docstring_summary}"
+        fake_report = FakeReport('Test::Second::test_example_Demo_CamelCase')
+        fake_report.docstring_summary = None
+        pytest_runtest_logreport(fake_self, fake_report)
+        fake_self._tw.write.assert_has_calls([
             call('  ✓ Example Demo CamelCase', green=True)
         ])
 
