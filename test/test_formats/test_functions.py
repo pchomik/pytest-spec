@@ -11,6 +11,7 @@ def some_function(arg):
 
 
 def test__some_function__returns_none():
+    """Some func"""
     assert some_function(None) is None
 
 
@@ -19,6 +20,11 @@ def test_some_function__single_underscore_as_prefix():
 
 
 def test__some_function_single_underscore_as_suffix():
+    assert some_function(None) is None
+
+
+def test_with_custom_description():
+    """Shows custom message from docstring summary"""
     assert some_function(None) is None
 
 
