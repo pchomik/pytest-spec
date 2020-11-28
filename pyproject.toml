@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "pytest-spec"
-version = "3.0.6"
-description = "pytest plugin to display test execution output like a SPECIFICATION"
-readme = "README.rst"
+version = "3.0.7rc1"
+description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
+readme = "README.md"
 authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
 license = "GPL-2.0-or-later"
 homepage = "https://github.com/pchomik/pytest-spec"
