@@ -47,7 +47,7 @@
 You can configure the format of the test headers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](http://doc.pytest.org/en/latest/customize.html#inifiles):
 
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_header_format = {module_path}:
 ```
 
@@ -57,17 +57,31 @@ In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is 
 
 You can configure the format of the test results by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](http://doc.pytest.org/en/latest/customize.html#inifiles):
 
+3 variables are available:
+* result - place for indicator
+* name - name of test
+* docstring_summary - first line from test docstring if available
+
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_test_format = {result} {name}
 ```
+
+or
+
+```ini
+    [tool:pytest]
+    spec_test_format = {result} {docstring_summary}
+```
+
+In second example where docstring is not available the name will be added to spec output.
 
 ### spec_success_indicator
 
 You can configure the indicator displayed when test passed.
 
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_success_indicator = ✓
 ```
 
@@ -76,7 +90,7 @@ You can configure the indicator displayed when test passed.
 You can configure the indicator displated when test failed.
 
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_failure_indicator = ✗
 ```
 
@@ -85,14 +99,24 @@ You can configure the indicator displated when test failed.
 You can configure the indicator displated when test is skipped.
 
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_skipped_indicator = ?
+```
+
+### spec_ignore
+
+Comma-separated settings to ignore/hide some tests or output from from plugins like FLAKE8 or ISORT.
+Any test which contain provided string will be ignored in output spec.
+
+```ini
+    [tool:pytest]
+    spec_ignore = FLAKE8
 ```
 
 ### spec_indent
 
 ```ini
-    [pytest]
+    [tool:pytest]
     spec_indent = "   "
 ```
 
