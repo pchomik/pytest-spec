@@ -48,6 +48,11 @@ def pytest_addoption(parser):
         default='  ',
         help='The string used for indentation in the spec output'
     )
+    parser.addini(
+        'spec_ignore',
+        default='',
+        help='The comma-separated list of strings used to ignore tests in the spec output e.g. FLAKE8'
+    )
 
 
 def pytest_configure(config):

@@ -31,6 +31,7 @@ class FakeConfig(object):
             'spec_failure_indicator': '✗',
             'spec_skipped_indicator': '?',
             'spec_indent': '  ',
+            'spec_ignore': 'FLAKE8'
         }
 
     def getini(self, option):
@@ -160,6 +161,17 @@ class TestPatch(unittest.TestCase):
         fake_self._tw.write.assert_has_calls([
             call('  ✓ Example Demo CamelCase', green=True)
         ])
+
+    def test__pytest_runtest_logreport__ignores_nodeid_which_matches_ignore_string(self):
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport('Test::FLAKE8'))
+        assert not fake_self._tw.write.mock_calls
+
+    def test__pytest_runtest_logreport__ignores_nodeid_if_multiple_string_ignore_are_provided(self):
+        fake_self = FakeSelf()
+        fake_self.config.mapping['spec_ignore'] = "FLAKE8,Something"
+        pytest_runtest_logreport(fake_self, FakeReport('Something'))
+        assert not fake_self._tw.write.called
 
 
 if __name__ == '__main__':

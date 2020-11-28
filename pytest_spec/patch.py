@@ -58,6 +58,8 @@ def pytest_runtest_logreport(self, report):
     res = self.config.hook.pytest_report_teststatus(report=report, config=self.config)
     cat, letter, word = res
     self.stats.setdefault(cat, []).append(report)
+    if _is_ignored(report.nodeid, self.config.getini('spec_ignore').split(',')):
+        return
     if not letter and not word:
         return
     if not _is_nodeid_has_test(report.nodeid):
@@ -84,6 +86,14 @@ def pytest_runtest_logreport(self, report):
         markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes)
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
+
+
+def _is_ignored(nodeid, ignore_strings):
+    if ignore_strings:
+        for ignore_string in ignore_strings:
+            if ignore_string and ignore_string in nodeid:
+                return True
+    return False
 
 
 def _is_nodeid_has_test(nodeid):
