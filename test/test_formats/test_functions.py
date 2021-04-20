@@ -28,5 +28,14 @@ def test_with_custom_description():
     assert some_function(None) is None
 
 
+def test_with_multiline_docstring():
+    """
+    Shows custom message from docstring summary
+
+    And doesn't show additional info.
+    """
+    assert some_function(None) is None
+
+
 if __name__ == '__main__':
     unittest.main()
