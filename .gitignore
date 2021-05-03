@@ -19,3 +19,6 @@ pytest_spec.egg-info
 
 # Poetry lock file
 poetry.lock
+
+# Conda environment file
+environment.yaml
