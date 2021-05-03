@@ -25,7 +25,7 @@ def describe_first_level():
 
     def it_passed_with_multiline_docstring_on_first_level():
         """
-        Shows custom message from docstring summary
+        Shows custom multiline message from docstring summary
 
         And doesn't show additional info.
         """
@@ -50,7 +50,7 @@ def describe_first_level():
 
         def it_passed_with_multiline_docstring_on_second_level():
             """
-            Shows custom message from docstring summary
+            Shows custom multiline message from docstring summary
 
             And doesn't show additional info.
             """
@@ -75,7 +75,7 @@ def describe_first_level():
 
             def it_passed_with_multiline_docstring_on_third_level():
                 """
-                Shows custom message from docstring summary
+                Shows custom multiline message from docstring summary
 
                 And doesn't show additional info.
                 """
