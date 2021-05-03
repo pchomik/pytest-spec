@@ -1,3 +1,6 @@
+v.3.2.0
+- Added support for multiline docstrings
+
 v.3.1.0
 - Added logic to use docstring_summary instead of test name
 - Added logic to ignore some tests from spec output
