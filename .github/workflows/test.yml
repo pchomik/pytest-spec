@@ -63,3 +63,34 @@ jobs:
         run: poetry install
       - name: Test with pytest
         run: poetry run pytest .
+  release-to-conda:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.0.10]
+        os: [ubuntu-18.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install projects
+        run: poetry install
+      - name: Test with pytest
+        run: poetry run pytest .
+      - name: Translate to conda
+        run: |
+          poetry run pip install poetry2conda
+          poetry run poetry2conda pyproject.toml environment.yaml
+      - name: Build and publish to conda
+        uses: fdiblen/anaconda-action@0.1.7
+        with:
+          env-file-name: 'environment.yaml'
+          publish: true
+          anaconda-token: ${{ secrets.ANACONDA_TOKEN }}
