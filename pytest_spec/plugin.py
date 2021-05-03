@@ -71,4 +71,4 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     node = getattr(item, 'obj', None)
     if node and item.obj.__doc__:
-        report.docstring_summary = str(item.obj.__doc__).split("\n")[0].strip()
+        report.docstring_summary = str(item.obj.__doc__).lstrip().split("\n")[0].strip()
