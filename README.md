@@ -45,9 +45,15 @@
 
 ### spec_header_format
 
-You can configure the format of the test headers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](http://doc.pytest.org/en/latest/customize.html#inifiles):
+You can configure the format of the test headers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
+
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_header_format = {module_path}:
+    
+    ; legacy pytest
     [tool:pytest]
     spec_header_format = {module_path}:
 ```
@@ -56,7 +62,7 @@ In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is 
 
 ### spec_test_format
 
-You can configure the format of the test results by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](http://doc.pytest.org/en/latest/customize.html#inifiles):
+You can configure the format of the test results by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
 
 3 variables are available:
 * result - place for indicator
@@ -64,6 +70,11 @@ You can configure the format of the test results by specifying a [format string]
 * docstring_summary - first line from test docstring if available
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_test_format = {result} {name}
+    
+    ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {name}
 ```
@@ -71,6 +82,11 @@ You can configure the format of the test results by specifying a [format string]
 or
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_test_format = {result} {docstring_summary}
+    
+    ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {docstring_summary}
 ```
@@ -82,6 +98,11 @@ In second example where docstring is not available the name will be added to spe
 You can configure the indicator displayed when test passed.
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_success_indicator = ✓
+
+    ; legacy pytest
     [tool:pytest]
     spec_success_indicator = ✓
 ```
@@ -91,6 +112,11 @@ You can configure the indicator displayed when test passed.
 You can configure the indicator displated when test failed.
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_failure_indicator = ✗
+
+    ; legacy pytest
     [tool:pytest]
     spec_failure_indicator = ✗
 ```
@@ -100,6 +126,11 @@ You can configure the indicator displated when test failed.
 You can configure the indicator displated when test is skipped.
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_skipped_indicator = ?
+
+    ; legacy pytest
     [tool:pytest]
     spec_skipped_indicator = ?
 ```
@@ -110,6 +141,11 @@ Comma-separated settings to ignore/hide some tests or output from from plugins l
 Any test which contain provided string will be ignored in output spec.
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_ignore = FLAKE8
+
+    ; legacy pytest
     [tool:pytest]
     spec_ignore = FLAKE8
 ```
@@ -117,6 +153,11 @@ Any test which contain provided string will be ignored in output spec.
 ### spec_indent
 
 ```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_indent = "   "
+
+    ; legacy pytest
     [tool:pytest]
     spec_indent = "   "
 ```
