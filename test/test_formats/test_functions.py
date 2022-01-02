@@ -37,5 +37,9 @@ def test_with_multiline_docstring():
     assert some_function(None) is None
 
 
+def describe_test_different_python_functions_name():
+    assert some_function(None) is None
+
+
 if __name__ == '__main__':
     unittest.main()

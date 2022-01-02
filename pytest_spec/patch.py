@@ -80,7 +80,7 @@ def pytest_runtest_logreport(self, report):
     self.previous_scopes = self.current_scopes
 
     if not isinstance(word, tuple):
-        test_name = _get_test_name(report.nodeid)
+        test_name = _get_test_name(report.nodeid, self.config)
         docstring_summary = getattr(report, 'docstring_summary', '')
         docstring_summary = docstring_summary if docstring_summary else test_name
         markup, test_status = _format_results(report, self.config)
@@ -105,12 +105,11 @@ def _is_nodeid_has_test(nodeid):
 def prettify(string):
     return _capitalize_first_letter(
         _replace_underscores(
-            _remove_test_container_prefix(
-                _remove_file_extension(string))))
+            _remove_file_extension(string)))
 
 
-def prettify_test(string):
-    return prettify(_remove_test_prefix(string))
+def prettify_test(string, config):
+    return prettify(_remove_test_prefix(string, config))
 
 
 def prettify_description(string):
@@ -161,8 +160,16 @@ def _remove_module_name(nodeid):
     return nodeid.rsplit("::", 1)[1]
 
 
-def _remove_test_prefix(nodeid):
-    return re.sub("^test_+", "", nodeid)
+def _remove_test_prefix(nodeid, config):
+    try:
+        prefixes = config.getini('python_functions')
+    except TypeError:
+        prefixes = ['test']
+    if len(prefixes) == 1 and prefixes[0] == 'test':
+        regexp = "^test_+"
+    else:
+        regexp = "|".join(["^{}".format(prefix) for prefix in prefixes])
+    return re.sub(regexp, "", nodeid)
 
 
 def _replace_underscores(nodeid):
@@ -177,8 +184,8 @@ def _append_colon(string):
     return "{}:".format(string)
 
 
-def _get_test_name(nodeid):
-    test_name = prettify_test(_remove_module_name(nodeid))
+def _get_test_name(nodeid, config):
+    test_name = prettify_test(_remove_module_name(nodeid), config)
     if test_name[:1] == ' ':
         test_name_parts = test_name.split('  ')
         if len(test_name_parts) == 1:
