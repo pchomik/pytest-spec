@@ -35,7 +35,7 @@ six = "*"
 [tool.poetry.dev-dependencies]
 mock = ">1.0.1"
 pytest = "*"
-pytest-describe = "*"
+pytest-describe = "^1.0.0"
 pytest-flake8 = "*"
 pytest-cov = "*"
 wheel = "*"
