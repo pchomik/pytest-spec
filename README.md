@@ -7,6 +7,7 @@
         <img src="https://badgen.net/badge/python/3.7/green">
         <img src="https://badgen.net/badge/python/3.8/green">
         <img src="https://badgen.net/badge/python/3.9/green">
+        <img src="https://badgen.net/badge/python/3.10/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -52,7 +53,7 @@ You can configure the format of the test headers by specifying a [format string]
     ; since pytest 4.6.x
     [pytest]
     spec_header_format = {module_path}:
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_header_format = {module_path}:
@@ -73,7 +74,7 @@ You can configure the format of the test results by specifying a [format string]
     ; since pytest 4.6.x
     [pytest]
     spec_test_format = {result} {name}
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {name}
@@ -85,7 +86,7 @@ or
     ; since pytest 4.6.x
     [pytest]
     spec_test_format = {result} {docstring_summary}
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {docstring_summary}

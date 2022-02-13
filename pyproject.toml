@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-spec"
-version = "3.2.0"
+version = "3.3.0"
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
 authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
@@ -19,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Testing",
     "Topic :: Utilities"
