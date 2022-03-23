@@ -33,7 +33,7 @@ include = ["LICENSE.txt"]
 six = "*"
 
 [tool.poetry.dev-dependencies]
-mock = ">1.0.1"
+mock = { version = ">1.0.1", python = "~2.7" }
 pytest = "*"
 pytest-describe = "*"
 pytest-flake8 = "*"

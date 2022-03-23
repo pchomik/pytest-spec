@@ -4,7 +4,10 @@
 """
 import unittest
 
-from mock import patch
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
 from pytest_spec.replacer import logstart_replacer, report_replacer
 
 

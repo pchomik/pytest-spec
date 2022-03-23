@@ -4,7 +4,10 @@
 """
 import unittest
 
-from mock import Mock, call, patch
+try:
+    from unittest.mock import Mock, call, patch
+except ImportError:
+    from mock import Mock, call, patch
 from pytest_spec.plugin import pytest_addoption, pytest_configure
 
 
