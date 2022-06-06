@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Module contains command line option definition and logic needed to enable new formatting.
 
 :author: Pawel Chomicki

@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
 """
 :author: Pawel Chomicki
 """
 import unittest
 
-from mock import Mock, call, patch
+from unittest.mock import Mock, call, patch
 from pytest_spec.plugin import pytest_addoption, pytest_configure
 
 
-class FakeOption(object):
+class FakeOption:
     def __init__(self, spec=False):
         self.spec = spec
         self.verbose = 0
 
 
-class FakeConfig(object):
+class FakeConfig:
     def __init__(self, spec):
         self.option = FakeOption(spec=spec)
 
