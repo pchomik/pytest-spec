@@ -31,7 +31,6 @@ include = ["LICENSE.txt"]
 
 [tool.poetry.dependencies]
 python = ">=3.5"
-six = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
