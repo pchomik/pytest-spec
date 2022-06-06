@@ -34,7 +34,6 @@ python = ">=3.5"
 six = "*"
 
 [tool.poetry.dev-dependencies]
-mock = ">1.0.1"
 pytest = "*"
 pytest-describe = "*"
 pytest-flake8 = "*"
