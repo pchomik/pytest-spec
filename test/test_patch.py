@@ -141,6 +141,12 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase'))
         fake_self._tw.write.assert_has_calls([call('  ✓ Test documentation', green=True)])
 
+    def test__pytest_runtest_longreport__uses_docstring_summary_with_parametrize(self):
+        fake_self = FakeSelf()
+        fake_self.config.mapping['spec_test_format'] = '{result} {docstring_summary}'
+        pytest_runtest_logreport(fake_self, FakeReport('Test::Second::test_example_Demo_CamelCase[10-20-30]'))
+        fake_self._tw.write.assert_has_calls([call('  ✓ Test documentation[10-20-30]', green=True)])
+
     def test__pytest_runtest_longreport__uses_test_name_as_docstring_summary_if_missing(
         self,
     ):

@@ -80,8 +80,9 @@ def pytest_runtest_logreport(self, report):
 
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
+        parameters = _get_parametrized_parameters(test_name)
         docstring_summary = getattr(report, 'docstring_summary', '')
-        docstring_summary = docstring_summary if docstring_summary else test_name
+        docstring_summary = docstring_summary + parameters if docstring_summary else test_name
         markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes) or 1
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
@@ -171,6 +172,11 @@ def _capitalize_first_letter(s):
 
 def _append_colon(string):
     return '{}:'.format(string)
+
+
+def _get_parametrized_parameters(test_name):
+    m = re.search(r'\[.*\]', test_name)
+    return m.group(0) if m else ''
 
 
 def _get_test_name(nodeid):
