@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-spec"
-version = "3.2.0"
+version = "3.3.0rc1"
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
 authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
@@ -34,7 +34,7 @@ python = ">=3.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
-pytest-describe = "*"
+pytest-describe = "^1.0.0"
 pytest-flake8 = "*"
 pytest-cov = "*"
 wheel = "*"

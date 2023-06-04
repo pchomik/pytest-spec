@@ -22,6 +22,8 @@ jobs:
         run: poetry install
       - name: Test with pytest
         run: poetry run pytest .
+      - name: Test with different python_functions
+        run: poetry run pytest -o python_functions=describe .
   test-os:
     strategy:
       fail-fast: false
@@ -41,6 +43,8 @@ jobs:
         run: poetry install
       - name: Test with pytest
         run: poetry run pytest .
+      - name: Test with different python_functions
+        run: poetry run pytest -o python_functions=describe .
   test-pytest:
     strategy:
       fail-fast: false
@@ -63,3 +67,5 @@ jobs:
         run: poetry install
       - name: Test with pytest
         run: poetry run pytest .
+      - name: Test with different python_functions
+        run: poetry run pytest -o python_functions=describe .
