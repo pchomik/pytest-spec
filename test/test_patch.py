@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
 """
 :author: Pawel Chomicki
 """
 import unittest
 
-from mock import Mock, call
+from unittest.mock import Mock, call
 
 import pytest_spec
 from pytest_spec.patch import pytest_runtest_logstart, pytest_runtest_logreport
 
 
-class FakeHook(object):
+class FakeHook:
     def __init__(self, *args, **kwargs):
         self.cat = kwargs.get('cat', ' ')
         self.letter = kwargs.get('letter', ' ')
@@ -20,7 +19,7 @@ class FakeHook(object):
         return self.cat, self.letter, self.word
 
 
-class FakeConfig(object):
+class FakeConfig:
 
     def __init__(self, *args, **kwargs):
         self.hook = FakeHook(*args, **kwargs)
@@ -43,12 +42,12 @@ class FakeConfig(object):
         return result
 
 
-class FakeStats(object):
+class FakeStats:
     def setdefault(self, first, second):
         return []
 
 
-class FakeSelf(object):
+class FakeSelf:
     def __init__(self, *args, **kwargs):
         self.config = FakeConfig(*args, **kwargs)
         self.currentfspath = None
@@ -56,7 +55,7 @@ class FakeSelf(object):
         self.stats = FakeStats()
 
 
-class FakeReport(object):
+class FakeReport:
     def __init__(self, nodeid, *args, **kwargs):
         self.nodeid = nodeid
         self.passed = kwargs.get('passed', True)

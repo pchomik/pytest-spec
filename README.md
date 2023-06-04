@@ -1,7 +1,6 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/2.7/green">
         <img src="https://badgen.net/badge/python/3.5/green">
         <img src="https://badgen.net/badge/python/3.6/green">
         <img src="https://badgen.net/badge/python/3.7/green">

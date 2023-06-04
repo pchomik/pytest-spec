@@ -1,20 +1,19 @@
-# -*- coding: utf-8 -*-
 """
 :author: Pawel Chomicki
 """
 import unittest
 
-from mock import Mock, call, patch
+from unittest.mock import Mock, call, patch
 from pytest_spec.plugin import pytest_addoption, pytest_configure
 
 
-class FakeOption(object):
+class FakeOption:
     def __init__(self, spec=False):
         self.spec = spec
         self.verbose = 0
 
 
-class FakeConfig(object):
+class FakeConfig:
     def __init__(self, spec):
         self.option = FakeOption(spec=spec)
 
@@ -34,12 +33,12 @@ class TestPlugin(unittest.TestCase):
                                                               dest='spec',
                                                               help='Print test result in specification format')])
 
-    @patch('six.moves.reload_module')
+    @patch('importlib.reload')
     def test__pytest_configure__should_not_reload_configuration(self, imp_mock):
         pytest_configure(FakeConfig(spec=False))
         self.assertEqual(len(imp_mock.mock_calls), 0)
 
-    @patch('six.moves.reload_module')
+    @patch('importlib.reload')
     def test__pytest_configure__reloads_pytest_after_patching(self, imp_mock):
         pytest_configure(FakeConfig(spec=True))
         self.assertEqual(len(imp_mock.mock_calls), 1)

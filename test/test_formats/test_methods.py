@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :author: Pawel Chomicki
 :e-mail: pawel.chomicki@gmail.com
@@ -6,7 +5,7 @@
 import unittest
 
 
-class SomeClass(object):
+class SomeClass:
     def some_method(self, arg):
         return arg
 

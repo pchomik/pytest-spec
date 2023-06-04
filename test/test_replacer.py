@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 """
 :author: Pawel Chomicki
 """
 import unittest
 
-from mock import patch
+from unittest.mock import patch
 from pytest_spec.replacer import logstart_replacer, report_replacer
 
 

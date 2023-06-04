@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Module contains method for replace operation.
 
 Additional method are necessary because self is not yet defined and module

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Module contains command line option definition and logic needed to enable new formatting.
 
 :author: Pawel Chomicki
@@ -57,12 +56,12 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     if getattr(config.option, 'spec', 0) and not getattr(config.option, 'quiet', 0) and not getattr(config.option, 'verbose', 0):
-        import six
+        import importlib
         import _pytest
         _pytest.terminal.TerminalReporter.pytest_runtest_logstart = logstart_replacer
         _pytest.terminal.TerminalReporter.pytest_runtest_logreport = report_replacer
         _pytest.terminal.TerminalReporter.pytest_collection_modifyitems = modifyitems_replacer
-        six.moves.reload_module(_pytest)
+        importlib.reload(_pytest)
 
 
 @pytest.mark.hookwrapper
