@@ -17,4 +17,3 @@ repos:
       - id: check-yaml
       - id: double-quote-string-fixer
       - id: mixed-line-ending
-      
