@@ -2,8 +2,8 @@
 :author: Pawel Chomicki
 """
 import unittest
-
 from unittest.mock import patch
+
 from pytest_spec.replacer import logstart_replacer, report_replacer
 
 

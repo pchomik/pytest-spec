@@ -1,11 +1,11 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/3.5/green">
-        <img src="https://badgen.net/badge/python/3.6/green">
         <img src="https://badgen.net/badge/python/3.7/green">
         <img src="https://badgen.net/badge/python/3.8/green">
         <img src="https://badgen.net/badge/python/3.9/green">
+        <img src="https://badgen.net/badge/python/3.10/green">
+        <img src="https://badgen.net/badge/python/3.11/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -16,7 +16,8 @@
         <img src="https://badgen.net/badge/pytest/3.9.3/purple">
         <img src="https://badgen.net/badge/pytest/4.6.11/purple">
         <img src="https://badgen.net/badge/pytest/5.4.3/purple">
-        <img src="https://badgen.net/badge/pytest/6.1.2/purple">
+        <img src="https://badgen.net/badge/pytest/6.2.5/purple">
+        <img src="https://badgen.net/badge/pytest/7.3.1/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
@@ -51,7 +52,7 @@ You can configure the format of the test headers by specifying a [format string]
     ; since pytest 4.6.x
     [pytest]
     spec_header_format = {module_path}:
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_header_format = {module_path}:
@@ -72,7 +73,7 @@ You can configure the format of the test results by specifying a [format string]
     ; since pytest 4.6.x
     [pytest]
     spec_test_format = {result} {name}
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {name}
@@ -84,7 +85,7 @@ or
     ; since pytest 4.6.x
     [pytest]
     spec_test_format = {result} {docstring_summary}
-    
+
     ; legacy pytest
     [tool:pytest]
     spec_test_format = {result} {docstring_summary}
