@@ -12,7 +12,6 @@ def pytest_runtest_logstart(self, nodeid, location):
     Hook has to be disabled because additional information may break output
     formatting.
     """
-    pass
 
 
 def pytest_collection_modifyitems(session, config, items):
@@ -20,7 +19,7 @@ def pytest_collection_modifyitems(session, config, items):
         return f.listchain()[1].name
 
     def get_nodeid(f):
-        return "::".join(f.nodeid.split('::')[:-1])
+        return '::'.join(f.nodeid.split('::')[:-1])
 
     items.sort(key=get_nodeid)
     items.sort(key=get_module_name)
@@ -72,7 +71,7 @@ def pytest_runtest_logreport(self, report):
     for msg in self.current_scopes:
         if msg not in self.previous_scopes:
             msg = [indent * scope_ind + prettify_description(msg)]
-            msg = "\n".join(msg)
+            msg = '\n'.join(msg)
             if msg:
                 _print_description(self, msg)
         scope_ind += 1
@@ -96,16 +95,13 @@ def _is_ignored(nodeid, ignore_strings):
 
 
 def _is_nodeid_has_test(nodeid):
-    if len(nodeid.split("::")) >= 2:
+    if len(nodeid.split('::')) >= 2:
         return True
     return False
 
 
 def prettify(string):
-    return _capitalize_first_letter(
-        _replace_underscores(
-            _remove_test_container_prefix(
-                _remove_file_extension(string))))
+    return _capitalize_first_letter(_replace_underscores(_remove_test_container_prefix(_remove_file_extension(string))))
 
 
 def prettify_test(string):
@@ -117,7 +113,7 @@ def prettify_description(string):
 
 
 def _get_test_path(nodeid, header):
-    levels = nodeid.split("::")
+    levels = nodeid.split('::')
 
     module_path = levels[0]
     module_name = os.path.split(levels[0])[1]
@@ -134,7 +130,7 @@ def _get_test_path(nodeid, header):
         module_name=module_name,
         module_path=module_path,
         class_name=class_name,
-        test_case=test_case
+        test_case=test_case,
     )
 
 
@@ -149,7 +145,7 @@ def _print_description(self, msg=None):
 
 
 def _remove_test_container_prefix(nodeid):
-    return re.sub("^(Test)|(describe)", "", nodeid)
+    return re.sub('^(Test)|(describe)', '', nodeid)
 
 
 def _remove_file_extension(nodeid):
@@ -157,15 +153,15 @@ def _remove_file_extension(nodeid):
 
 
 def _remove_module_name(nodeid):
-    return nodeid.rsplit("::", 1)[1]
+    return nodeid.rsplit('::', 1)[1]
 
 
 def _remove_test_prefix(nodeid):
-    return re.sub("^test_+", "", nodeid)
+    return re.sub('^test_+', '', nodeid)
 
 
 def _replace_underscores(nodeid):
-    return nodeid.replace("__", " ").strip().replace("_", " ").strip()
+    return nodeid.replace('__', ' ').strip().replace('_', ' ').strip()
 
 
 def _capitalize_first_letter(s):
@@ -173,7 +169,7 @@ def _capitalize_first_letter(s):
 
 
 def _append_colon(string):
-    return "{}:".format(string)
+    return '{}:'.format(string)
 
 
 def _get_test_name(nodeid):
@@ -202,7 +198,6 @@ def _print_test_result(self, test_name, docstring_summary, test_status, markup, 
     indent = self.config.getini('spec_indent')
     self._tw.line()
     self._tw.write(
-        indent * depth + self.config.getini('spec_test_format').format(
-            result=test_status, name=test_name, docstring_summary=docstring_summary
-        ), **markup
+        indent * depth + self.config.getini('spec_test_format').format(result=test_status, name=test_name, docstring_summary=docstring_summary),
+        **markup
     )

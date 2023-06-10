@@ -2,8 +2,8 @@
 :author: Pawel Chomicki
 """
 import unittest
-
 from unittest.mock import Mock, call, patch
+
 from pytest_spec.plugin import pytest_addoption, pytest_configure
 
 
@@ -28,10 +28,16 @@ class TestPlugin(unittest.TestCase):
 
     def test__pytest_adoption__adds_spec_option(self):
         pytest_addoption(self.mock)
-        self.mock.assert_has_calls([call.getgroup().addoption('--spec',
-                                                              action='store_true',
-                                                              dest='spec',
-                                                              help='Print test result in specification format')])
+        self.mock.assert_has_calls(
+            [
+                call.getgroup().addoption(
+                    '--spec',
+                    action='store_true',
+                    dest='spec',
+                    help='Print test result in specification format',
+                )
+            ]
+        )
 
     @patch('importlib.reload')
     def test__pytest_configure__should_not_reload_configuration(self, imp_mock):
