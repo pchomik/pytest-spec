@@ -1,7 +1,6 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/3.7/green">
         <img src="https://badgen.net/badge/python/3.8/green">
         <img src="https://badgen.net/badge/python/3.9/green">
         <img src="https://badgen.net/badge/python/3.10/green">
@@ -18,7 +17,8 @@
         <img src="https://badgen.net/badge/pytest/4.6.11/purple">
         <img src="https://badgen.net/badge/pytest/5.4.3/purple">
         <img src="https://badgen.net/badge/pytest/6.2.5/purple">
-        <img src="https://badgen.net/badge/pytest/7.3.1/purple">
+        <img src="https://badgen.net/badge/pytest/7.4.4/purple">
+        <img src="https://badgen.net/badge/pytest/8.2.2/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
