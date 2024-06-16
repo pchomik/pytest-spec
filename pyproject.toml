@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-spec"
-version = "3.2.0"
+version = "4.0.0"
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
 authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
@@ -14,11 +14,11 @@ classifiers = [
     "Operating System :: POSIX",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Testing",
     "Topic :: Utilities"
@@ -30,15 +30,55 @@ packages = [
 include = ["LICENSE.txt"]
 
 [tool.poetry.dependencies]
-python = ">=3.5"
+python = ">=3.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"
 pytest-describe = "*"
-pytest-flake8 = "*"
-pytest-cov = "*"
 wheel = "*"
 twine = "*"
+
+[tool.black]
+line-length = 150
+skip-string-normalization = true
+
+[tool.ruff]
+select = [
+  "B",     # flake8-bugbear
+  "C",     # complexity
+  "E",     # pycodestyle
+  "F",     # pyflakes/autoflake
+  "I",     # isort
+  "PIE",   # flake8-pie
+  "W",     # pycodestyle
+  "TID",   # flake-tidy-imports
+]
+
+line-length = 150
+target-version = "py37"
+exclude = [
+  "tests"
+]
+
+unfixable = ["B", "C", "D", "E", "F", "PIE", "W", "TID"]
+fixable = ["I"]
+ignore = [
+    "C901",
+    "C408"
+]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+
+[tool.ruff.per-file-ignores]
+"ute_ca_agentctl/utils/logging/formatters.py" = ["C901"]
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.flake8-tidy-imports]
+ban-relative-imports = "all"
 
 [tool.poetry.plugins.pytest11]
 pytest_spec = "pytest_spec.plugin"
