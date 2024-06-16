@@ -199,5 +199,5 @@ def _print_test_result(self, test_name, docstring_summary, test_status, markup, 
     self._tw.line()
     self._tw.write(
         indent * depth + self.config.getini('spec_test_format').format(result=test_status, name=test_name, docstring_summary=docstring_summary),
-        **markup
+        **markup,
     )
