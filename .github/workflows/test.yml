@@ -7,21 +7,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.1.4
-        with:
-          poetry-version: 1.0.10
       - name: Install projects
-        run: poetry install
+        run: pip install -e ".[test]"
       - name: Test with pytest
-        run: poetry run pytest .
+        run: pytest .
   test-os:
     strategy:
       fail-fast: false
@@ -32,37 +28,29 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
         with:
-          python-version: 3.7
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.1.4
-        with:
-          poetry-version: 1.0.10
+          python-version: 3.8
       - name: Install projects
-        run: poetry install
+        run: pip install -e ".[test]"
       - name: Test with pytest
-        run: poetry run pytest .
+        run: pytest .
   test-pytest:
     strategy:
       fail-fast: false
       matrix:
-        pytest-version: [3.9.3, 4.6.11, 5.4.3, 6.2.5, 7.3.1]
+        pytest-version: [3.9.3, 4.6.11, 5.4.3, 6.2.5, 7.4.4, 8.2.2]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
         with:
-          python-version: 3.7
+          python-version: 3.8
       - uses: BSFishy/pip-action@v1
         with:
           packages: pytest==${{ matrix.pytest-version }}
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.1.4
-        with:
-          poetry-version: 1.0.10
       - name: Install projects
-        run: poetry install
+        run: pip install -e ".[test]"
       - name: Test with pytest
-        run: poetry run pytest .
+        run: pytest .
   run-pre-commit:
     runs-on: ubuntu-latest
     steps:
