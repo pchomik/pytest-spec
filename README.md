@@ -6,6 +6,7 @@
         <img src="https://badgen.net/badge/python/3.9/green">
         <img src="https://badgen.net/badge/python/3.10/green">
         <img src="https://badgen.net/badge/python/3.11/green">
+        <img src="https://badgen.net/badge/python/3.12/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -194,6 +195,8 @@ Please feel free to present your idea by code example (pull request) or reported
 * [@hugovk](https://github.com/hugovk)
 * [@b0g3r](https://github.com/b0g3r)
 * [@paxcodes](https://github.com/paxcodes)
+* [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
+
 
 ## License
 

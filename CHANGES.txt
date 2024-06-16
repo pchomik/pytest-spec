@@ -1,3 +1,9 @@
+v.4.0.0
+- Drop support for Python 2.7, 3.5, 3.6, 3.7
+- Added support for Python 3.11, 3.12
+- Migrate project back to pip from poetry
+- Replace mock by version from stdlib
+
 v.3.2.0
 - Added support for multiline docstrings
 
