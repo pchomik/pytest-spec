@@ -22,3 +22,6 @@ poetry.lock
 
 # Conda environment file
 environment.yaml
+
+# Lint cache
+.ruff_cache

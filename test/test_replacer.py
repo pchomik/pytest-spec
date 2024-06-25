@@ -1,6 +1,7 @@
 """
 :author: Pawel Chomicki
 """
+
 import unittest
 from unittest.mock import patch
 
