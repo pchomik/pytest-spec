@@ -1,11 +1,11 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/3.7/green">
         <img src="https://badgen.net/badge/python/3.8/green">
         <img src="https://badgen.net/badge/python/3.9/green">
         <img src="https://badgen.net/badge/python/3.10/green">
         <img src="https://badgen.net/badge/python/3.11/green">
+        <img src="https://badgen.net/badge/python/3.12/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -17,7 +17,8 @@
         <img src="https://badgen.net/badge/pytest/4.6.11/purple">
         <img src="https://badgen.net/badge/pytest/5.4.3/purple">
         <img src="https://badgen.net/badge/pytest/6.2.5/purple">
-        <img src="https://badgen.net/badge/pytest/7.3.1/purple">
+        <img src="https://badgen.net/badge/pytest/7.4.4/purple">
+        <img src="https://badgen.net/badge/pytest/8.2.2/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
@@ -58,6 +59,13 @@ You can configure the format of the test headers by specifying a [format string]
     spec_header_format = {module_path}:
 ```
 
+or in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_header_format = "{module_path}:"
+```
+
 In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
 
 ### spec_test_format
@@ -93,9 +101,25 @@ or
 
 In second example where docstring is not available the name will be added to spec output.
 
+Similar configuration could be done in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_test_format = "{result} {name}"
+```
+
+or
+
+```toml
+    [tool.pytest.ini_options]
+    spec_test_format = "{result} {docstring_summary}"
+```
+
 ### spec_success_indicator
 
 You can configure the indicator displayed when test passed.
+
+*ini-file*
 
 ```ini
     ; since pytest 4.6.x
@@ -105,12 +129,21 @@ You can configure the indicator displayed when test passed.
     ; legacy pytest
     [tool:pytest]
     spec_success_indicator = ✓
+```
+
+*or pyproject.toml*
+
+```toml
+    [tool.pytest.ini_options]
+    spec_success_indicator = "✓"
 ```
 
 ### spec_failure_indicator
 
 You can configure the indicator displated when test failed.
 
+*ini-file*
+
 ```ini
     ; since pytest 4.6.x
     [pytest]
@@ -121,18 +154,34 @@ You can configure the indicator displated when test failed.
     spec_failure_indicator = ✗
 ```
 
+or *pyproject.toml*
+
+```toml
+    [tool.pytest.ini_options]
+    spec_failure_indicator = "✗"
+```
+
 ### spec_skipped_indicator
 
 You can configure the indicator displated when test is skipped.
 
+*ini-file*
+
 ```ini
     ; since pytest 4.6.x
     [pytest]
-    spec_skipped_indicator = ?
+    spec_skipped_indicator = »
 
     ; legacy pytest
     [tool:pytest]
-    spec_skipped_indicator = ?
+    spec_skipped_indicator = »
+```
+
+or *pyproject.toml*
+
+```toml
+    [tool.pytest.ini_options]
+    spec_skipped_indicator = "»"
 ```
 
 ### spec_ignore
@@ -140,6 +189,8 @@ You can configure the indicator displated when test is skipped.
 Comma-separated settings to ignore/hide some tests or output from from plugins like FLAKE8 or ISORT.
 Any test which contain provided string will be ignored in output spec.
 
+*ini-file*
+
 ```ini
     ; since pytest 4.6.x
     [pytest]
@@ -150,7 +201,16 @@ Any test which contain provided string will be ignored in output spec.
     spec_ignore = FLAKE8
 ```
 
+or *pyproject.toml*
+
+```toml
+    [tool.pytest.ini_options]
+    spec_ignore = "FLAKE8"
+```
+
 ### spec_indent
+
+*ini-file*
 
 ```ini
     ; since pytest 4.6.x
@@ -159,6 +219,13 @@ Any test which contain provided string will be ignored in output spec.
 
     ; legacy pytest
     [tool:pytest]
+    spec_indent = "   "
+```
+
+or *pyproject.toml*
+
+```toml
+    [tool.pytest.ini_options]
     spec_indent = "   "
 ```
 
@@ -173,8 +240,31 @@ All versions of library are available on official [pypi server](https://pypi.org
 
 ## Install
 
+### From [pypi.org](https://pypi.org)
+
 ```sh
     pip install pytest-spec
+```
+
+### From source
+
+```sh
+    cd pytest-spec
+    pip install -e .
+```
+
+### From source for testing
+
+```sh
+    cd pytest-spec
+    pip install -e ".[test]"
+```
+
+### From source for build or deployment
+
+```sh
+    cd pytest-spec
+    pip install -e ".[deploy]"
 ```
 
 ## Contribution
@@ -194,12 +284,14 @@ Please feel free to present your idea by code example (pull request) or reported
 * [@hugovk](https://github.com/hugovk)
 * [@b0g3r](https://github.com/b0g3r)
 * [@paxcodes](https://github.com/paxcodes)
+* [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
+
 
 ## License
 
 pytest-spec - pytest plugin to display test execution output like a SPECIFICATION.
 
-Copyright (C) 2014-2023 Pawel Chomicki
+Copyright (C) 2014-2024 Pawel Chomicki
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

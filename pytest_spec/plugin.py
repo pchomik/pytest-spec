@@ -2,6 +2,7 @@
 
 :author: Pawel Chomicki
 """
+
 import pytest
 
 from pytest_spec.replacer import logstart_replacer, modifyitems_replacer, report_replacer
