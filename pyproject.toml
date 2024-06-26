@@ -13,7 +13,7 @@ authors = [
 ]
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 keywords = ["pytest", "test", "unittest", "spec"]
 license = {text = "GPL-2.0-or-later"}
 classifiers = [
