@@ -1,42 +1,59 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["pytest_spec"]
+
+[project]
 name = "pytest-spec"
 version = "4.0.0"
+authors = [
+    {name = "Pawel Chomicki", email = "pawel.chomicki@gmail.com"},
+]
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
-authors = ["Pawel Chomicki <pawel.chomicki@gmail.com>"]
-license = "GPL-2.0-or-later"
-homepage = "https://github.com/pchomik/pytest-spec"
-repository = "https://github.com/pchomik/pytest-spec"
+requires-python = ">=3.8"
 keywords = ["pytest", "test", "unittest", "spec"]
+license = {text = "GPL-2.0-or-later"}
 classifiers = [
     "Operating System :: MacOS :: MacOS X",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Testing",
-    "Topic :: Utilities"
+    "Topic :: Utilities",
 ]
-packages = [
-    { include = "pytest_spec" },
-    { include = "test", format = "sdist" },
+
+[project.optional-dependencies]
+test = [
+  "pytest",
+  "pytest-describe"
 ]
-include = ["LICENSE.txt"]
+deploy = [
+  "build",
+  "twine"
+]
 
-[tool.poetry.dependencies]
-python = ">=3.7"
+[project.entry-points.pytest11]
+pytest_spec = "pytest_spec.plugin"
 
-[tool.poetry.dev-dependencies]
-pytest = "*"
-pytest-describe = "*"
-wheel = "*"
-twine = "*"
+[project.urls]
+Documentation = "https://github.com/pchomik/pytest-spec"
+Changelog = "https://github.com/pchomik/pytest-spec/CHANGES.txt"
+Repository = "https://github.com/pchomik/pytest-spec"
+Issues = "https://github.com/pchomik/pytest-spec/issues"
+
+[tool.pytest.ini_options]
+addopts = "--spec"
+spec_test_format = "{result} {docstring_summary}"
 
 [tool.black]
 line-length = 150
@@ -70,7 +87,6 @@ ignore = [
 [tool.ruff.pydocstyle]
 convention = "google"
 
-
 [tool.ruff.per-file-ignores]
 "ute_ca_agentctl/utils/logging/formatters.py" = ["C901"]
 
@@ -79,13 +95,3 @@ max-complexity = 10
 
 [tool.ruff.flake8-tidy-imports]
 ban-relative-imports = "all"
-
-[tool.poetry.plugins.pytest11]
-pytest_spec = "pytest_spec.plugin"
-
-[tool.poetry2conda]
-name = "pytest-spec-env"
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"

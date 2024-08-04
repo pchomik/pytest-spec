@@ -5,6 +5,7 @@ doesn't have access to it.
 
 :author: Pawel Chomicki
 """
+
 from pytest_spec.patch import pytest_collection_modifyitems, pytest_runtest_logreport, pytest_runtest_logstart
 
 
