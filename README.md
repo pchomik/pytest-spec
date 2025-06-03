@@ -300,7 +300,7 @@ All versions of library are available on official [pypi server](https://pypi.org
 
 ```sh
     cd pytest-spec
-    uv sync --locked --all-extras --dev
+    uv sync --all-extras --dev
 ```
 
 ### From source for build or deployment
