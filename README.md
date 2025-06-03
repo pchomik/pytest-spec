@@ -1,11 +1,11 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/3.8/green">
         <img src="https://badgen.net/badge/python/3.9/green">
         <img src="https://badgen.net/badge/python/3.10/green">
         <img src="https://badgen.net/badge/python/3.11/green">
         <img src="https://badgen.net/badge/python/3.12/green">
+        <img src="https://badgen.net/badge/python/3.13/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -13,12 +13,11 @@
         <img src="https://badgen.net/badge/os/macos/blue">
     </p>
     <p align="center">
-        <img src="https://badgen.net/badge/pytest/3.9.3/purple">
         <img src="https://badgen.net/badge/pytest/4.6.11/purple">
         <img src="https://badgen.net/badge/pytest/5.4.3/purple">
         <img src="https://badgen.net/badge/pytest/6.2.5/purple">
         <img src="https://badgen.net/badge/pytest/7.4.4/purple">
-        <img src="https://badgen.net/badge/pytest/8.2.2/purple">
+        <img src="https://badgen.net/badge/pytest/8.4.0/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
@@ -44,6 +43,10 @@
 
 ## Configuration
 
+<details>
+
+<summary>spec_header_format</summary>
+
 ### spec_header_format
 
 You can configure the format of the test headers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
@@ -67,6 +70,12 @@ or in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customiz
 ```
 
 In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
+
+</details>
+
+<details>
+
+<summary>spec_test_format</summary>
 
 ### spec_test_format
 
@@ -115,6 +124,13 @@ or
     spec_test_format = "{result} {docstring_summary}"
 ```
 
+</details>
+
+
+<details>
+
+<summary>spec_success_indicator</summary>
+
 ### spec_success_indicator
 
 You can configure the indicator displayed when test passed.
@@ -137,6 +153,12 @@ You can configure the indicator displayed when test passed.
     [tool.pytest.ini_options]
     spec_success_indicator = "✓"
 ```
+
+</details>
+
+<details>
+
+<summary>spec_failure_indicator</summary>
 
 ### spec_failure_indicator
 
@@ -161,6 +183,12 @@ or *pyproject.toml*
     spec_failure_indicator = "✗"
 ```
 
+</details>
+
+<details>
+
+<summary>spec_skipped_indicator</summary>
+
 ### spec_skipped_indicator
 
 You can configure the indicator displated when test is skipped.
@@ -183,6 +211,12 @@ or *pyproject.toml*
     [tool.pytest.ini_options]
     spec_skipped_indicator = "»"
 ```
+
+</details>
+
+<details>
+
+<summary>spec_ignore</summary>
 
 ### spec_ignore
 
@@ -208,6 +242,12 @@ or *pyproject.toml*
     spec_ignore = "FLAKE8"
 ```
 
+</details>
+
+<details>
+
+<summary>spec_indent</summary>
+
 ### spec_indent
 
 *ini-file*
@@ -228,6 +268,8 @@ or *pyproject.toml*
     [tool.pytest.ini_options]
     spec_indent = "   "
 ```
+
+</details>
 
 ## Continuous Integration
 
@@ -250,21 +292,23 @@ All versions of library are available on official [pypi server](https://pypi.org
 
 ```sh
     cd pytest-spec
-    pip install -e .
+    uv sync
 ```
 
 ### From source for testing
 
 ```sh
     cd pytest-spec
-    pip install -e ".[test]"
+    uv sync --all-extras --dev
 ```
 
 ### From source for build or deployment
 
 ```sh
     cd pytest-spec
-    pip install -e ".[deploy]"
+    uv sync
+    uv build
+    uv publish
 ```
 
 ## Contribution
@@ -285,13 +329,14 @@ Please feel free to present your idea by code example (pull request) or reported
 * [@b0g3r](https://github.com/b0g3r)
 * [@paxcodes](https://github.com/paxcodes)
 * [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
+* [@yk-kd](https://github.com/yk-kd)
 
 
 ## License
 
 pytest-spec - pytest plugin to display test execution output like a SPECIFICATION.
 
-Copyright (C) 2014-2024 Pawel Chomicki
+Copyright (C) 2014-2025 Pawel Chomicki
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 

@@ -7,17 +7,21 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install projects
-        run: pip install -e ".[test]"
+        run: uv sync --all-extras --dev
+
       - name: Test with pytest
-        run: pytest .
+        run: uv run pytest .
   test-os:
     strategy:
       fail-fast: false
@@ -25,34 +29,42 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: 3.8
+          python-version: 3.9
+
       - name: Install projects
-        run: pip install -e ".[test]"
+        run: uv sync --all-extras --dev
+
       - name: Test with pytest
-        run: pytest .
+        run: uv run pytest .
   test-pytest:
     strategy:
       fail-fast: false
       matrix:
-        pytest-version: [3.9.3, 4.6.11, 5.4.3, 6.2.5, 7.4.4, 8.2.2]
+        pytest-version: [4.6.11, 5.4.3, 6.2.5, 7.4.4, 8.4.0]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: 3.8
-      - uses: BSFishy/pip-action@v1
-        with:
-          packages: pytest==${{ matrix.pytest-version }}
+          python-version: 3.9
+
       - name: Install projects
-        run: pip install -e ".[test]"
+        run: uv sync --all-extras --dev
+
+      - name: Override pytest
+        run: uv pip install pytest==${{ matrix.pytest-version }}
+
       - name: Test with pytest
-        run: pytest .
+        run: uv run pytest .
   run-pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pre-commit/action@v3.0.1

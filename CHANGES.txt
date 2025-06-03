@@ -1,3 +1,12 @@
+v.5.0.0
+- Drop support for Python 3.8
+- Drop support for pytest 3.9.3
+- Added support for Python 3.13
+- Added support for pytest 8.4.0
+- Migrate project to use uv application
+- Update pre-commit hooks
+- Fixed case when parametrization arguments were ignored
+
 v.4.0.0
 - Drop support for Python 2.7, 3.5, 3.6, 3.7
 - Added support for Python 3.11, 3.12
