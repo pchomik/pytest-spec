@@ -26,7 +26,8 @@ jobs:
       - name: Test with pytest
         run: uv run pytest .
 
-      - name: Build and publish
-        run: |
-          uv build
-          uv publish
+      - name: Build
+        run: uv build
+
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
