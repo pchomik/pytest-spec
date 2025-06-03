@@ -15,5 +15,4 @@ repos:
       - id: trailing-whitespace
       - id: check-toml
       - id: check-yaml
-      - id: double-quote-string-fixer
       - id: mixed-line-ending

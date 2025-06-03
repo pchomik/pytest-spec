@@ -34,5 +34,5 @@ class TestFormats(unittest.TestCase):
         assert SomeClass().some_method(None) is None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
