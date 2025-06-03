@@ -60,8 +60,6 @@ jobs:
 
       - name: Override pytest
         run: uv pip install pytest==${{ matrix.pytest-version }}
-        env:
-          UV_SYSTEM_PYTHON: 1
 
       - name: Test with pytest
         run: uv run pytest .
