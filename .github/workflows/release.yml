@@ -12,6 +12,9 @@ jobs:
         python-version: [3.9]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
+    environment: release
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
