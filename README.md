@@ -13,12 +13,11 @@
         <img src="https://badgen.net/badge/os/macos/blue">
     </p>
     <p align="center">
-        <img src="https://badgen.net/badge/pytest/3.9.3/purple">
         <img src="https://badgen.net/badge/pytest/4.6.11/purple">
         <img src="https://badgen.net/badge/pytest/5.4.3/purple">
         <img src="https://badgen.net/badge/pytest/6.2.5/purple">
         <img src="https://badgen.net/badge/pytest/7.4.4/purple">
-        <img src="https://badgen.net/badge/pytest/8.3.4/purple">
+        <img src="https://badgen.net/badge/pytest/8.4.0/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
