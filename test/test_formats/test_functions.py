@@ -5,6 +5,8 @@
 
 import unittest
 
+import pytest
+
 
 def some_function(arg):
     return arg
@@ -37,5 +39,10 @@ def test_with_multiline_docstring():
     assert some_function(None) is None
 
 
-if __name__ == '__main__':
+@pytest.mark.parametrize("input_value", ["param1", "param2"])
+def test_when_parametrized(input_value):
+    assert input_value in ["param1", "param2"]
+
+
+if __name__ == "__main__":
     unittest.main()
