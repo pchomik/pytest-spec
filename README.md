@@ -24,22 +24,19 @@
     </p>
 </p>
 
-
 ## Available features
 
-* Format output to look like specification.
-* Group tests by classes and files
-* Failed, passed and skipped are marked and colored.
-* Remove test\_ and underscores for every test.
-* It is possible to use docstring summary instead of test name.
-* Supports function based, class based test.
-* Supports describe like tests.
-
+-   Format output to look like specification.
+-   Group tests by classes and files
+-   Failed, passed and skipped are marked and colored.
+-   Remove test\_ and underscores for every test.
+-   It is possible to use docstring summary instead of test name.
+-   Supports function based, class based test.
+-   Supports describe like tests.
 
 ## Output example
 
 ![Example](https://github.com/pchomik/pytest-spec/raw/master/docs/output.gif)
-
 
 ## Configuration
 
@@ -50,7 +47,6 @@
 ### spec_header_format
 
 You can configure the format of the test headers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
-
 
 ```ini
     ; since pytest 4.6.x
@@ -69,7 +65,7 @@ or in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customiz
     spec_header_format = "{module_path}:"
 ```
 
-In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is also ``{test_case}`` that holds a more human readable name.
+In addition to the `{path}` and `{class_name}` replacement fields, there is also `{test_case}` that holds a more human readable name.
 
 </details>
 
@@ -82,9 +78,10 @@ In addition to the ``{path}`` and ``{class_name}`` replacement fields, there is 
 You can configure the format of the test results by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
 
 3 variables are available:
-* result - place for indicator
-* name - name of test
-* docstring_summary - first line from test docstring if available
+
+-   result - place for indicator
+-   name - name of test
+-   docstring_summary - first line from test docstring if available
 
 ```ini
     ; since pytest 4.6.x
@@ -126,7 +123,6 @@ or
 
 </details>
 
-
 <details>
 
 <summary>spec_success_indicator</summary>
@@ -135,7 +131,7 @@ or
 
 You can configure the indicator displayed when test passed.
 
-*ini-file*
+_ini-file_
 
 ```ini
     ; since pytest 4.6.x
@@ -147,7 +143,7 @@ You can configure the indicator displayed when test passed.
     spec_success_indicator = ✓
 ```
 
-*or pyproject.toml*
+_or pyproject.toml_
 
 ```toml
     [tool.pytest.ini_options]
@@ -164,7 +160,7 @@ You can configure the indicator displayed when test passed.
 
 You can configure the indicator displated when test failed.
 
-*ini-file*
+_ini-file_
 
 ```ini
     ; since pytest 4.6.x
@@ -176,7 +172,7 @@ You can configure the indicator displated when test failed.
     spec_failure_indicator = ✗
 ```
 
-or *pyproject.toml*
+or _pyproject.toml_
 
 ```toml
     [tool.pytest.ini_options]
@@ -193,7 +189,7 @@ or *pyproject.toml*
 
 You can configure the indicator displated when test is skipped.
 
-*ini-file*
+_ini-file_
 
 ```ini
     ; since pytest 4.6.x
@@ -205,7 +201,7 @@ You can configure the indicator displated when test is skipped.
     spec_skipped_indicator = »
 ```
 
-or *pyproject.toml*
+or _pyproject.toml_
 
 ```toml
     [tool.pytest.ini_options]
@@ -223,7 +219,7 @@ or *pyproject.toml*
 Comma-separated settings to ignore/hide some tests or output from from plugins like FLAKE8 or ISORT.
 Any test which contain provided string will be ignored in output spec.
 
-*ini-file*
+_ini-file_
 
 ```ini
     ; since pytest 4.6.x
@@ -235,7 +231,7 @@ Any test which contain provided string will be ignored in output spec.
     spec_ignore = FLAKE8
 ```
 
-or *pyproject.toml*
+or _pyproject.toml_
 
 ```toml
     [tool.pytest.ini_options]
@@ -250,7 +246,7 @@ or *pyproject.toml*
 
 ### spec_indent
 
-*ini-file*
+_ini-file_
 
 ```ini
     ; since pytest 4.6.x
@@ -262,7 +258,7 @@ or *pyproject.toml*
     spec_indent = "   "
 ```
 
-or *pyproject.toml*
+or _pyproject.toml_
 
 ```toml
     [tool.pytest.ini_options]
@@ -274,7 +270,6 @@ or *pyproject.toml*
 ## Continuous Integration
 
 [![Tests](https://github.com/pchomik/pytest-spec/workflows/test/badge.svg)](https://github.com/pchomik/pytest-spec/actions)
-
 
 ## Download
 
@@ -317,20 +312,19 @@ Please feel free to present your idea by code example (pull request) or reported
 
 ## Contributors
 
-* [@0x64746b](https://github.com/0x64746b)
-* [@lucasmarshall](https://github.com/lucasmarshall)
-* [@amcgregor](https://github.com/amcgregor)
-* [@jhermann](https://github.com/jhermann)
-* [@frenzymadness](https://github.com/frenzymadness)
-* [@chrischambers](https://github.com/chrischambers)
-* [@maxalbert](https://github.com/maxalbert)
-* [@jayvdb](https://github.com/jayvdb)
-* [@hugovk](https://github.com/hugovk)
-* [@b0g3r](https://github.com/b0g3r)
-* [@paxcodes](https://github.com/paxcodes)
-* [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
-* [@yk-kd](https://github.com/yk-kd)
-
+-   [@0x64746b](https://github.com/0x64746b)
+-   [@lucasmarshall](https://github.com/lucasmarshall)
+-   [@amcgregor](https://github.com/amcgregor)
+-   [@jhermann](https://github.com/jhermann)
+-   [@frenzymadness](https://github.com/frenzymadness)
+-   [@chrischambers](https://github.com/chrischambers)
+-   [@maxalbert](https://github.com/maxalbert)
+-   [@jayvdb](https://github.com/jayvdb)
+-   [@hugovk](https://github.com/hugovk)
+-   [@b0g3r](https://github.com/b0g3r)
+-   [@paxcodes](https://github.com/paxcodes)
+-   [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
+-   [@yk-kd](https://github.com/yk-kd)
 
 ## License
 

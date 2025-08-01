@@ -5,9 +5,10 @@
 
 import os
 import re
+from typing import Any, Dict, List, Optional, Tuple
 
 
-def pytest_runtest_logstart(self, nodeid, location):
+def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
     """Signal the start of running a single test item.
 
     Hook has to be disabled because additional information may break output
@@ -15,11 +16,11 @@ def pytest_runtest_logstart(self, nodeid, location):
     """
 
 
-def pytest_collection_modifyitems(session, config, items):
-    def get_module_name(f):
+def pytest_collection_modifyitems(session: Any, config: Any, items: List[Any]) -> List[Any]:
+    def get_module_name(f: Any) -> str:
         return f.listchain()[1].name
 
-    def get_nodeid(f):
+    def get_nodeid(f: Any) -> str:
         return "::".join(f.nodeid.split("::")[:-1])
 
     items.sort(key=get_nodeid)
@@ -27,7 +28,7 @@ def pytest_collection_modifyitems(session, config, items):
     return items
 
 
-def get_report_scopes(report):
+def get_report_scopes(report: Any) -> List[str]:
     """
     Returns a list of the report's nested scopes, excluding the module.
 
@@ -42,7 +43,7 @@ def get_report_scopes(report):
     return [i for i in report.nodeid.split("::")[1:-1] if i != "()"]
 
 
-def pytest_runtest_logreport(self, report):
+def pytest_runtest_logreport(self, report: Any) -> None:
     """
     Process a test setup/call/teardown report relating to the respective phase
     of executing a test.
@@ -88,7 +89,7 @@ def pytest_runtest_logreport(self, report):
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
 
 
-def _is_ignored(nodeid, ignore_strings):
+def _is_ignored(nodeid: str, ignore_strings: List[str]) -> bool:
     if ignore_strings:
         for ignore_string in ignore_strings:
             if ignore_string and ignore_string in nodeid:
@@ -96,25 +97,25 @@ def _is_ignored(nodeid, ignore_strings):
     return False
 
 
-def _is_nodeid_has_test(nodeid):
+def _is_nodeid_has_test(nodeid: str) -> bool:
     if len(nodeid.split("::")) >= 2:
         return True
     return False
 
 
-def prettify(string):
+def prettify(string: str) -> str:
     return _capitalize_first_letter(_replace_underscores(_remove_test_container_prefix(_remove_file_extension(string))))
 
 
-def prettify_test(string):
+def prettify_test(string: str) -> str:
     return prettify(_remove_test_prefix(string))
 
 
-def prettify_description(string):
+def prettify_description(string: str) -> str:
     return prettify(_append_colon(_remove_test_container_prefix(string)))
 
 
-def _get_test_path(nodeid, header):
+def _get_test_path(nodeid: str, header: str) -> str:
     levels = nodeid.split("::")
 
     module_path = levels[0]
@@ -136,7 +137,7 @@ def _get_test_path(nodeid, header):
     )
 
 
-def _print_description(self, msg=None):
+def _print_description(self, msg: Optional[str] = None) -> None:
     if msg is None:
         msg = self.currentfspath
     if hasattr(self, "_first_triggered"):
@@ -146,40 +147,40 @@ def _print_description(self, msg=None):
     self._first_triggered = True
 
 
-def _remove_test_container_prefix(nodeid):
+def _remove_test_container_prefix(nodeid: str) -> str:
     return re.sub("^(Test)|(describe)", "", nodeid)
 
 
-def _remove_file_extension(nodeid):
+def _remove_file_extension(nodeid: str) -> str:
     return os.path.splitext(nodeid)[0]
 
 
-def _remove_module_name(nodeid):
+def _remove_module_name(nodeid: str) -> str:
     return nodeid.rsplit("::", 1)[1]
 
 
-def _remove_test_prefix(nodeid):
+def _remove_test_prefix(nodeid: str) -> str:
     return re.sub("^test_+", "", nodeid)
 
 
-def _replace_underscores(nodeid):
+def _replace_underscores(nodeid: str) -> str:
     return nodeid.replace("__", " ").strip().replace("_", " ").strip()
 
 
-def _capitalize_first_letter(s):
+def _capitalize_first_letter(s: str) -> str:
     return s[:1].capitalize() + s[1:]
 
 
-def _append_colon(string):
+def _append_colon(string: str) -> str:
     return "{}:".format(string)
 
 
-def _get_parametrized_parameters(test_name):
+def _get_parametrized_parameters(test_name: str) -> str:
     m = re.search(r"\[.*\]", test_name)
     return m.group(0) if m else ""
 
 
-def _get_test_name(nodeid):
+def _get_test_name(nodeid: str) -> str:
     test_name = prettify_test(_remove_module_name(nodeid))
     if test_name[:1] == " ":
         test_name_parts = test_name.split("  ")
@@ -189,7 +190,7 @@ def _get_test_name(nodeid):
     return test_name
 
 
-def _format_results(report, config):
+def _format_results(report: Any, config: Any) -> Optional[Tuple[Dict[str, bool], str]]:
     success_indicator = config.getini("spec_success_indicator")
     failure_indicator = config.getini("spec_failure_indicator")
     skipped_indicator = config.getini("spec_skipped_indicator")
@@ -199,9 +200,17 @@ def _format_results(report, config):
         return {"red": True}, failure_indicator
     elif report.skipped:
         return {"yellow": True}, skipped_indicator
+    return None
 
 
-def _print_test_result(self, test_name, docstring_summary, test_status, markup, depth):
+def _print_test_result(
+    self,
+    test_name: str,
+    docstring_summary: str,
+    test_status: str,
+    markup: Dict[str, bool],
+    depth: int,
+) -> None:
     indent = self.config.getini("spec_indent")
     self._tw.line()
     self._tw.write(

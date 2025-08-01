@@ -3,12 +3,15 @@
 :author: Pawel Chomicki
 """
 
+from typing import Any
+
 import pytest
 
 from pytest_spec.replacer import logstart_replacer, modifyitems_replacer, report_replacer
 
 
-def pytest_addoption(parser):
+def pytest_addoption(parser: Any) -> None:
+    """Adds command line option to enable spec format."""
     group = parser.getgroup("general")
     group.addoption(
         "--spec",
@@ -55,7 +58,8 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_configure(config):
+def pytest_configure(config: Any) -> None:
+    """Enables spec format if command line option is present."""
     if getattr(config.option, "spec", 0) and not getattr(config.option, "quiet", 0) and not getattr(config.option, "verbose", 0):
         import importlib
 
@@ -68,7 +72,8 @@ def pytest_configure(config):
 
 
 @pytest.mark.hookwrapper
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item: Any, call: Any) -> Any:
+    """Adds docstring summary to the report."""
     outcome = yield
     report = outcome.get_result()
     node = getattr(item, "obj", None)
