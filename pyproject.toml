@@ -31,7 +31,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest", "pytest-describe"]
+test = ["pytest", "pytest-describe", "mypy"]
 
 [project.entry-points.pytest11]
 pytest_spec = "pytest_spec.plugin"
