@@ -21,7 +21,7 @@
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION. <br>
-        <a href="https://pchomik.ovh/docs/pytest-spec/about">[Documentation]</a>
+        <a href="https://pchomik.ovh/docs/pytest-spec/about" target="_blank" rel="noopener noreferrer">[Documentation]</a>
     </p>
 </p>
 
