@@ -17,11 +17,24 @@ pytest_spec.egg-info
 # VSCode workspace settings
 .vscode
 
-# Poetry lock file
+# Lock file
 poetry.lock
+uv.lock
 
 # Conda environment file
 environment.yaml
 
 # Lint cache
 .ruff_cache
+
+# Virtualenv
+.venv
+
+# Crush state
+.crush
+
+# Mypy cache
+.mypy_cache
+
+# Kilo code
+.kilocode

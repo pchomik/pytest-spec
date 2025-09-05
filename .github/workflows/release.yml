@@ -1,30 +1,42 @@
 name: release
 
 on:
-  release:
-    types: [created]
+    release:
+        types: [created]
 
 jobs:
-  release:
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.8]
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install projects
-        run: pip install -e ".[test, deploy]"
-      - name: Test with pytest
-        run: pytest .
-      - name: Build and publish
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        run: |
-          python3 -m build .
-          twine upload dist/*
+    release:
+        strategy:
+            fail-fast: false
+            matrix:
+                python-version: [3.9]
+                os: [ubuntu-latest]
+        runs-on: ${{ matrix.os }}
+        environment: release
+        permissions:
+            id-token: write
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  python-version: ${{ matrix.python-version }}
+
+            - name: Install projects
+              run: uv sync --all-extras --dev
+
+            - name: Test with pytest
+              run: uv run pytest .
+
+            - name: Test with mypy
+              run: uv run mypy .
+
+            - name: Test with pre-commit
+              run: uvx pre-commit run -a
+
+            - name: Build
+              run: uv build
+
+            - name: Publish
+              uses: pypa/gh-action-pypi-publish@release/v1
