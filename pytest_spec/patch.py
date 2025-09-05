@@ -7,6 +7,11 @@ import os
 import re
 from typing import Any, Dict, List, Optional, Tuple
 
+from _pytest.config import Config
+from _pytest.main import Session
+from _pytest.nodes import Item
+from _pytest.reports import TestReport
+
 
 def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
     """Signal the start of running a single test item.
@@ -16,7 +21,7 @@ def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -
     """
 
 
-def pytest_collection_modifyitems(session: Any, config: Any, items: List[Any]) -> List[Any]:
+def pytest_collection_modifyitems(session: Session, config: Config, items: List[Item]) -> List[Any]:
     def get_module_name(f: Any) -> str:
         return f.listchain()[1].name
 
@@ -28,7 +33,7 @@ def pytest_collection_modifyitems(session: Any, config: Any, items: List[Any]) -
     return items
 
 
-def get_report_scopes(report: Any) -> List[str]:
+def get_report_scopes(report: TestReport) -> List[str]:
     """
     Returns a list of the report's nested scopes, excluding the module.
 
@@ -43,7 +48,7 @@ def get_report_scopes(report: Any) -> List[str]:
     return [i for i in report.nodeid.split("::")[1:-1] if i != "()"]
 
 
-def pytest_runtest_logreport(self, report: Any) -> None:
+def pytest_runtest_logreport(self, report: TestReport) -> None:
     """
     Process a test setup/call/teardown report relating to the respective phase
     of executing a test.
@@ -82,8 +87,7 @@ def pytest_runtest_logreport(self, report: Any) -> None:
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
         parameters = _get_parametrized_parameters(test_name)
-        docstring_summary = getattr(report, "docstring_summary", "")
-        docstring_summary = docstring_summary + parameters if docstring_summary else test_name
+        docstring_summary = _get_docstring_summary(report, test_name, parameters)
         markup, test_status = _format_results(report, self.config)
         depth = len(self.current_scopes) or 1
         _print_test_result(self, test_name, docstring_summary, test_status, markup, depth)
@@ -190,7 +194,16 @@ def _get_test_name(nodeid: str) -> str:
     return test_name
 
 
-def _format_results(report: Any, config: Any) -> Optional[Tuple[Dict[str, bool], str]]:
+def _get_docstring_summary(report: TestReport, test_name: str, parameters: str) -> list[str]:
+    docstring_summary: list[str] = getattr(report, "docstring_summary", [])
+    if docstring_summary:
+        docstring_summary[0] = docstring_summary[0] + parameters
+        return docstring_summary
+    else:
+        return [test_name]
+
+
+def _format_results(report: TestReport, config: Any) -> Tuple[Dict[str, bool], str]:
     success_indicator = config.getini("spec_success_indicator")
     failure_indicator = config.getini("spec_failure_indicator")
     skipped_indicator = config.getini("spec_skipped_indicator")
@@ -200,20 +213,35 @@ def _format_results(report: Any, config: Any) -> Optional[Tuple[Dict[str, bool],
         return {"red": True}, failure_indicator
     elif report.skipped:
         return {"yellow": True}, skipped_indicator
-    return None
+    return {}, ""
 
 
 def _print_test_result(
     self,
     test_name: str,
-    docstring_summary: str,
+    docstring_summary: list[str],
     test_status: str,
     markup: Dict[str, bool],
     depth: int,
 ) -> None:
     indent = self.config.getini("spec_indent")
+
     self._tw.line()
     self._tw.write(
-        indent * depth + self.config.getini("spec_test_format").format(result=test_status, name=test_name, docstring_summary=docstring_summary),
+        indent * depth
+        + self.config.getini("spec_test_format").format(
+            result=test_status,
+            name=test_name,
+            docstring_summary=docstring_summary[0],
+        ),
         **markup,
     )
+
+    for line in docstring_summary[1:]:
+        if line.strip() == "":
+            break
+        self._tw.line()
+        self._tw.write(
+            indent * (depth + len(test_status)) + line.strip(),
+            **markup,
+        )

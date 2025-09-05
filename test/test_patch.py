@@ -58,7 +58,7 @@ class FakeReport:
         self.passed = kwargs.get("passed", True)
         self.failed = kwargs.get("failed", False)
         self.skipped = kwargs.get("skipped", False)
-        self.docstring_summary = "Test documentation"
+        self.docstring_summary = ["Test documentation"]
 
 
 class TestPatch(unittest.TestCase):

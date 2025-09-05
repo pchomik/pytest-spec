@@ -30,6 +30,15 @@ def describe_first_level():
         """
         assert True is True
 
+    def it_passed_with_multiline_docstring_summary_on_first_level():
+        """
+        Shows custom message from multiline
+        docstring summary.
+
+        And doesn't show additional info.
+        """
+        assert True is True
+
     def describe_second_level():
         def it_passed_on_second_level():
             assert True is True
@@ -54,6 +63,15 @@ def describe_first_level():
             """
             assert True is True
 
+        def it_passed_with_multiline_docstring_summary_on_second_level():
+            """
+            Shows custom message from multiline
+            docstring summary.
+
+            And doesn't show additional info.
+            """
+            assert True is True
+
         def describe_third_level():
             def it_passed_on_third_level():
                 assert True is True
@@ -73,6 +91,15 @@ def describe_first_level():
             def it_passed_with_multiline_docstring_on_third_level():
                 """
                 Shows custom multiline message from docstring summary
+
+                And doesn't show additional info.
+                """
+                assert True is True
+
+            def it_passed_with_multiline_docstring_summary_on_third_level():
+                """
+                Shows custom message from multiline
+                docstring summary.
 
                 And doesn't show additional info.
                 """

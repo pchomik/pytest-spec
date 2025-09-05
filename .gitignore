@@ -32,3 +32,9 @@ environment.yaml
 
 # Crush state
 .crush
+
+# Mypy cache
+.mypy_cache
+
+# Kilo code
+.kilocode
