@@ -20,7 +20,8 @@
         <img src="https://badgen.net/badge/pytest/8.4.0/purple">
     </p>
     <p align="center">
-        Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION.
+        Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION. <br>
+        <a href="https://pchomik.ovh/docs/pytest-spec/about">[Documentation]</a>
     </p>
 </p>
 

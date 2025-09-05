@@ -37,7 +37,7 @@ test = ["pytest", "pytest-describe", "mypy"]
 pytest_spec = "pytest_spec.plugin"
 
 [project.urls]
-Documentation = "https://github.com/pchomik/pytest-spec"
+Documentation = "https://pchomik.ovh/docs/pytest-spec/about"
 Changelog = "https://github.com/pchomik/pytest-spec/CHANGES.txt"
 Repository = "https://github.com/pchomik/pytest-spec"
 Issues = "https://github.com/pchomik/pytest-spec/issues"
