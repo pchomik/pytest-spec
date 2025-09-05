@@ -133,7 +133,7 @@ class TestPatch(unittest.TestCase):
     ):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport("Test::Second::test_example_Demo_CamelCase"))
-        fake_self._tw.write.assert_has_calls([call("Second:"), call("  ✓ Example Demo CamelCase", green=True)])
+        fake_self._tw.write.assert_has_calls([call("Second:"), call("  ✓ Example Demo Camel Case", green=True)])
 
     def test__pytest_runtest_longreport__uses_docstring_summary(self):
         fake_self = FakeSelf()
@@ -155,7 +155,7 @@ class TestPatch(unittest.TestCase):
         fake_report = FakeReport("Test::Second::test_example_Demo_CamelCase")
         fake_report.docstring_summary = None
         pytest_runtest_logreport(fake_self, fake_report)
-        fake_self._tw.write.assert_has_calls([call("  ✓ Example Demo CamelCase", green=True)])
+        fake_self._tw.write.assert_has_calls([call("  ✓ Example Demo Camel Case", green=True)])
 
     def test__pytest_runtest_logreport__ignores_nodeid_which_matches_ignore_string(
         self,

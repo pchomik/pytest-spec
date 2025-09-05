@@ -108,7 +108,11 @@ def _is_nodeid_has_test(nodeid: str) -> bool:
 
 
 def prettify(string: str) -> str:
-    return _capitalize_first_letter(_replace_underscores(_remove_test_container_prefix(_remove_file_extension(string))))
+    return _capitalize_first_letter(_split_words(_replace_underscores(_remove_test_container_prefix(_remove_file_extension(string)))))
+
+
+def _split_words(string: str):
+    return re.sub(r"(\w)([A-Z])", r"\1 \2", string).strip()
 
 
 def prettify_test(string: str) -> str:
