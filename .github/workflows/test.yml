@@ -27,7 +27,7 @@ jobs:
               run: uv run mypy .
 
             - name: Test with pre-commit
-              run: uv run pre-commit run -a
+              run: uvx pre-commit run -a
     test-os:
         strategy:
             fail-fast: false
