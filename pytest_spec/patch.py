@@ -156,6 +156,8 @@ def _remove_test_container_prefix(nodeid: str) -> str:
 
 
 def _remove_file_extension(nodeid: str) -> str:
+    if ".py" not in nodeid:
+        return nodeid
     return os.path.splitext(nodeid)[0]
 
 
