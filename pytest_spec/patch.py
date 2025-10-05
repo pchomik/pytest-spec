@@ -12,6 +12,16 @@ from _pytest.main import Session
 from _pytest.nodes import Item
 from _pytest.reports import TestReport
 
+BOUNDARIES_REGEXP = re.compile(
+    r"""
+        (?<=[A-Z])(?=[A-Z][a-z]) # Split between acronyms and words, e.g. "PDFFile" -> "PDF File"
+        |(?<=[a-z])(?=[A-Z])     # Split between words
+        |(?<=[A-Za-z])(?=[0-9])  # Split between letters and numbers
+        |(?<=[0-9])(?=[A-Za-z])  # Split between numbers and letters
+    """,
+    re.VERBOSE,
+)
+
 
 def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
     """Signal the start of running a single test item.
@@ -112,13 +122,7 @@ def prettify(string: str) -> str:
 
 
 def _split_boundaries(string: str) -> str:
-    boundaries = re.compile(r"""
-        (?<=[A-Z])(?=[A-Z][a-z]) # Split between acronyms and words, e.g. "PDFFile" -> "PDF File"
-        |(?<=[a-z])(?=[A-Z])     # Split between words
-        |(?<=[A-Za-z])(?=[0-9])  # Split between letters and numbers
-        |(?<=[0-9])(?=[A-Za-z])  # Split between numbers and letters
-    """, re.VERBOSE)
-    return boundaries.sub(" ", string)
+    return BOUNDARIES_REGEXP.sub(" ", string)
 
 
 def prettify_test(string: str) -> str:
