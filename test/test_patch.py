@@ -132,9 +132,9 @@ class TestPatch(unittest.TestCase):
         cases = [
             ("Demo_CamelCase", "Demo Camel Case"),
             ("PDFFile", "PDF File"),
-            ("camelCase", "camel Case"),
+            ("camelCase", "Camel Case"),
             ("PascalCase", "Pascal Case"),
-            ("lowerACRONYM", "lower ACRONYM"),
+            ("lowerACRONYM", "Lower ACRONYM"),
             ("Word123", "Word 123"),
             ("123Word", "123 Word"),
             ("Office365API", "Office 365 API"),
@@ -144,8 +144,8 @@ class TestPatch(unittest.TestCase):
         for test_suffix, expected_result in cases:
             with self.subTest(test_suffix=test_suffix, expected_result=expected_result):
                 fake_self = FakeSelf()
-                pytest_runtest_logreport(fake_self, FakeReport(f"Test::Second::test_example_{test_suffix}"))
-                fake_self._tw.write.assert_has_calls([call("Second:"), call(f"  ✓ Example {expected_result}", green=True)])
+                pytest_runtest_logreport(fake_self, FakeReport(f"Test::Second::test_{test_suffix}"))
+                fake_self._tw.write.assert_has_calls([call("Second:"), call(f"  ✓ {expected_result}", green=True)])
 
     def test__pytest_runtest_longreport__uses_docstring_summary(self):
         fake_self = FakeSelf()
