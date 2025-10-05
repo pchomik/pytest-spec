@@ -128,12 +128,24 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport("Test::Second::test__example"))
         fake_self._tw.write.assert_has_calls([call("Second:"), call("  ✓ Example", green=True)])
 
-    def test__pytest_runtest_logreport__honors_capitalization_of_words_in_test_name(
-        self,
-    ):
-        fake_self = FakeSelf()
-        pytest_runtest_logreport(fake_self, FakeReport("Test::Second::test_example_Demo_CamelCase"))
-        fake_self._tw.write.assert_has_calls([call("Second:"), call("  ✓ Example Demo Camel Case", green=True)])
+    def test__pytest_runtest_logreport__honors_different_type_of_baundaries_between_words(self):
+        cases = [
+            ("Demo_CamelCase", "Demo Camel Case"),
+            ("PDFFile", "PDF File"),
+            ("camelCase", "Camel Case"),
+            ("PascalCase", "Pascal Case"),
+            ("lowerACRONYM", "Lower ACRONYM"),
+            ("Word123", "Word 123"),
+            ("123Word", "123 Word"),
+            ("Office365API", "Office 365 API"),
+            ("ACRONYM", "ACRONYM"),
+            ("ACRONYMletter", "ACRONY Mletter"),
+        ]
+        for test_suffix, expected_result in cases:
+            with self.subTest(test_suffix=test_suffix, expected_result=expected_result):
+                fake_self = FakeSelf()
+                pytest_runtest_logreport(fake_self, FakeReport(f"Test::Second::test_{test_suffix}"))
+                fake_self._tw.write.assert_has_calls([call("Second:"), call(f"  ✓ {expected_result}", green=True)])
 
     def test__pytest_runtest_longreport__uses_docstring_summary(self):
         fake_self = FakeSelf()
