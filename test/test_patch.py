@@ -145,7 +145,6 @@ class TestPatch(unittest.TestCase):
             with self.subTest(test_suffix=test_suffix, expected_result=expected_result):
                 fake_self = FakeSelf()
                 pytest_runtest_logreport(fake_self, FakeReport(f"Test::Second::test_example_{test_suffix}"))
-                print(fake_self._tw.write.mock_calls)
                 fake_self._tw.write.assert_has_calls([call("Second:"), call(f"  ✓ Example {expected_result}", green=True)])
 
     def test__pytest_runtest_longreport__uses_docstring_summary(self):
