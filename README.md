@@ -326,6 +326,7 @@ Please feel free to present your idea by code example (pull request) or reported
 -   [@paxcodes](https://github.com/paxcodes)
 -   [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
 -   [@yk-kd](https://github.com/yk-kd)
+-   [@benfairless](https://github.com/benfairless)
 
 ## License
 

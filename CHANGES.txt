@@ -1,3 +1,6 @@
+v.5.2.0
+- Improved class name and patameter string
+
 v.5.1.0
 - Added support for multiline docstrings
 - Fixed case for class names
