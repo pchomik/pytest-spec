@@ -75,7 +75,7 @@ def pytest_configure(config: Config) -> None:
         importlib.reload(_pytest)
 
 
-@pytest.mark.hookwrapper
+@pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item: Item, call: CallInfo) -> Any:
     """Adds docstring summary to the report."""
     outcome = yield
