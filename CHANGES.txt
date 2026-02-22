@@ -1,6 +1,7 @@
 v.6.0.0
 - Update pytest hook implementation marker to use pluggy API
 - Drop support for pytest 4.x.x
+- Drop support for pytest 5.x.x
 - Added support for pytest 9.x.x
 - Drop support for Python 3.9
 - Added support for Python 3.14

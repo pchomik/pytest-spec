@@ -52,7 +52,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                pytest-version: [5.4.3, 6.2.5, 7.4.4, 8.4.2, 9.0.2]
+                pytest-version: [6.2.5, 7.4.4, 8.4.2, 9.0.2]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
