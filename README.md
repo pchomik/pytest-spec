@@ -1,11 +1,11 @@
 <p>
     <h1 align="center">pytest-spec</h1>
     <p align="center">
-        <img src="https://badgen.net/badge/python/3.9/green">
         <img src="https://badgen.net/badge/python/3.10/green">
         <img src="https://badgen.net/badge/python/3.11/green">
         <img src="https://badgen.net/badge/python/3.12/green">
         <img src="https://badgen.net/badge/python/3.13/green">
+        <img src="https://badgen.net/badge/python/3.14/green">
     </p>
     <p align="center">
         <img src="https://badgen.net/badge/os/linux/blue">
@@ -13,11 +13,10 @@
         <img src="https://badgen.net/badge/os/macos/blue">
     </p>
     <p align="center">
-        <img src="https://badgen.net/badge/pytest/4.6.11/purple">
-        <img src="https://badgen.net/badge/pytest/5.4.3/purple">
         <img src="https://badgen.net/badge/pytest/6.2.5/purple">
         <img src="https://badgen.net/badge/pytest/7.4.4/purple">
         <img src="https://badgen.net/badge/pytest/8.4.0/purple">
+        <img src="https://badgen.net/badge/pytest/9.0.2/purple">
     </p>
     <p align="center">
         Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION. <br>
@@ -27,13 +26,13 @@
 
 ## Available features
 
--   Format output to look like specification.
--   Group tests by classes and files
--   Failed, passed and skipped are marked and colored.
--   Remove test\_ and underscores for every test.
--   It is possible to use docstring summary instead of test name.
--   Supports function based, class based test.
--   Supports describe like tests.
+- Format output to look like specification.
+- Group tests by classes and files
+- Failed, passed and skipped are marked and colored.
+- Remove test\_ and underscores for every test.
+- It is possible to use docstring summary instead of test name.
+- Supports function based, class based test.
+- Supports describe like tests.
 
 ## Output example
 
@@ -80,9 +79,9 @@ You can configure the format of the test results by specifying a [format string]
 
 3 variables are available:
 
--   result - place for indicator
--   name - name of test
--   docstring_summary - first line from test docstring if available
+- result - place for indicator
+- name - name of test
+- docstring_summary - first line from test docstring if available
 
 ```ini
     ; since pytest 4.6.x
@@ -313,20 +312,21 @@ Please feel free to present your idea by code example (pull request) or reported
 
 ## Contributors
 
--   [@0x64746b](https://github.com/0x64746b)
--   [@lucasmarshall](https://github.com/lucasmarshall)
--   [@amcgregor](https://github.com/amcgregor)
--   [@jhermann](https://github.com/jhermann)
--   [@frenzymadness](https://github.com/frenzymadness)
--   [@chrischambers](https://github.com/chrischambers)
--   [@maxalbert](https://github.com/maxalbert)
--   [@jayvdb](https://github.com/jayvdb)
--   [@hugovk](https://github.com/hugovk)
--   [@b0g3r](https://github.com/b0g3r)
--   [@paxcodes](https://github.com/paxcodes)
--   [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
--   [@yk-kd](https://github.com/yk-kd)
--   [@benfairless](https://github.com/benfairless)
+- [@0x64746b](https://github.com/0x64746b)
+- [@lucasmarshall](https://github.com/lucasmarshall)
+- [@amcgregor](https://github.com/amcgregor)
+- [@jhermann](https://github.com/jhermann)
+- [@frenzymadness](https://github.com/frenzymadness)
+- [@chrischambers](https://github.com/chrischambers)
+- [@maxalbert](https://github.com/maxalbert)
+- [@jayvdb](https://github.com/jayvdb)
+- [@hugovk](https://github.com/hugovk)
+- [@b0g3r](https://github.com/b0g3r)
+- [@paxcodes](https://github.com/paxcodes)
+- [@s-t-e-v-e-n-k](https://github.com/s-t-e-v-e-n-k)
+- [@yk-kd](https://github.com/yk-kd)
+- [@benfairless](https://github.com/benfairless)
+- [@damienflament](https://github.com/damienflament)
 
 ## License
 
