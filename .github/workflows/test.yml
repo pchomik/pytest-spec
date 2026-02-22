@@ -7,7 +7,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+                python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
             - name: Install uv
               uses: astral-sh/setup-uv@v5
               with:
-                  python-version: 3.9
+                  python-version: 3.10
 
             - name: Install projects
               run: uv sync --all-extras --dev
@@ -52,7 +52,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                pytest-version: [4.6.11, 5.4.3, 6.2.5, 7.4.4, 8.4.0]
+                pytest-version: [5.4.3, 6.2.5, 7.4.4, 8.4.2, 9.0.2]
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -60,7 +60,7 @@ jobs:
             - name: Install uv
               uses: astral-sh/setup-uv@v5
               with:
-                  python-version: 3.9
+                  python-version: 3.10
 
             - name: Install projects
               run: uv sync --all-extras --dev

@@ -7,7 +7,7 @@ packages = ["pytest_spec"]
 
 [project]
 name = "pytest-spec"
-version = "5.2.0"
+version = "6.0.0"
 authors = [{ name = "Pawel Chomicki", email = "pawel.chomicki@gmail.com" }]
 description = "Library pytest-spec is a pytest plugin to display test execution output like a SPECIFICATION."
 readme = "README.md"
@@ -20,11 +20,11 @@ classifiers = [
     "Operating System :: POSIX",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Testing",
     "Topic :: Utilities",
