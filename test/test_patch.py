@@ -2,8 +2,9 @@
 :author: Pawel Chomicki
 """
 
+import pytest
 import unittest
-from unittest.mock import Mock, call
+from unittest.mock import Mock, call, ANY
 
 import pytest_spec
 from pytest_spec.patch import pytest_runtest_logreport, pytest_runtest_logstart
@@ -24,6 +25,7 @@ class FakeConfig:
         self.hook = FakeHook(*args, **kwargs)
         self.mapping = {
             "spec_header_format": "{module_path}:",
+            "spec_container_format": "{sentence}",
             "spec_test_format": "{result} {name}",
             "spec_success_indicator": "✓",
             "spec_failure_indicator": "✗",
@@ -59,7 +61,35 @@ class FakeReport:
         self.failed = kwargs.get("failed", False)
         self.skipped = kwargs.get("skipped", False)
         self.docstring_summary = ["Test documentation"]
+        self.describe_hierarchy = kwargs.get("describe_hierarchy", [])
 
+def fake_container_hierarchy(depth, withDocsring=False):
+    if 0 >= depth or depth > 2:
+        raise ValueError("Depth should be either 1 or 2")
+    
+    def describe_my_function(): pass
+    def describe_my_other_function(): pass
+    
+    def describe_my_function_with_docstring():
+        """
+        my function docstring
+        This is text that should be ignored.
+        """
+        pass
+
+    def describe_my_other_function_with_docstring():
+        """
+        my other function docstring
+        This is text that should be ignored.
+        """
+        pass
+
+    f1 = describe_my_function_with_docstring if withDocsring else describe_my_function
+    f2 = describe_my_other_function_with_docstring if withDocsring else describe_my_other_function
+    containers = f1.__name__ + "::" + f2.__name__ if depth == 2 else f1.__name__
+    nodeid = f"Test::{containers}::test_example_demo"
+    describe_heirarchy = [f1] if depth == 1 else [f2, f1]
+    return nodeid, describe_heirarchy
 
 class TestPatch(unittest.TestCase):
     def tearDown(self):
@@ -81,13 +111,6 @@ class TestPatch(unittest.TestCase):
     ):
         result = pytest_runtest_logreport(FakeSelf(), FakeReport(""))
         self.assertIsNone(result)
-
-    def test__pytest_runtest_logreport__prints_class_name_before_first_test_result(
-        self,
-    ):
-        fake_self = FakeSelf()
-        pytest_runtest_logreport(fake_self, FakeReport("Test::Second::Test_example_demo"))
-        fake_self._tw.write.assert_has_calls([call("Second:")])
 
     def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
         fake_self = FakeSelf()
@@ -184,6 +207,100 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport("Something"))
         assert not fake_self._tw.write.called
 
+@pytest.mark.parametrize("hirearchey_detection_method", ["nodeid", "functions"])
+class TestContainerHeirarchey:
+    def test__pytest_runtest_logreport__prints_container_name_before_first_test_result(
+        self,
+        hirearchey_detection_method,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_test_format"] = "{name}"
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=1, withDocsring=False)
+        if hirearchey_detection_method == "nodeid": describe_hierarchy = None
+        
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([
+            call("My function:"),
+            call('  Example demo', green=ANY),
+        ])
+
+    def test__pytest_runtest_logreport__uses_unit_name_format_for_container_name(
+        self,
+        hirearchey_detection_method,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_container_format"] = "{unit_name}"
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=1, withDocsring=False)
+        if hirearchey_detection_method == "nodeid": describe_hierarchy = None
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([call("my_function:")])
+
+    def test__pytest_runtest_logreport__uses_docstring_summary_format_for_container_name(
+        self,
+        hirearchey_detection_method,
+    ):
+        if hirearchey_detection_method == "nodeid":
+            pytest.skip("Docstring summary format is not supported when hierarchy is detected by nodeid")
+
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_container_format"] = "{docstring_summary}"
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=1, withDocsring=True)
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([call("my function docstring:")])
+
+
+    def test__pytest_runtest_logreport__uses_sentence_format_when_docstring_summary_format_not_available(
+        self, hirearchey_detection_method,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_container_format"] = "{docstring_summary}"
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=1, withDocsring=False)
+        if hirearchey_detection_method == "nodeid": describe_hierarchy = None
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([call("My function:")])
+
+    def test__pytest_runtest_logreport__adds_indentation_for_each_nested_container(
+        self,
+        hirearchey_detection_method,
+    ):
+        fake_self = FakeSelf()
+        indent = fake_self.config.mapping["spec_indent"]
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=2, withDocsring=False)
+        if hirearchey_detection_method == "nodeid": describe_hierarchy = None
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([
+            call("My function:"),
+            call(indent + 'My other function:'),
+        ])
+
+    def test__pytest_runtest_logreport__does_not_print_the_same_container_more_than_once(
+        self,
+        hirearchey_detection_method,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_test_format"] = "{name}"
+        nodeid, describe_hierarchy = fake_container_hierarchy(depth=2, withDocsring=False)
+        if hirearchey_detection_method == "nodeid": describe_hierarchy = None
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid, describe_hierarchy=describe_hierarchy))
+
+        fake_self._tw.write.assert_has_calls([
+            call("Test:"),
+            call("My function:"),
+            call('  My other function:'),
+            call('    Example demo', green=ANY),
+            call('    Example demo', green=ANY),
+        ])
 
 if __name__ == "__main__":
     unittest.main()

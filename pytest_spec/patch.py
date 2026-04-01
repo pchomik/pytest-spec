@@ -68,6 +68,7 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
     """
     self.previous_scopes = getattr(self, "previous_scopes", [])
     self.current_scopes = get_report_scopes(report)
+    self.previous_describes = getattr(self, "previous_describes", [])
     indent = self.config.getini("spec_indent")
 
     res = self.config.hook.pytest_report_teststatus(report=report, config=self.config)
@@ -85,14 +86,25 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
         _print_description(self)
 
     scope_ind = 0
-    for msg in self.current_scopes:
-        if msg not in self.previous_scopes:
-            msg = [indent * scope_ind + prettify_description(msg)]
-            msg = "\n".join(msg)
-            if msg:
-                _print_description(self, msg)
-        scope_ind += 1
+    if report.describe_hierarchy:
+        for describe in reversed(report.describe_hierarchy):
+            if describe not in self.previous_describes:
+                msg = [indent * scope_ind + _format_container_description(describe, self.config)]
+                msg = "\n".join(msg)
+                if msg.strip():
+                    _print_description(self, msg)
+            scope_ind += 1
+    else:
+        for msg in self.current_scopes:
+            if msg not in self.previous_scopes:
+                msg = [indent * scope_ind + _format_container_description(msg, self.config)]
+                msg = "\n".join(msg)
+                if msg:
+                    _print_description(self, msg)
+            scope_ind += 1
+
     self.previous_scopes = self.current_scopes
+    self.previous_describes = report.describe_hierarchy
 
     if not isinstance(word, tuple):
         test_name = _get_test_name(report.nodeid)
@@ -132,6 +144,8 @@ def prettify_test(string: str) -> str:
 def prettify_description(string: str) -> str:
     return prettify(_append_colon(_remove_test_container_prefix(string)))
 
+def prettify_unit_name(string: str) -> str:
+    return _append_colon(_remove_test_container_prefix(string))
 
 def _get_test_path(nodeid: str, header: str) -> str:
     levels = nodeid.split("::")
@@ -166,7 +180,7 @@ def _print_description(self, msg: Optional[str] = None) -> None:
 
 
 def _remove_test_container_prefix(nodeid: str) -> str:
-    return re.sub("^(Test)|(describe)", "", nodeid)
+    return re.sub("^(Test)|(describe_?)", "", nodeid)
 
 
 def _remove_file_extension(nodeid: str) -> str:
@@ -198,6 +212,27 @@ def _append_colon(string: str) -> str:
 def _get_parametrized_parameters(test_name: str) -> str:
     m = re.search(r"\[.*\]", test_name)
     return m.group(0) if m else ""
+
+def _format_container_description(describe: Any, config: Any) -> str:
+    if type(describe) == str:
+        sentence = prettify_description(describe)
+        unit_name = prettify_unit_name(describe)
+        docstring_summary = sentence
+    else:
+        sentence = prettify_description(getattr(describe, "__name__", ""))
+        unit_name = prettify_unit_name(getattr(describe, "__name__", ""))
+        docstring_summary = getattr(describe, "__doc__", None)
+        docstring_summary = (
+            _append_colon(str(docstring_summary).lstrip().split("\n")[0])
+            if docstring_summary
+            else sentence
+        )
+
+    return config.getini("spec_container_format").format(
+        sentence=sentence,
+        unit_name=unit_name,
+        docstring_summary=docstring_summary,
+    )
 
 
 def _get_test_name(nodeid: str) -> str:

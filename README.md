@@ -71,6 +71,84 @@ In addition to the `{path}` and `{class_name}` replacement fields, there is also
 
 <details>
 
+<summary>spec_container_format</summary>
+
+### spec_container_format
+
+You can configure the format of the test containers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
+
+3 variables are available:
+
+- sentence - capitalize first letter and remove all underscores
+- unit_name - leaves capitalization and underscores 
+- docstring_summary - first line from test docstring if available
+
+```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_container_format = {sentence}
+
+    ; legacy pytest
+    [tool:pytest]
+    spec_container_format = {sentence}
+```
+
+or
+
+```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_container_format = {docstring_summary}
+
+    ; legacy pytest
+    [tool:pytest]
+    spec_container_format = {docstring_summary}
+```
+
+In second example where docstring is not available the container name will be formatted as a sentence.
+
+Similar configuration could be done in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_container_format = "{sentence}"
+```
+
+or
+
+```toml
+    [tool.pytest.ini_options]
+    spec_container_format = "{docstring_summary}"
+```
+
+Here are some examples of what each format looks like:
+```python
+'''
+Outputs:
+    {sentence}         -> Fibonacci sequence:
+    {unit_name}        -> FibonacciSequence:
+    {docstring_sumary} -> fibonacci_sequence():
+'''
+class TestFibonacciSequence:
+    """fibonacci_sequence()"""
+    ...
+
+
+'''
+Outputs:
+    {sentence}          -> Fibonacci sequence:
+    {unit_name}         -> fibonacci_sequence:
+    {docstring_summary} -> fibonacci_sequence():
+'''
+def describe_fibonacci_sequence():
+    """fibonacci_sequence()"""
+    ...
+```
+
+</details>
+
+<details>
+
 <summary>spec_test_format</summary>
 
 ### spec_test_format

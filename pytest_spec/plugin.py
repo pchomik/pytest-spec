@@ -31,6 +31,11 @@ def pytest_addoption(parser: Parser) -> None:
         help="The format of the test headers when using the spec plugin",
     )
     parser.addini(
+        "spec_container_format",
+        default="{sentence}:",
+        help="The format of the container descriptions when using the spec plugin",
+    )
+    parser.addini(
         "spec_test_format",
         default="{result} {name}",
         help="The format of the test results when using the spec plugin",
@@ -84,3 +89,9 @@ def pytest_runtest_makereport(item: Item, call: CallInfo) -> Any:
         report.docstring_summary = str(item.obj.__doc__).lstrip().split("\n")  # type: ignore
     else:
         report.docstring_summary = []
+
+    report.describe_hierarchy = (
+        item.get_describe_function_heirarchy()
+        if hasattr(item, "get_describe_function_heirarchy")
+        else []
+    )
