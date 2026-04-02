@@ -302,5 +302,41 @@ class TestContainerHeirarchey:
             call('    Example demo', green=ANY),
         ])
 
+    def test__pytest_runtest_logreport__does_not_collapse_different_containers_with_the_same_name(
+        self,
+        hirearchey_detection_method,
+    ):
+        def create_heirarchy(top):
+            def describe_A(): pass
+            def describe_B(): pass
+            def describe_C(): pass
+            return [describe_C, describe_B, describe_A, top]
+        
+        def describe_I(): pass
+        def describe_II(): pass
+
+        fake_self = FakeSelf()
+        nodeid1 = f"Test::{describe_I.__name__}::describe_A::describe_B::describe_C::test_example_demo"
+        nodeid2 = f"Test::{describe_II.__name__}::describe_A::describe_B::describe_C::test_example_demo"
+        hierarchy1 = create_heirarchy(describe_I) if hirearchey_detection_method == "functions" else None
+        hierarchy2 = create_heirarchy(describe_II) if hirearchey_detection_method == "functions" else None
+
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid1, describe_hierarchy=hierarchy1))
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid=nodeid2, describe_hierarchy=hierarchy2))
+
+        fake_self._tw.write.assert_has_calls([
+            call("I:"),
+            call('  A:'),
+            call('    B:'),
+            call('      C:'),
+        ])
+
+        fake_self._tw.write.assert_has_calls([
+            call("II:"),
+            call('  A:'),
+            call('    B:'),
+            call('      C:'),
+        ])
+
 if __name__ == "__main__":
     unittest.main()

@@ -5,7 +5,7 @@
 
 import os
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, Generator, Callable
 
 from _pytest.config import Config
 from _pytest.main import Session
@@ -22,6 +22,24 @@ BOUNDARIES_REGEXP = re.compile(
     re.VERBOSE,
 )
 
+def iterate_nodeid_hierarchy(previous: list[str], current: list[str]) -> Generator[str, None, None]:
+    common_index = 0
+    for prev, curr in zip(previous, current):
+        if prev == curr:
+            common_index += 1
+        else:
+            break
+    yield from current[common_index:]
+
+def iterate_describe_hierarchy(previous: list[Callable[..., None]], current: list[Callable[..., None]]) -> Generator[Callable[..., None], None, None]:
+    common_index = 0
+    for prev, curr in zip(reversed(previous), reversed(current)):
+        if prev == curr:
+            common_index += 1
+        else:
+            break
+    end_index = len(current) - common_index
+    yield from reversed(current[:end_index])
 
 def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
     """Signal the start of running a single test item.
@@ -84,24 +102,19 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
     if test_path != self.currentfspath:
         self.currentfspath = test_path
         _print_description(self)
+    
+    if report.describe_hierarchy:
+        containers = iterate_describe_hierarchy(self.previous_describes, report.describe_hierarchy)
+    else:
+        containers = iterate_nodeid_hierarchy(self.previous_scopes, self.current_scopes)
 
     scope_ind = 0
-    if report.describe_hierarchy:
-        for describe in reversed(report.describe_hierarchy):
-            if describe not in self.previous_describes:
-                msg = [indent * scope_ind + _format_container_description(describe, self.config)]
-                msg = "\n".join(msg)
-                if msg.strip():
-                    _print_description(self, msg)
-            scope_ind += 1
-    else:
-        for msg in self.current_scopes:
-            if msg not in self.previous_scopes:
-                msg = [indent * scope_ind + _format_container_description(msg, self.config)]
-                msg = "\n".join(msg)
-                if msg:
-                    _print_description(self, msg)
-            scope_ind += 1
+    for container in containers:
+        msg = [indent * scope_ind + _format_container_description(container, self.config)]
+        msg = "\n".join(msg)
+        if msg.strip():
+            _print_description(self, msg)
+        scope_ind += 1
 
     self.previous_scopes = self.current_scopes
     self.previous_describes = report.describe_hierarchy
