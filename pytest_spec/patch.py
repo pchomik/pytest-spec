@@ -94,9 +94,8 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
         _print_description(self)
 
     for scope_ind, scope in iterate_scope_hierarchy(self.previous_scopes, self.current_scopes):
-        msg = indent * scope_ind + prettify_description(scope)
-        if msg:
-            _print_description(self, msg)
+        container_name = _format_container_name(scope, self.config)
+        _print_description(self, indent * scope_ind + container_name)
     self.previous_scopes = self.current_scopes
 
     if not isinstance(word, tuple):
@@ -160,6 +159,16 @@ def _get_test_path(nodeid: str, header: str) -> str:
     )
 
 
+def _format_container_name(container: str, config) -> str:
+    unit_name = _remove_test_container_prefix(container)
+    sentence = prettify(unit_name)
+
+    return config.getini("spec_container_format").format(
+        sentence=sentence,
+        unit_name=unit_name,
+    )
+
+
 def _print_description(self, msg: Optional[str] = None) -> None:
     if msg is None:
         msg = self.currentfspath
@@ -171,7 +180,7 @@ def _print_description(self, msg: Optional[str] = None) -> None:
 
 
 def _remove_test_container_prefix(nodeid: str) -> str:
-    return re.sub("^(Test)|(describe)", "", nodeid)
+    return re.sub("^(Test)|(describe_?)", "", nodeid)
 
 
 def _remove_file_extension(nodeid: str) -> str:
