@@ -5,7 +5,7 @@
 
 import os
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Generator, List, Optional, Tuple
 
 from _pytest.config import Config
 from _pytest.main import Session
@@ -21,6 +21,15 @@ BOUNDARIES_REGEXP = re.compile(
     """,
     re.VERBOSE,
 )
+
+
+def iterate_scope_hierarchy(previous: list[str], current: list[str]) -> Generator[tuple[int, str], None, None]:
+    yielding = False
+    for depth, scope in enumerate(current):
+        if depth >= len(previous) or scope != previous[depth]:
+            yielding = True
+        if yielding:
+            yield depth, scope
 
 
 def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
@@ -84,14 +93,10 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
         self.currentfspath = test_path
         _print_description(self)
 
-    scope_ind = 0
-    for msg in self.current_scopes:
-        if msg not in self.previous_scopes:
-            msg = [indent * scope_ind + prettify_description(msg)]
-            msg = "\n".join(msg)
-            if msg:
-                _print_description(self, msg)
-        scope_ind += 1
+    for scope_ind, scope in iterate_scope_hierarchy(self.previous_scopes, self.current_scopes):
+        msg = indent * scope_ind + prettify_description(scope)
+        if msg:
+            _print_description(self, msg)
     self.previous_scopes = self.current_scopes
 
     if not isinstance(word, tuple):
