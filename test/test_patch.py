@@ -24,6 +24,7 @@ class FakeConfig:
         self.hook = FakeHook(*args, **kwargs)
         self.mapping = {
             "spec_header_format": "{module_path}:",
+            "spec_container_format": "{sentence}:",
             "spec_test_format": "{result} {name}",
             "spec_success_indicator": "✓",
             "spec_failure_indicator": "✗",
@@ -82,12 +83,64 @@ class TestPatch(unittest.TestCase):
         result = pytest_runtest_logreport(FakeSelf(), FakeReport(""))
         self.assertIsNone(result)
 
-    def test__pytest_runtest_logreport__prints_class_name_before_first_test_result(
+    def test__pytest_runtest_logreport__prints_container_name_before_first_test_result(
         self,
     ):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport("Test::Second::Test_example_demo"))
-        fake_self._tw.write.assert_has_calls([call("Second:")])
+        fake_self._tw.write.assert_has_calls(
+            [
+                call("Second:"),
+                call("  ✓ Example demo", green=True),
+            ]
+        )
+
+    def test__pytest_runtest_logreport__uses_sentence_format_for_container_name(
+        self,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_container_format"] = "{sentence}"
+        pytest_runtest_logreport(fake_self, FakeReport("Test::describe_first_container::Test_example_demo"))
+        fake_self._tw.write.assert_has_calls([call("First container")])
+
+    def test__pytest_runtest_logreport__uses_unit_name_format_for_container_name(
+        self,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_container_format"] = "{unit_name}"
+        pytest_runtest_logreport(fake_self, FakeReport("Test::describe_first_container::Test_example_demo"))
+        fake_self._tw.write.assert_has_calls([call("first_container")])
+
+    def test__pytest_runtest_logreport__adds_indentation_for_each_nested_container(
+        self,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_indent"] = "    "
+        pytest_runtest_logreport(fake_self, FakeReport("Test::describe_first_container::describe_second_container::Test_example_demo"))
+        fake_self._tw.write.assert_has_calls(
+            [
+                call("First container:"),
+                call("    Second container:"),
+            ]
+        )
+
+    def test__pytest_runtest_logreport__does_not_print_the_same_container_more_than_once(
+        self,
+    ):
+        fake_self = FakeSelf()
+        nodeid1 = "Test::describe_first_container::describe_second_container::Test_example_demo1"
+        nodeid2 = "Test::describe_first_container::describe_second_container::Test_example_demo2"
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid1))
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid2))
+
+        fake_self._tw.write.assert_has_calls(
+            [
+                call("First container:"),
+                call("  Second container:"),
+                call("    ✓ Example demo 1", green=True),
+                call("    ✓ Example demo 2", green=True),
+            ]
+        )
 
     def test__pytest_runtest_logreport__does_not_collapse_different_containers_with_the_same_name(
         self,
