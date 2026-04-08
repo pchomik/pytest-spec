@@ -26,6 +26,7 @@ class FakeConfig:
             "spec_header_format": "{module_path}:",
             "spec_container_format": "{sentence}:",
             "spec_test_format": "{result} {name}",
+            "spec_override_with_docstring": False,
             "spec_success_indicator": "✓",
             "spec_failure_indicator": "✗",
             "spec_skipped_indicator": "?",
@@ -35,7 +36,7 @@ class FakeConfig:
 
     def getini(self, option):
         result = self.mapping.get(option, None)
-        if not result:
+        if option not in self.mapping:
             raise TypeError("Option {} is not supported in the test".format(option))
         return result
 
@@ -60,6 +61,10 @@ class FakeReport:
         self.failed = kwargs.get("failed", False)
         self.skipped = kwargs.get("skipped", False)
         self.docstring_summary = ["Test documentation"]
+
+
+def fake_describe_function_hierarchy(nodeid):
+    return [{"name": scope, "doc": ""} for scope in reversed(nodeid.split("::")[1:-1])]
 
 
 class TestPatch(unittest.TestCase):
@@ -170,6 +175,56 @@ class TestPatch(unittest.TestCase):
                 call("        C:"),
             ]
         )
+
+    def test__pytest_runtest_logreport__overrides_container_name_with_docstring(
+        self,
+    ):
+        formats = [
+            "{sentence}",
+            "{unit_name}",
+        ]
+
+        for f in formats:
+            fake_self = FakeSelf()
+            fake_self.config.mapping["spec_container_format"] = f
+            fake_self.config.mapping["spec_override_with_docstring"] = True
+            fake_report = FakeReport("Test::TestFibonacciSequence::describe_dijkstras_algorithm::test_example_docstring_override")
+            fake_report.describe_hierarchy = fake_describe_function_hierarchy(fake_report.nodeid)
+            fake_report.describe_hierarchy[0]["doc"] = "#dijkstras_algorithm()"
+            fake_report.describe_hierarchy[1]["doc"] = "#fibonacci_sequence()"
+
+            pytest_runtest_logreport(fake_self, fake_report)
+            fake_self._tw.write.assert_has_calls(
+                [
+                    call("#fibonacci_sequence()"),
+                    call("  #dijkstras_algorithm()"),
+                ]
+            )
+
+    def test__pytest_runtest_logreport__overrides_container_name_with_only_the_first_line_of_the_docstring(
+        self,
+    ):
+        fake_self = FakeSelf()
+        fake_self.config.mapping["spec_override_with_docstring"] = True
+        fake_report = FakeReport("Test::describe_dijkstras_algorithm::test_example_docstring_override")
+        fake_report.describe_hierarchy = fake_describe_function_hierarchy(fake_report.nodeid)
+        fake_report.describe_hierarchy[0]["doc"] = "line 1\nignored line 1\nignored line 2"
+        pytest_runtest_logreport(fake_self, fake_report)
+        for args, _ in fake_self._tw.write.call_args_list:
+            assert "ignored" not in args[0]
+
+    def test__pytest_runtest_logreport__does_not_override_container_name_with_docstring_if_docstring_is_not_available(
+        self,
+    ):
+        describe_hierarchies = [None, [], [{"name": "", "doc": "#dijkstras_algorithm()"}, {"name": "describe_dijkstras_algorithm", "doc": ""}]]
+
+        for describe_hierarchy in describe_hierarchies:
+            fake_self = FakeSelf()
+            fake_self.config.mapping["spec_override_with_docstring"] = True
+            fake_report = FakeReport("Test::describe_dijkstras_algorithm::test_example_docstring_override")
+            fake_report.describe_hierarchy = describe_hierarchy
+            pytest_runtest_logreport(fake_self, fake_report)
+            fake_self._tw.write.assert_has_calls([call("Dijkstras algorithm:")])
 
     def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
         fake_self = FakeSelf()
