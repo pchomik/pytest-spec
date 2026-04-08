@@ -94,7 +94,12 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
         _print_description(self)
 
     for scope_ind, scope in iterate_scope_hierarchy(self.previous_scopes, self.current_scopes):
-        container_name = _format_container_name(scope, self.config)
+        describe = None
+        if getattr(report, "describe_hierarchy", None) and len(report.describe_hierarchy) == len(self.current_scopes):
+            describe = report.describe_hierarchy[-1 - scope_ind]
+
+        container = describe if describe and describe["name"] == scope and describe["doc"] else scope
+        container_name = _format_container_name(container, self.config)
         _print_description(self, indent * scope_ind + container_name)
     self.previous_scopes = self.current_scopes
 
@@ -159,9 +164,18 @@ def _get_test_path(nodeid: str, header: str) -> str:
     )
 
 
-def _format_container_name(container: str, config) -> str:
-    unit_name = _remove_test_container_prefix(container)
+def _format_container_name(container: str | dict[str, str], config) -> str:
+    if type(container) is dict:
+        unit_name = _remove_test_container_prefix(container["name"])
+        docstring = container["doc"]
+    elif type(container) is str:
+        unit_name = _remove_test_container_prefix(container)
+        docstring = ""
+
     sentence = prettify(unit_name)
+
+    if docstring and config.getini("spec_override_with_docstring"):
+        unit_name = sentence = docstring.splitlines()[0]
 
     return config.getini("spec_container_format").format(
         sentence=sentence,

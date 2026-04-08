@@ -41,6 +41,11 @@ def pytest_addoption(parser: Parser) -> None:
         help="The format of the test results when using the spec plugin",
     )
     parser.addini(
+        "spec_override_with_docstring",
+        default=False,
+        help="Overrides variables in the container and test result formats with the first line of the docstring if it exists",
+    )
+    parser.addini(
         "spec_success_indicator",
         default="✓",
         help="The indicator displayed when a test passes",
@@ -89,3 +94,24 @@ def pytest_runtest_makereport(item: Item, call: CallInfo) -> Any:
         report.docstring_summary = str(item.obj.__doc__).lstrip().split("\n")  # type: ignore
     else:
         report.docstring_summary = []
+
+    # describe_hierarchy = item.get_describe_function_heirarchy() if hasattr(item, "get_describe_function_heirarchy") else None
+    # if describe_hierarchy is not None:
+    #     report.describe_hierarchy = [{"name": f.__name__, "doc": f.__doc__ or ""} for f in describe_hierarchy]
+    # else:
+    #     report.describe_hierarchy = _get_describe_hierarchy_by_duck_typing(item)
+    report.describe_hierarchy = _get_describe_hierarchy_by_duck_typing(item)
+
+
+def _get_describe_hierarchy_by_duck_typing(item: Item) -> list[dict[str, str]]:
+    hierarchy = []
+    parent = item.parent
+    while parent is not None:
+        class_name = parent.__class__.__name__
+        funcobj = getattr(parent, "funcobj", None)
+
+        if class_name == "DescribeBlock" and callable(funcobj):
+            hierarchy.append({"name": funcobj.__name__, "doc": funcobj.__doc__ or ""})
+
+        parent = parent.parent
+    return hierarchy

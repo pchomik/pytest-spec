@@ -165,6 +165,39 @@ or
 
 <details>
 
+<summary>spec_override_with_docstring</summary>
+
+### spec_override_with_docstring
+
+When `spec_override_with_docstring` is true then certian formatting variables will be overridden with the first line of the docstring.
+
+```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_override_with_docstring = true
+
+    ; legacy pytest
+    [tool:pytest]
+    spec_override_with_docstring = true
+```
+
+Similar configuration could be done in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_override_with_docstring = true
+```
+
+The format variables that will be overridden by the docstring are:
+| Format String         | Variables            |
+|-----------------------|----------------------|
+| spec_container_format | sentence, unit_name  |
+
+
+</details>
+
+<details>
+
 <summary>spec_success_indicator</summary>
 
 ### spec_success_indicator
