@@ -5,7 +5,7 @@
 
 import os
 import re
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Generator, List, Optional, Tuple
 
 from _pytest.config import Config
 from _pytest.main import Session
@@ -21,6 +21,15 @@ BOUNDARIES_REGEXP = re.compile(
     """,
     re.VERBOSE,
 )
+
+
+def iterate_scope_hierarchy(previous: list[str], current: list[str]) -> Generator[tuple[int, str], None, None]:
+    yielding = False
+    for depth, scope in enumerate(current):
+        if depth >= len(previous) or scope != previous[depth]:
+            yielding = True
+        if yielding:
+            yield depth, scope
 
 
 def pytest_runtest_logstart(self, nodeid: str, location: Tuple[str, int, str]) -> None:
@@ -84,14 +93,14 @@ def pytest_runtest_logreport(self, report: TestReport) -> None:
         self.currentfspath = test_path
         _print_description(self)
 
-    scope_ind = 0
-    for msg in self.current_scopes:
-        if msg not in self.previous_scopes:
-            msg = [indent * scope_ind + prettify_description(msg)]
-            msg = "\n".join(msg)
-            if msg:
-                _print_description(self, msg)
-        scope_ind += 1
+    for scope_ind, scope in iterate_scope_hierarchy(self.previous_scopes, self.current_scopes):
+        describe = None
+        if getattr(report, "describe_hierarchy", None) and len(report.describe_hierarchy) == len(self.current_scopes):
+            describe = report.describe_hierarchy[-1 - scope_ind]
+
+        container = describe if describe and describe["name"] == scope and describe["doc"] else scope
+        container_name = _format_container_name(container, self.config)
+        _print_description(self, indent * scope_ind + container_name)
     self.previous_scopes = self.current_scopes
 
     if not isinstance(word, tuple):
@@ -155,6 +164,25 @@ def _get_test_path(nodeid: str, header: str) -> str:
     )
 
 
+def _format_container_name(container: str | dict[str, str], config) -> str:
+    if type(container) is dict:
+        unit_name = _remove_test_container_prefix(container["name"])
+        docstring = container["doc"]
+    elif type(container) is str:
+        unit_name = _remove_test_container_prefix(container)
+        docstring = ""
+
+    sentence = prettify(unit_name)
+
+    if docstring and config.getini("spec_override_with_docstring"):
+        unit_name = sentence = docstring.splitlines()[0]
+
+    return config.getini("spec_container_format").format(
+        sentence=sentence,
+        unit_name=unit_name,
+    )
+
+
 def _print_description(self, msg: Optional[str] = None) -> None:
     if msg is None:
         msg = self.currentfspath
@@ -166,7 +194,7 @@ def _print_description(self, msg: Optional[str] = None) -> None:
 
 
 def _remove_test_container_prefix(nodeid: str) -> str:
-    return re.sub("^(Test)|(describe)", "", nodeid)
+    return re.sub("^(Test)|(describe_?)", "", nodeid)
 
 
 def _remove_file_extension(nodeid: str) -> str:

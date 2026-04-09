@@ -71,6 +71,46 @@ In addition to the `{path}` and `{class_name}` replacement fields, there is also
 
 <details>
 
+<summary>spec_container_format</summary>
+
+### spec_container_format
+
+You can configure the format of the test containers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
+
+2 variables are available:
+
+- sentence - capitalize first letter and remove all underscores
+- unit_name - looks like the name of the unit under test
+
+```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_container_format = {sentence}:
+
+    ; legacy pytest
+    [tool:pytest]
+    spec_container_format = {sentence}:
+```
+
+Similar configuration could be done in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_container_format = "{sentence}:"
+```
+
+Here is an example of what the formatted output might look like:
+
+| Format    | Test Container                      | Formatted Output   |
+|-----------|-------------------------------------|--------------------|
+| sentence  | `class TestFibonacciSequence`       | Fibonacci Sequence |
+| sentence  | `def describe_fibonacci_sequence()` | Fibonacci sequence |
+| unit_name | `class TestFibonacciSequence`       | FibonacciSequence  |
+| unit_name | `def describe_fibonacci_sequence()` | fibonacci_sequence |
+</details>
+
+<details>
+
 <summary>spec_test_format</summary>
 
 ### spec_test_format
@@ -120,6 +160,39 @@ or
     [tool.pytest.ini_options]
     spec_test_format = "{result} {docstring_summary}"
 ```
+
+</details>
+
+<details>
+
+<summary>spec_override_with_docstring</summary>
+
+### spec_override_with_docstring
+
+When `spec_override_with_docstring` is true then certian formatting variables will be overridden with the first line of the docstring.
+
+```ini
+    ; since pytest 4.6.x
+    [pytest]
+    spec_override_with_docstring = true
+
+    ; legacy pytest
+    [tool:pytest]
+    spec_override_with_docstring = true
+```
+
+Similar configuration could be done in your [pyproject.toml](https://docs.pytest.org/en/stable/reference/customize.html#pyproject-toml) file:
+
+```toml
+    [tool.pytest.ini_options]
+    spec_override_with_docstring = true
+```
+
+The format variables that will be overridden by the docstring are:
+| Format String         | Variables            |
+|-----------------------|----------------------|
+| spec_container_format | sentence, unit_name  |
+
 
 </details>
 
