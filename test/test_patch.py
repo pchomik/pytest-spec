@@ -89,6 +89,35 @@ class TestPatch(unittest.TestCase):
         pytest_runtest_logreport(fake_self, FakeReport("Test::Second::Test_example_demo"))
         fake_self._tw.write.assert_has_calls([call("Second:")])
 
+    def test__pytest_runtest_logreport__does_not_collapse_different_containers_with_the_same_name(
+        self,
+    ):
+        nodeid1 = "Test::indent_one_level::describe_root1::describe_A::describe_B::describe_C::test_example_demo"
+        nodeid2 = "Test::indent_one_level::describe_root2::describe_A::describe_B::describe_C::test_example_demo"
+
+        fake_self = FakeSelf()
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid1))
+        pytest_runtest_logreport(fake_self, FakeReport(nodeid2))
+
+        fake_self._tw.write.assert_has_calls(
+            [
+                call("Indent one level:"),
+                call("  Root 1:"),
+                call("    A:"),
+                call("      B:"),
+                call("        C:"),
+            ]
+        )
+
+        fake_self._tw.write.assert_has_calls(
+            [
+                call("  Root 2:"),
+                call("    A:"),
+                call("      B:"),
+                call("        C:"),
+            ]
+        )
+
     def test__pytest_runtest_logreport__prints_test_name_and_passed_status(self):
         fake_self = FakeSelf()
         pytest_runtest_logreport(fake_self, FakeReport("Test::Second::test_example_demo"))
