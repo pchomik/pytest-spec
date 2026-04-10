@@ -24,6 +24,11 @@ BOUNDARIES_REGEXP = re.compile(
 
 
 def iterate_scope_hierarchy(previous: list[str], current: list[str]) -> Generator[tuple[int, str], None, None]:
+    """
+    Generates a (depth, scope) sequence for the current hierarchy starting from the first
+    level that differs from the previous hierarchy. This is used to process only the new
+    namespace depths when transitioning between two scope hirarchies.
+    """
     yielding = False
     for depth, scope in enumerate(current):
         if depth >= len(previous) or scope != previous[depth]:
