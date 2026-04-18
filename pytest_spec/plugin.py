@@ -31,6 +31,11 @@ def pytest_addoption(parser: Parser) -> None:
         help="The format of the test headers when using the spec plugin",
     )
     parser.addini(
+        "spec_container_format",
+        default="{sentence}:",
+        help="The format of the test container when using the spec plugin",
+    )
+    parser.addini(
         "spec_test_format",
         default="{result} {name}",
         help="The format of the test results when using the spec plugin",
