@@ -75,12 +75,11 @@ In addition to the `{path}` and `{class_name}` replacement fields, there is also
 
 ### spec_container_format
 
-You can configure the format of the test containers by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
+You can configure the format of test container names (e.g., `describe_*` or `Test*` classes/methods) by specifying a [format string](https://docs.python.org/2/library/string.html#format-string-syntax) in your [ini-file](https://docs.pytest.org/en/stable/customize.html#pytest-ini):
 
-2 variables are available:
-
-- sentence - capitalize first letter and remove all underscores
-- unit_name - looks like the name of the unit under test
+**Available variables:**
+- `{sentence}` - Capitalize first letter, replace underscores with spaces, remove `describe_` prefix
+- `{unit_name}` - Raw name with `describe_` prefix removed, underscores preserved
 
 ```ini
     ; since pytest 4.6.x
