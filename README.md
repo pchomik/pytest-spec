@@ -366,12 +366,13 @@ Please feel free to present your idea by code example (pull request) or reported
 - [@yk-kd](https://github.com/yk-kd)
 - [@benfairless](https://github.com/benfairless)
 - [@damienflament](https://github.com/damienflament)
+- [@joshuaprior](https://github.com/joshuaprior)
 
 ## License
 
 pytest-spec - pytest plugin to display test execution output like a SPECIFICATION.
 
-Copyright (C) 2014-2025 Pawel Chomicki
+Copyright (C) 2014-2026 Pawel Chomicki
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
